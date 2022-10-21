@@ -3,6 +3,10 @@ const app = express();
 
 const port = process.env.PORT || 3001;
 
+const pg = require('pg');
+const bcrypt = require('bcrypt');
+
+
 app.use(express.json());
 app.use(express.static("./client/build"));
 
