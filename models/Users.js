@@ -1,7 +1,7 @@
-const db = require('../database/db');
+const db = require('../database/db.js');
 
 const User = {
-    checkEmailExists: (email) => {
+    checkUserDetailsWithEmail: (email) => {
         const sql = 'SELECT * FROM users WHERE email = $1';
         return db.query(sql, [email])
     },
