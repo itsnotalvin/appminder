@@ -25,4 +25,45 @@ router.post('/', (request, response) => {
         .catch(err => response.statusCode(500).json({ message: 'Could not find the right user to store job information, sorry!' }))
 });
 
+router.patch('/updateReminder/:newStatus/:jobId', (request, response) => {
+    const newStatus = request.params.newStatus;
+    const jobId = request.params.jobId;
+    Jobs.updateJobReminderStatus(jobId, newStatus)
+        .then(dbRes => response.json({ message: `Changed job reminder status! - for job - ${jobId}` }))
+        .catch(err => response.statusCode(500).json({ message: `Sorry! We were unable to update reminder status for job - ${jobId} due to an internal error` }))
+});
+
+router.patch('/archiveStatusChange/:newStatus/:jobId', (request, response) => {
+    const newStatus = request.params.newStatus;
+    const jobId = request.params.jobId;
+    Jobs.updateJobArchiveStatus(jobId, newStatus)
+        .then(dbRes => response.json({ message: `Changed job archive status! - for job - ${jobId}` }))
+        .catch(err => response.statusCode(500).json({ message: `Sorry! We were unable to update archive status for job - ${jobId} due to an internal error` }))
+});
+
+router.patch('/completionStatusChange/:newStatus/:jobId', (request, response) => {
+    const newStatus = request.params.newStatus;
+    const jobId = request.params.jobId;
+    Jobs.updateJobCompletionStatus(jobId, newStatus)
+        .then(dbRes => response.json({ message: `Changed job completion status! - for job - ${jobId}` }))
+        .catch(err => response.statusCode(500).json({ message: `Sorry! We were unable to update completion status for job - ${jobId} due to an internal error` }))
+});
+
+// add the ability to check if new notes are any different from the original
+router.patch('/updateNotes/:newNotes/:jobId', (request, response) => {
+    const newNotes = request.params.newNotes;
+    const jobId = request.params.jobId;
+    Jobs.updateJobReminderStatus(jobId, newNotes)
+        .then(dbRes => response.json({ message: `Changed job notes! - for job - ${jobId}` }))
+        .catch(err => response.statusCode(500).json({ message: `Sorry! We were unable to update notes for job - ${jobId} due to an internal error` }))
+});
+
+router.patch('/updateDeletionStatus/:newStatus/:jobId', (request, response) => {
+    const newStatus = request.params.newStatus;
+    const jobId = request.params.jobId;
+    Jobs.updateJobReminderStatus(jobId, newStatus)
+        .then(dbRes => response.json({ message: `Changed job deletion status! - for job - ${jobId}` }))
+        .catch(err => response.statusCode(500).json({ message: `Sorry! We were unable to update deletion status for job - ${jobId} due to an internal error` }))
+});
+
 module.exports = router;
