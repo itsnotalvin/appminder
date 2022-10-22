@@ -33,7 +33,8 @@ export const Signup = () => {
 
 
     return (
-        <div>
+        <>
+            <div>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"></p>
             
             <h1>Sign Up</h1>
@@ -87,14 +88,16 @@ export const Signup = () => {
                 <button>Sign In</button>
 
                 <p>
-                    Don't have an account? < br/>
+                    Already have an account? < br/>
                     <span>
                         { /*insert route */}
-                        <a href="#">Sign Up</a>
+                        <a href="#">Sign In</a>
                     </span>
                 </p>
             </form>
 
         </div>
+        </>
+        
     )
 }
