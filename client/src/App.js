@@ -9,7 +9,7 @@ function App() {
       <h1>This is a portfolio website</h1>
       <h2>Body</h2>
       <Login />
-      <Signup />
+      {/* <Signup /> */}
     </div>
   );
 }
