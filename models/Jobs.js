@@ -13,7 +13,6 @@ const Jobs = {
         const sql = "INSERT INTO jobs(user_id,job_title,company_name,app_stage,key_date,set_reminder,archived,completed,deleted,notes) VALUES($1,$2,$3,$4,$5,$6,'f','f','f',$7)";
         return db.query(sql, [user_id, job_title, company_name, app_stage, key_date, set_reminder, notes])
     },
-    // how to update timestamp here
     updateJobNotes: (job_id, notes) => {
         const sql = 'UPDATE jobs SET notes = $1 WHERE id = $2';
         return db.query(sql, [notes, job_id])
