@@ -29,5 +29,15 @@ CREATE TABLE jobs (
     completed boolean,
     deleted boolean,
     notes text,
-    last_updated date default CURRENT_DATE
+    last_updated TIMESTAMP default CURRENT_TIMESTAMP
 );
+
+CREATE OR REPLACE FUNCTION update_modified_column() 
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.last_updated = now();
+    RETURN NEW; 
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_user_modtime BEFORE UPDATE ON jobs FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
