@@ -1,0 +1,61 @@
+* {
+    box-sizing: border-box;
+}
+#dashboard {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+}
+#side-panel {
+    border: 1px solid black;
+    width: 20vw;
+}
+#main-screen {
+    border: 1px solid black;
+    width: 80vw;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+#application-bar {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    width: 90%;
+    padding: 10px;
+}
+.application-btn {
+    background-color: rgb(102, 102, 229);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s ease all;
+}
+.application-btn:hover {
+    background-color: blue;
+}
+#applications-display {
+    border: 1px solid black;
+    width: 90%;
+    height: 90%;
+    padding: 5px;
+}
+#application-stage-selection {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: aquamarine;
+}
+.application-stage-btn {
+    background-color: aquamarine;
+    padding: 10px;
+    cursor: pointer;
+    transition: 1s ease all;
+}
+.application-stage-btn:hover {
+    background-color: blueviolet;
+}
