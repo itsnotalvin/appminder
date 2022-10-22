@@ -9,6 +9,27 @@
 #side-panel {
     border: 1px solid black;
     width: 20vw;
+    background-color: blue;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+#side-panel-content {
+    display: flex;
+    height: 50vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.nav-btn {
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+    transition: 1s ease all;
+    margin: 5px;
+    border-radius: 10px;
+}
+.nav-btn:hover {
+    background-color: aqua;
 }
 #main-screen {
     border: 1px solid black;
@@ -27,34 +48,46 @@
     padding: 10px;
 }
 .application-btn {
-    background-color: rgb(102, 102, 229);
+    background-color: aquamarine;
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: 1s ease all;
+    border-radius: 10px;
 }
 .application-btn:hover {
-    background-color: blue;
+    background-color: blueviolet;
 }
 #applications-display {
     border: 1px solid black;
     width: 90%;
     height: 90%;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 #application-stage-selection {
     display: flex;
     justify-content: space-around;
     width: 100%;
     background-color: aquamarine;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 .application-stage-btn {
     background-color: aquamarine;
     padding: 10px;
     cursor: pointer;
     transition: 1s ease all;
+    border-radius: 10px;
+}
+#application-content {
+    background-color: aquamarine;
+    height: 80%;
+    border-radius: 10px;
 }
 .application-stage-btn:hover {
     background-color: blueviolet;

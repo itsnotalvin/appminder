@@ -9,7 +9,18 @@ const usersController = require('./controller/users.js')
 
 const jobsController = require('./controller/Jobs.js');
 
-
+const { expressSession, pgSession } = require('./session.js');
+app.use(
+    expressSession({
+        store: new pgSession({
+            pool: db,
+            createTableIfMissing: true,
+        }),
+        secret: process.env.EXPRESS_SESSION_SECRET_KEY,
+        resave: false,
+        saveUninitialized: false
+    })
+);
 
 
 app.use('/jobs', jobsController);
