@@ -4,7 +4,8 @@ const User = require('../models/Users.js');
 const Jobs = require('../models/Jobs.js');
 
 router.get('/allUserJobs', (request, response) => {
-    const loggedInEmail = request.session.email;
+    // const loggedInEmail = request.session.email;
+    const loggedInEmail = 'sid@sid.com';
     Jobs.getUsersJobs(loggedInEmail)
         .then(dbRes => {
             response.json(dbRes.rows)
