@@ -4,18 +4,10 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import { useState, useEffect } from 'react';
 
 export const ApplicationRow = ({ jobInfo }) => {
-    const expandedStyle = {
-        display: 'flex'
-    };
-
-    const collapsedStyle = {
-        display: 'none'
-    };
     const [hideJobDetails, setHideJobDetails] = useState(false);
     const { id, job_title, company_name, app_stage, key_date, archived, completed, deleted, last_updated, notes, set_reminder } = jobInfo;
 
     const expandJobDetails = (id) => {
-        console.log(id);
         setHideJobDetails(hideJobDetails ? false : true);
     };
 
