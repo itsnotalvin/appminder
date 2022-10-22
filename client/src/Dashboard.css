@@ -89,6 +89,14 @@
     height: 80%;
     border-radius: 10px;
 }
+#application-detail-header {
+    display: flex;
+    justify-content: space-evenly;
+}
 .application-stage-btn:hover {
     background-color: blueviolet;
+}
+.job-row {
+    display: flex;
+    justify-content: space-evenly;
 }
