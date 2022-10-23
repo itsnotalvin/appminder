@@ -15,6 +15,11 @@ export const Signup = () => {
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
+    const [email, setEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
+
+
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
@@ -98,7 +103,6 @@ export const Signup = () => {
                 <h1>Success!</h1>
             </section>
         ) : (
-
         <div>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
@@ -121,6 +125,25 @@ export const Signup = () => {
                     onBlur={() => setUserFocus(false)}
                  />
                  <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>4 to 24 characters <br /> sample text</p>
+
+                 {/* email */}
+                <label htmlFor="email">
+                    Email:
+                </label>
+                <input
+                    type="text"
+                    id="email"
+                    ref={userRef}
+                    autoComplete="off"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    aria-invalid={validEmail ? "false" : "true"}
+                    aria-describedby="emailnote"
+                    onFocus={() => setEmailFocus(true)}
+                    onBlur={() => setEmailFocus(false)}
+                    placeholder="youremail@emailaddress.com"
+                 />
+                 <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>Enter a valid email followed by @ to valid hosting address<br /> sample text</p>
 
                  {/* password */}
                  <label htmlFor="password">
@@ -167,12 +190,13 @@ export const Signup = () => {
                 </p>
 
                 {/* submit button */}
-                <button disable={!validName || !validPwd || !validMatch ? true : false}>
+                <button disable={!validName || validEmail|| !validPwd || !validMatch ? true : false}>
                   Start tracking
                 </button>
                 <p>
                     Already have an account? < br/>
                     Sign in here!
+                    <a href='/#'></a>
                 </p>
 
                 
