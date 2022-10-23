@@ -2,7 +2,7 @@ const db = require('../database/db.js');
 
 const Jobs = {
     getUsersJobs: (email) => {
-        const sql = 'SELECT jobs.id,jobs.job_title,jobs.company_name,jobs.app_stage,jobs.key_date,jobs.set_reminder,jobs.archived,jobs.completed,jobs.deleted,jobs.notes,jobs.last_updated FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1';
+        const sql = 'SELECT jobs.id,jobs.job_title,jobs.company_name,jobs.app_stage,jobs.key_date,jobs.set_reminder,jobs.archived,jobs.completed,jobs.deleted,jobs.notes,jobs.last_updated FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 ORDER BY jobs.last_updated DESC';
         return db.query(sql, [email])
     },
     checkJobExists: (email, job_title, company_name) => {
@@ -13,9 +13,9 @@ const Jobs = {
         const sql = "INSERT INTO jobs(user_id,job_title,company_name,app_stage,key_date,set_reminder,archived,completed,deleted,notes) VALUES($1,$2,$3,$4,$5,$6,'f','f','f',$7)";
         return db.query(sql, [user_id, job_title, company_name, app_stage, key_date, set_reminder, notes])
     },
-    updateJobNotes: (job_id, notes) => {
-        const sql = 'UPDATE jobs SET notes = $1 WHERE id = $2';
-        return db.query(sql, [notes, job_id])
+    updateJobInfo: (job_id, app_stage, key_date, notes) => {
+        const sql = 'UPDATE jobs SET app_stage = $1, key_date = $2, notes = $3 WHERE id = $4';
+        return db.query(sql, [app_stage, key_date, notes, job_id])
     },
     updateJobReminderStatus: (job_id, newStatus) => {
         const sql = 'UPDATE jobs SET set_reminder = $1 WHERE id = $2';
