@@ -12,8 +12,9 @@ export const ApplicationsView = () => {
     const [modalClass, setModalClass] = useState('modal');
     const [appToUpdateId, setAppToUpdateId] = useState(0);
     const [appToUpdateStage, setAppToUpdateStage] = useState();
-    const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
+    const [appToUpdateNotes, setAppToUpdateNotes] = useState();
     const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState();
+    const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({});
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
@@ -24,10 +25,14 @@ export const ApplicationsView = () => {
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
-    const updateAppModal = ({ id, key_date, notes, app_stage }) => {
-        setAppToUpdateStage(app_stage)
+    const updateAppModal = ({ id, key_date, notes, app_stage, job_title, company_name }) => {
+        setAppToUpdateStage(app_stage);
         setAppToUpdateNotes(notes);
         setAppToUpdateId(id);
+        setAppToUpdateOtherInfo({
+            job: job_title,
+            company: company_name
+        });
         setAppToUpdateKeyDate(timestampCleanup(key_date, 'update'));
         setModalClass('modal view-modal');
     };
@@ -83,6 +88,14 @@ export const ApplicationsView = () => {
                 <div className='modal-box'>
                     <div className='modal-content'>
                         <h3>Update Application</h3>
+                        <div className='update-app-field'>
+                            <label htmlFor="job_title">Job Title</label>
+                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onClick={(e) => e.preventDefault()} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="company_name">Company Name</label>
+                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onClick={(e) => e.preventDefault()} />
+                        </div>
                         <div className='update-app-field'>
                             <label htmlFor="app_stage_dropdown">Application Stage</label>
                             <select name="app-stage" id="app_stage_dropdown" value={appToUpdateStage} onChange={updateAppStage}>

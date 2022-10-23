@@ -18,7 +18,7 @@ export const timestampCleanup = (timestamp, key) => {
     };
 
     if (key === 'update') {
-        return `${formattedArr[3]}-${monthNumMap[formattedArr[1]]}-${formattedArr[2]}`
+        return `${formattedArr[3]}-${monthNumMap[formattedArr[1]]}-${parseInt(formattedArr[2]) - 1}`
     }
     else {
         if (parseInt(time[0]) > 12) {

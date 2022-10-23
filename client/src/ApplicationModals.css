@@ -25,6 +25,14 @@
     justify-content: center;
     align-items: center;
 }
+.disabled-inp {
+    cursor: not-allowed;
+    background-color: gray;
+    caret-color: transparent;
+}
+.disabled-inp:hover {
+    transform: scale(1);
+}
 select,input,textarea {
     margin: 0.5rem;
     padding: 10px;
