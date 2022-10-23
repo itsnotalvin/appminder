@@ -7,7 +7,7 @@ import { timestampCleanup } from './TimestampCleanup';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
-export const ApplicationRow = ({ jobInfo, setReminder }) => {
+export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
     const { id, job_title, company_name, app_stage, key_date, archived, completed, deleted, last_updated, notes, set_reminder } = jobInfo;
 
@@ -25,11 +25,13 @@ export const ApplicationRow = ({ jobInfo, setReminder }) => {
                 <div>{job_title}</div>
                 <div>{key_date.split('T')[0]}</div>
                 <div>{lastUpdatedDateTime}</div>
-                <div>
-                    {
-                        set_reminder ? <NotificationsActiveIcon className='icon-mod' onClick={() => setReminder(id, false)} /> : <NotificationsNoneIcon className='icon-mod' onClick={() => setReminder(id, true)} />
-                    }
-                </div>
+                {
+                    !archived && <div>
+                        {
+                            set_reminder ? <NotificationsActiveIcon className='icon-mod' onClick={() => changeReminderStatus(id, false)} /> : <NotificationsNoneIcon className='icon-mod' onClick={() => changeReminderStatus(id, true)} />
+                        }
+                    </div>
+                }
                 <div>
                     {
                         !hideJobDetails ? <ArrowDropDownIcon className='icon-mod' onClick={() => expandJobDetails(id)} /> : <ArrowDropUpIcon className='icon-mod' onClick={() => expandJobDetails(id)} />
@@ -37,7 +39,7 @@ export const ApplicationRow = ({ jobInfo, setReminder }) => {
                 </div>
                 <div>
                     {
-                        !archived && <ArchiveIcon className='icon-mod' />
+                        !archived ? <ArchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, true)} /> : <UnarchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, false)} />
                     }
                 </div>
             </div>
@@ -47,7 +49,9 @@ export const ApplicationRow = ({ jobInfo, setReminder }) => {
                 </div>
                 <div className='notes-and-appUpdateBtn'>
                     <span>{notes}</span>
-                    <span className='application-btn'>Update Application</span>
+                    {
+                        !archived && <span className='application-btn'>Update Application</span>
+                    }
                 </div>
             </div>
         </div>
