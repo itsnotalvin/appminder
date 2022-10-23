@@ -2,6 +2,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { useState, useEffect } from 'react';
+import { timestampCleanup } from './TimestampCleanup';
 
 export const ApplicationRow = ({ jobInfo }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
@@ -11,13 +12,15 @@ export const ApplicationRow = ({ jobInfo }) => {
         setHideJobDetails(hideJobDetails ? false : true);
     };
 
+    const lastUpdatedDateTime = timestampCleanup(last_updated);
+
     return (
         <div className='job-row'>
             <div className='core-job-details'>
                 <div>{company_name}</div>
                 <div>{job_title}</div>
-                <div>{key_date}</div>
-                <div>{last_updated}</div>
+                <div>{key_date.split('T')[0]}</div>
+                <div>{lastUpdatedDateTime}</div>
                 <div>
                     {
                         !hideJobDetails ? <ArrowDropDownIcon className='icon-mod' onClick={() => expandJobDetails(id)} /> : <ArrowDropUpIcon className='icon-mod' onClick={() => expandJobDetails(id)} />

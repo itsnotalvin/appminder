@@ -43,7 +43,7 @@ export const JobDashboard = ({ id }) => {
                         <div id='application-detail-header'>
                             <span>Company</span>
                             <span>Position</span>
-                            <span>Application Deadline</span>
+                            <span>Key Date</span>
                             <span>Last Updated</span>
                             <span>Details</span>
                             <span>Archive</span>
