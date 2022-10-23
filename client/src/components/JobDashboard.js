@@ -2,22 +2,31 @@ import '../Dashboard.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { JobDetails } from './JobDetails.js'
+import { ApplicationsView } from './ApplicationsView';
+import { ArchiveView } from './ArchiveView';
 
 export const JobDashboard = ({ id }) => {
     const [jobInfo, setJobInfo] = useState([]);
-    const [selectedTab, setSelectedTab] = useState('Draft');
-    const [infoChange, setInfoChange] = useState(0);
-
+    const [viewPage, setViewPage] = useState('Applications');
+    const [componentToView, setComponentToView] = useState(<ApplicationsView />);
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
                 setJobInfo(res.data)
             })
-    }, [selectedTab, infoChange]);
-
-    const changedJobInfo = () => {
-        setInfoChange(infoChange === 0 ? 1 : 0);
-    };
+        if (viewPage === 'Applications') {
+            setComponentToView(<ApplicationsView />)
+        }
+        else if (viewPage === 'Profile') {
+            setComponentToView();
+        }
+        else if (viewPage === 'Settings') {
+            setComponentToView();
+        }
+        else {
+            setComponentToView(<ArchiveView />)
+        }
+    }, [viewPage]);
 
     return (
         jobInfo.length ? <div id='dashboard'>
@@ -26,40 +35,17 @@ export const JobDashboard = ({ id }) => {
                     <h3>App Minder</h3>
                     <h3>Hello, first name</h3>
                     <div>
-                        <div className='nav-btn'>Applications</div>
-                        <div className='nav-btn'>Profile</div>
-                        <div className='nav-btn'>Settings</div>
+                        <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
+                        <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
+                        <div className='nav-btn' onClick={() => setViewPage('Settings')} >Settings</div>
+                        <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
                     </div>
                 </div>
             </div>
             <div id='main-screen'>
-                <header id='application-bar'>
-                    <h2>Applications</h2>
-                    <div className='application-btn'>Add Application</div>
-                </header>
-                <div id='applications-display'>
-                    <div id='application-stage-selection'>
-                        <div className='application-stage-btn' onClick={() => setSelectedTab('Draft')}>Draft</div>
-                        <div className='application-stage-btn' onClick={() => setSelectedTab('Applied')}>Applied</div>
-                        <div className='application-stage-btn' onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
-                        <div className='application-stage-btn' onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
-                    </div>
-                    <div id='application-content'>
-                        <div id='application-detail-header'>
-                            <span>Company</span>
-                            <span>Position</span>
-                            <span>Key Date</span>
-                            <span>Last Updated</span>
-                            <span>Set Reminder</span>
-                            <span>Details</span>
-                            <span>Archive</span>
-                        </div>
-                        {
-                            console.log(jobInfo)
-                        }
-                        <JobDetails jobs={jobInfo} selected={selectedTab} changedJobInfo={changedJobInfo} />
-                    </div>
-                </div>
+                {
+                    componentToView
+                }
             </div>
         </div> : <></>
 

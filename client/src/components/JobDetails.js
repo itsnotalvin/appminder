@@ -1,9 +1,8 @@
 import { ApplicationRow } from './ApplicationRow.js';
 import axios from 'axios';
-import { useEffect } from 'react';
 
 export const JobDetails = ({ jobs, selected, changedJobInfo }) => {
-    const displayJobs = jobs.filter(job => job.app_stage === selected)
+    const displayJobs = jobs.filter(job => job.app_stage === selected && job.archived !== true)
     const setReminder = (id, newStatus) => {
         console.log(`attempting to change reminder status of ${id} to ${newStatus}`);
         axios.patch(`/jobs/updateReminder/${newStatus}/${id}`)

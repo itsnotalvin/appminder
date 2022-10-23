@@ -1,11 +1,11 @@
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArchiveIcon from '@mui/icons-material/Archive';
-import { useState, useEffect } from 'react';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import { useState } from 'react';
 import { timestampCleanup } from './TimestampCleanup';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import axios from 'axios';
 
 export const ApplicationRow = ({ jobInfo, setReminder }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
@@ -35,7 +35,11 @@ export const ApplicationRow = ({ jobInfo, setReminder }) => {
                         !hideJobDetails ? <ArrowDropDownIcon className='icon-mod' onClick={() => expandJobDetails(id)} /> : <ArrowDropUpIcon className='icon-mod' onClick={() => expandJobDetails(id)} />
                     }
                 </div>
-                <div><ArchiveIcon className='icon-mod' /></div>
+                <div>
+                    {
+                        !archived && <ArchiveIcon className='icon-mod' />
+                    }
+                </div>
             </div>
             <div style={{ display: !hideJobDetails ? 'none' : 'flex' }} className='expanded-job-content' id={id}>
                 <div>
