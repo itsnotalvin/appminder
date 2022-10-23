@@ -1,3 +1,10 @@
+const dateCleanup = (date) => {
+    if (date < 10) {
+        return `0${date}`;
+    }
+    return date
+};
+
 export const timestampCleanup = (timestamp, key) => {
     const formatted = String(new Date(Date.parse(timestamp)));
     const formattedArr = formatted.split(' ');
@@ -18,7 +25,7 @@ export const timestampCleanup = (timestamp, key) => {
     };
 
     if (key === 'update') {
-        return `${formattedArr[3]}-${monthNumMap[formattedArr[1]]}-${parseInt(formattedArr[2]) - 1}`
+        return `${formattedArr[3]}-${monthNumMap[formattedArr[1]]}-${dateCleanup(parseInt(formattedArr[2]) - 1)}`
     }
     else {
         if (parseInt(time[0]) > 12) {
