@@ -10,26 +10,48 @@ export const ApplicationsView = () => {
     const [selectedTab, setSelectedTab] = useState('Draft');
     const [infoChange, setInfoChange] = useState(0);
     const [modalClass, setModalClass] = useState('modal');
-    const [appToUpdateInfo, setAppToUpdateInfo] = useState({});
+    const [appToUpdateId, setAppToUpdateId] = useState(0);
+    const [appToUpdateStage, setAppToUpdateStage] = useState();
+    const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
+    const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState();
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
+                console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
     }, [selectedTab, infoChange]);
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
-    const updateAppModal = ({ key_date, notes, app_stage }) => {
-        setAppToUpdateInfo({
-            key_date: timestampCleanup(key_date, 'update'),
-            notes: notes,
-            app_stage: app_stage
-        })
+    const updateAppModal = ({ id, key_date, notes, app_stage }) => {
+        setAppToUpdateStage(app_stage)
+        setAppToUpdateNotes(notes);
+        setAppToUpdateId(id);
+        setAppToUpdateKeyDate(timestampCleanup(key_date, 'update'));
         setModalClass('modal view-modal');
     };
     const updateAppAction = () => {
         setModalClass('modal');
+        axios.patch('/jobs/updateJobInfo', {
+            job_id: appToUpdateId,
+            app_stage: appToUpdateStage,
+            key_date: appToUpdateKeyDate,
+            notes: appToUpdateNotes
+        })
+            .then(res => {
+                console.log('calling api to update job info');
+                changedJobInfo();
+            })
+    };
+    const updateNotes = (e) => {
+        setAppToUpdateNotes(e.target.value);
+    };
+    const updateKeyDate = (e) => {
+        setAppToUpdateKeyDate(e.target.value);
+    };
+    const updateAppStage = (e) => {
+        setAppToUpdateStage(e.target.value);
     };
     return (
         <>
@@ -54,9 +76,6 @@ export const ApplicationsView = () => {
                         <span>Details</span>
                         <span>Archive</span>
                     </div>
-                    {
-                        console.log(jobInfo)
-                    }
                     <JobDetails jobs={jobInfo} selected={selectedTab} changedJobInfo={changedJobInfo} updateAppModal={updateAppModal} />
                 </div>
             </div>
@@ -66,7 +85,7 @@ export const ApplicationsView = () => {
                         <h3>Update Application</h3>
                         <div className='update-app-field'>
                             <label htmlFor="app_stage_dropdown">Application Stage</label>
-                            <select name="app-stage" id="app_stage_dropdown" value={appToUpdateInfo.app_stage}>
+                            <select name="app-stage" id="app_stage_dropdown" value={appToUpdateStage} onChange={updateAppStage}>
                                 <option value='Draft'>Draft</option>
                                 <option value='Applied'>Applied</option>
                                 <option value='Interviewing'>Interviewing</option>
@@ -75,11 +94,11 @@ export const ApplicationsView = () => {
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="key_date">Key Date</label>
-                            <input value={appToUpdateInfo.key_date} placeholder='Key Date' id='key_date' type='date' />
+                            <input value={appToUpdateKeyDate} placeholder='Key Date' id='key_date' type='date' onChange={updateKeyDate} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="notes">Notes</label>
-                            <textarea value={appToUpdateInfo.notes} placeholder='Edit Notes' id='notes' />
+                            <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
                         </div>
                         <div className='update-app-btn-group'>
                             <span onClick={updateAppAction}>Update Application</span>
