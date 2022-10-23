@@ -45,6 +45,7 @@ export const JobDashboard = ({ id }) => {
                             <span>Position</span>
                             <span>Key Date</span>
                             <span>Last Updated</span>
+                            <span>Set Reminder</span>
                             <span>Details</span>
                             <span>Archive</span>
                         </div>

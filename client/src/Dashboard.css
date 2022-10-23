@@ -101,7 +101,7 @@
     flex-direction: column;
     margin: 1rem;
     background-color: rgb(185, 252, 230);
-    padding: 1rem;
+    padding: 0.5rem 0rem;
     border-radius: 10px;
 }
 .core-job-details {
@@ -127,6 +127,9 @@
     cursor: pointer;
     transition: 0.5s ease all !important;
     border-radius: 10px;
+}
+.icon-mod.hidden {
+    display: none;
 }
 .icon-mod:hover {
     background-color: rgb(202, 202, 202);
