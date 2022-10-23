@@ -6,13 +6,18 @@ import { JobDetails } from './JobDetails.js'
 export const JobDashboard = ({ id }) => {
     const [jobInfo, setJobInfo] = useState([]);
     const [selectedTab, setSelectedTab] = useState('Draft');
+    const [infoChange, setInfoChange] = useState(0);
 
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
                 setJobInfo(res.data)
             })
-    }, []);
+    }, [selectedTab, infoChange]);
+
+    const changedJobInfo = () => {
+        setInfoChange(infoChange === 0 ? 1 : 0);
+    };
 
     return (
         jobInfo.length ? <div id='dashboard'>
@@ -52,7 +57,7 @@ export const JobDashboard = ({ id }) => {
                         {
                             console.log(jobInfo)
                         }
-                        <JobDetails jobs={jobInfo} selected={selectedTab} />
+                        <JobDetails jobs={jobInfo} selected={selectedTab} changedJobInfo={changedJobInfo} />
                     </div>
                 </div>
             </div>
