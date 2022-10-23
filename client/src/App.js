@@ -6,10 +6,10 @@ import { Signup } from './components/Signup.js';
 function App() {
   return (
     <div className="App">
-      <h1>This is a portfolio website</h1>
-      <h2>Body</h2>
-      <Login />
-      {/* <Signup /> */}
+      <h1>ApPmInDEr</h1>
+      
+      {/* <Login /> */}
+      <Signup />
     </div>
   );
 }
