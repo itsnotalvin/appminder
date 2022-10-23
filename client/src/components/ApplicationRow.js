@@ -7,7 +7,7 @@ import { timestampCleanup } from './TimestampCleanup';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
-export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus }) => {
+export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus, updateAppModal }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
     const { id, job_title, company_name, app_stage, key_date, archived, completed, deleted, last_updated, notes, set_reminder } = jobInfo;
 
@@ -50,7 +50,7 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
                 <div className='notes-and-appUpdateBtn'>
                     <span>{notes}</span>
                     {
-                        !archived && <span className='application-btn'>Update Application</span>
+                        !archived && <span className='application-btn' onClick={() => updateAppModal(true)}>Update Application</span>
                     }
                 </div>
             </div>

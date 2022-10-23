@@ -1,7 +1,7 @@
 import { ApplicationRow } from './ApplicationRow.js';
 import axios from 'axios';
 
-export const JobDetails = ({ jobs, selected, changedJobInfo }) => {
+export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) => {
     let displayJobs;
     if (selected !== 'Archive') {
         displayJobs = jobs.filter(job => job.app_stage === selected && job.archived !== true)
@@ -28,7 +28,7 @@ export const JobDetails = ({ jobs, selected, changedJobInfo }) => {
     return (
         <div id="stage-type-applications">
             {
-                displayJobs.length ? displayJobs.map((job, index) => <ApplicationRow key={index} jobInfo={job} changeReminderStatus={changeReminderStatus} changeArchiveStatus={changeArchiveStatus} />) : <div>Nothing to show!</div>
+                displayJobs.length ? displayJobs.map((job, index) => <ApplicationRow key={index} jobInfo={job} changeReminderStatus={changeReminderStatus} changeArchiveStatus={changeArchiveStatus} updateAppModal={updateAppModal} />) : <div>Nothing to show!</div>
             }
         </div>
     )

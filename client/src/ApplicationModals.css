@@ -1,0 +1,67 @@
+.modal {
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(218, 218, 218, 0.654);
+    z-index: -1;
+    position: fixed;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: ease all 0.35s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-box {
+    position: absolute;
+    background-color: aquamarine;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+}
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+select,input {
+    margin: 0.5rem;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    transform: scale(1);
+    transition: 1s ease all;
+}
+select:hover, input:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: 1s ease all;
+}
+.view-modal {
+    z-index: 1;
+    opacity: 1;
+    transform: scale(1);
+    transition: ease all 0.35s;
+}
+.update-app-btn-group {
+    display: flex;
+    justify-content: center;
+}
+.update-app-btn-group > span {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0.5rem;
+    transition: 1s ease all;
+}
+.update-app-btn-group>span:hover {
+    background-color: aqua;
+    transition: 1s ease all;
+    color: black;
+}
