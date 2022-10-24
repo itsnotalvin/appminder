@@ -1,19 +1,23 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "../axios.js"
 
-const REGISTER_URL = '/signup'
+const REGISTER_URL = '/users/signup'
 
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const NAME_REGEX = /^[A-Za-z]+$/;
+const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/;
 
 export const Signup = () => {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [validFirstName, setValidFirstName] = useState(false);
+    const [firstNameFocus, setFirstNameFocus] = useState(false);
+
+    const [lastName, setLastName] = useState('');
+    const [validLastName, setValidLastName] = useState(false);
+    const [lastNameFocus, setLastNameFocus] = useState(false);
 
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
@@ -36,25 +40,34 @@ export const Signup = () => {
     }, []);
 
     useEffect(() => {
-        const result = USER_REGEX.test(user);
+        const result = NAME_REGEX.test(firstName);
         console.log(result);
-        console.log(user);
-        setValidName(result);
-    }, [user])
+        console.log(firstName);
+        setValidFirstName(result);
+    }, [firstName])
 
     useEffect(() => {
-        const result = PWD_REGEX.test(user);
+        const result = NAME_REGEX.test(lastName);
         console.log(result);
-        console.log(pwd);
+        console.log(lastName);
+        setValidLastName(result);
+    }, [lastName])
+
+    useEffect(() => {
+        setValidEmail(email ? true : false);
+    }, [email])
+
+    useEffect(() => {
+        const result = PWD_REGEX.test(pwd);
         setValidPwd(result)
-        setValidName(result);
+        setValidFirstName(result);
         const match = pwd === matchPwd;
         setValidMatch(match)
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [firstName, lastName, pwd, matchPwd])
 
     // useEffect(() => {
     //     setValidName(USER_REGEX.test(user));
@@ -63,26 +76,33 @@ export const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const v1 = USER_REGEX.test(user);
+        const v1 = NAME_REGEX.test(firstName);
         const v2 = PWD_REGEX.test(pwd);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
             return;
         }
-        // console.log(user, pwd);
-        // setSuccess(true);
+        
         try {
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
+                JSON.stringify({ first_name: firstName,last_name: lastName ,email: email, hashed_pw: pwd }),
                 {
                     headers: { 'Content-Type': 'application/json'},
                     withCredentials: true
                 }
             );
+            const accessToken = response?.data.    accessToken;
             console.log(response.data);
             console.log(response.accessToken);
-            setSuccess(true);
+            
             // clear input fields after submit
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPwd("");
+            setMatchPwd("")
+            setSuccess(true);
+
         } catch (err) {
             if(!err?.response) {
                 setErrMsg('No server Response');
@@ -103,28 +123,51 @@ export const Signup = () => {
                 <h1>Success!</h1>
             </section>
         ) : (
-        <div>
+        <div className="RegisterBox">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
 
             <form onSubmit={handleSubmit}>
-                {/* username */}
-                <label htmlFor="username">
-                    Username:
+                {/* firstname */}
+                <label htmlFor="firstName">
+                    First Name:
                 </label>
                 <input
                     type="text"
-                    id="username"
+                    id="firstName"
                     ref={userRef}
                     autoComplete="off"
-                    onChange={(e) => setUser(e.target.value)}
+                    onChange={(e) => setFirstName(e.target.value)}
                     required
-                    aria-invalid={validName ? "false" : "true"}
-                    aria-describedby="uidnote"
-                    onFocus={() => setUserFocus(true)}
-                    onBlur={() => setUserFocus(false)}
+                    aria-invalid={validFirstName ? "false" : "true"}
+                    aria-describedby="fnnote"
+                    onFocus={() => setFirstNameFocus(true)}
+                    onBlur={() => setFirstNameFocus(false)}
                  />
-                 <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>4 to 24 characters <br /> sample text</p>
+                 {/* <p id="fnnote" className={firstNameFocus && firstName && !validFirstName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
+                 </p> */}
+                 < br/>
+
+                 {/* lastname */}
+                <label htmlFor="lastName">
+                    Last Name:
+                </label>
+                <input
+                    type="text"
+                    id="lastName"
+                    ref={userRef}
+                    autoComplete="off"
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                    aria-invalid={validLastName ? "false" : "true"}
+                    aria-describedby="lnnote"
+                    onFocus={() => setLastNameFocus(true)}
+                    onBlur={() => setLastNameFocus(false)}
+                 />
+                 {/* <p id="lnnote" className={lastNameFocus && lastName && !validLastName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
+                 </p> */}
+
+                 < br/>
 
                  {/* email */}
                 <label htmlFor="email">
@@ -143,7 +186,8 @@ export const Signup = () => {
                     onBlur={() => setEmailFocus(false)}
                     placeholder="youremail@emailaddress.com"
                  />
-                 <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>Enter a valid email followed by @ to valid hosting address<br /> sample text</p>
+                 {/* <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>Enter a valid email followed by @ to valid hosting address<br /> sample text</p> */}
+                 < br/>
 
                  {/* password */}
                  <label htmlFor="password">
@@ -166,7 +210,7 @@ export const Signup = () => {
                  />
                  <p id="pwdnote" className={pwdFocus && !validPwd ? "instruction" : "offscreen"}>
                      8 to 24 characters
-                     Must include uppercase and lower letters
+                     Must include uppercase and lower letters 1 special character and 1 special number
                  </p>
 
                 {/* confirm password */}
@@ -190,7 +234,7 @@ export const Signup = () => {
                 </p>
 
                 {/* submit button */}
-                <button disable={!validName || validEmail|| !validPwd || !validMatch ? true : false}>
+                <button disable={!validFirstName && validEmail && validPwd  && validMatch ? true : false}>
                   Start tracking
                 </button>
                 <p>
