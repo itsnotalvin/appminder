@@ -7,5 +7,6 @@ const generateHash = (password) => {
 const isValidPassword = (plainTextPassword, passwordHash) => {
     return bcrypt.compareSync(plainTextPassword, passwordHash)
 };
+console.log(generateHash(`password`));
 
 module.exports = { generateHash, isValidPassword }
