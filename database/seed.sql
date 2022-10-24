@@ -9,8 +9,8 @@ INSERT INTO users(first_name,last_name,email,hashed_pw,sec_qns,sec_ans,reminder_
 ('Sid','Singh','sid@sid.com','sid','qns','ans',3),
 ('Alvin','Boi','alvin@alvin.com','alvin','qns','ans',4),
 ('Sam','Hey There','sam@sam.com','sam','qns','ans',2),
-('Lucy','Hellloo','lucy@lucy.com','lucy','qns','ans',1),
-('test', 'test', 'test@email.com', 'password', 'qns', 'ans',3);
+('test', 'test', 'test@email.com', 'password', 'qns', 'ans',3),
+('Lucy','Hellloo','lucy@lucy.com','lucy','qns','ans',1)
 
 TRUNCATE jobs restart identity cascade;
 INSERT INTO jobs(user_id,job_title,company_name,app_stage,key_date,set_reminder,archived,completed,deleted,notes) VALUES
