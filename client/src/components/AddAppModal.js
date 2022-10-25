@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ReactDom from 'react-dom'
+import axios from '../axios.js'
+
+const ADDAPP_URL = '/jobs/createNewJob'
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -25,18 +28,55 @@ const OVERLAY_STYLES = {
 
 
 export default function Modal({ open, children, onClose }) {
-    const [appAddCompany, setAppAddCompany] = useState();
-    const [appAddRole, setAppAddRole] = useState();
-    const [appStage, setAppStage] = useState();
-    const [appKeyDate, setAppKeyDate] = useState();    
+    const userRef = useRef();
+    const errRef = useRef();
     
+    const [appAddCompany, setAppAddCompany] = useState('');
+    const [appAddRole, setAppAddRole] = useState('');
+    const [appStage, setAppStage] = useState('');
+    const [appKeyDate, setAppKeyDate] = useState('');
+    const [appNotes, setAppNotes] = useState('');    
+
+    const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState('false')
+    
+    useEffect(() => {
+        setErrMsg('');
+    }, [appAddCompany])
+    
+    // const onSubmit = () => {
+    //     setIsOpen={(false)}
+    // }
+
+    const handleAppSubmit = async (e) => {
+        e.preventDefault();
+        console.log("trying toi submit")
+
+        try {
+            const response = await axios.post(ADDAPP_URL,
+                JSON.stringify({ company_name: setAppAddCompany,  }),
+                {
+                    headers: { 'Content-Type': 'application/json'},
+                    withCredentials: true
+                });
+
+                // onSubmit={() => setIsOpen(false)};
+        } catch (err) {
+            if(!err?.response) {
+                setErrMsg('No server response');
+            } else {
+                setErrMsg('Unable to add Job')
+            }
+        }
+    }
+
     if (!open) return null
 
     return (
         <>
             <div style={OVERLAY_STYLES} onClick={onClose}>
             </div>
-            
+            {/* add application modal */}
             <div className='addAppModal'style={MODAL_STYLES}>
                 <div className='ModalHeader'>
                     This is modal header
@@ -45,15 +85,75 @@ export default function Modal({ open, children, onClose }) {
                 </div>
 
                 <div className='ModalBody'>
+                    
+                    <form onSubmit={handleAppSubmit}>
+                        {/* add company */}
+                        <label htmlFor="appAddCompany">
+                            Company Name:
+                        </label>
+                        <input
+                            type="text"
+                            autoComplete="off"
+                            required
+                            onChange={(e) => setAppAddCompany(e.target.value)}
+                        />
+                    
+
+                        {/* add position */}
+                        <label htmlFor="appAddRole">
+                            Role:
+                        </label>
+                        <input
+                            type="text"
+                            autoComplete="off"
+                            required
+                            onChange={(e) => setAppAddRole(e.target.value)}
+                        />
+                        {/* add stage */}
+                        <label htmlFor="appStage">
+                            Stage:
+                        </label>
+                        <select value={appStage} onChange={(e) => setAppStage}> 
+                            <option value='Draft'>Draft</option>
+                            <option value='Applied'>Applied</option>
+                            <option value='Interviewing'>Interviewing</option>
+                            <option value='Awaiting'>Awaiting</option>
+                        </select>
+
+                        {/* add keydate */}                    
+                        <label htmlFor="appKeyDate">
+                            Key Date:
+                        </label>
+                        <input
+                            type="date"
+                            required
+                            onChange={(e) => setAppKeyDate(e.target.value)}
+                        />
+                    
+                        {/* add notes */}                    
+                        <label htmlFor="appKeyDate">
+                            Notes:
+                        </label>
+                        <input
+                            type="text"
+                            autoComplete="off"
+                            onChange={(e) => setAppNotes(e.target.value)}
+                        />
+                    </form>
+                    <br />
+                    <button onClick={onClose}>Add Application</button>
+                    <br />
 
                     This is modal body
                 </div>
 
                 <div className='ModalFooter'>
+                    <br />
                     This is modal footer
+                    <button onClick={onClose}>Close Modal</button>
 
                 </div>                
-                <button onClick={onClose}>Close Modal</button>
+                
                 {children}
             </div>
         </>
