@@ -10,6 +10,7 @@ export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
     const [selectedTab, setSelectedTab] = useState('Draft');
     const [infoChange, setInfoChange] = useState(0);
+    const [droppedIntoStage, setDroppedIntoStage] = useState('');
     const [modalClass, setModalClass] = useState('modal');
     const [appToUpdateId, setAppToUpdateId] = useState(0);
     const [appToUpdateStage, setAppToUpdateStage] = useState();
@@ -22,7 +23,7 @@ export const ApplicationsView = () => {
                 console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
-    }, [selectedTab, infoChange]);
+    }, [selectedTab, infoChange, droppedIntoStage]);
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
@@ -64,7 +65,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Draft/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Draft`);
-                setInfoChange(infoChange === 0 ? 1 : 0);
+                setDroppedIntoStage('Draft');
             })
     };
 
@@ -80,7 +81,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Applied/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Applied`);
-                setInfoChange(infoChange === 0 ? 1 : 0);
+                setDroppedIntoStage('Applied');
             })
     };
 
@@ -96,7 +97,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Interviewing/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Interviewing`);
-                setInfoChange(infoChange === 0 ? 1 : 0);
+                setDroppedIntoStage('Interviewing');
             })
     };
 
@@ -112,7 +113,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Awaiting/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Awaiting`);
-                setInfoChange(infoChange === 0 ? 1 : 0);
+                setDroppedIntoStage('Awaiting');
             })
     };
 
@@ -132,10 +133,10 @@ export const ApplicationsView = () => {
             </header>
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-                    <div className='application-stage-btn' ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
-                    <div className='application-stage-btn' ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied</div>
-                    <div className='application-stage-btn' ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
-                    <div className='application-stage-btn' ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
                 </div>
                 <div id='application-content'>
                     <div id='application-detail-header'>
