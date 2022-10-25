@@ -6,10 +6,19 @@ import { useState } from 'react';
 import { timestampCleanup } from './TimestampCleanup';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { useDrag } from 'react-dnd';
 
 export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus, updateAppModal }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
     const { id, job_title, company_name, app_stage, key_date, archived, completed, deleted, last_updated, notes, set_reminder } = jobInfo;
+
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: 'application',
+        item: { id: id },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging()
+        })
+    }));
 
     const expandJobDetails = (id) => {
         setHideJobDetails(hideJobDetails ? false : true);
@@ -19,7 +28,7 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
 
 
     return (
-        <div className='job-row'>
+        <div className='job-row' style={{ opacity: isDragging ? '0.5' : '1' }} ref={drag}>
             <div className='core-job-details'>
                 <div>{company_name}</div>
                 <div>{job_title}</div>
