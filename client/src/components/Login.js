@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "../axios.js";
-// import { Link } from "react-router-dom";
+import { Route, BrowserRouter, Routes, Link } from 'react-router-dom';
+// import { JobDashboard } from './JobDashBoard.js';
 
 const LOGIN_URL = "/users/session";
 
@@ -63,7 +64,12 @@ export const Login = () => {
                 <h1> Welcome back to Appminder</h1>
                 <br />
                 <p>
-                    <a href='#'>Get Started</a>
+                    <span>
+                        <Link to='/dashboard'>Get me in</Link>
+                    </span>
+                    {/* <BrowserRouter>
+                        <Routes path='dashboard' element={<JobDashBoard id={1} />} />
+                    </BrowserRouter> */}
                 </p>
             </section>
         ) : (

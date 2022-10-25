@@ -4,6 +4,7 @@ import '../Dashboard.css';
 import '../ApplicationModals.css';
 import axios from 'axios';
 import { timestampCleanup } from "./TimestampCleanup";
+import Modal from './AddAppModal.js';
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -15,6 +16,7 @@ export const ApplicationsView = () => {
     const [appToUpdateNotes, setAppToUpdateNotes] = useState();
     const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState();
     const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({});
+    const [isOpen, setIsOpen] = useState(false);
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
@@ -60,10 +62,19 @@ export const ApplicationsView = () => {
     };
     return (
         <>
+            
+            {/* working hereworking hereworking hereworking here */}
+            
             <header id='application-bar'>
                 <h2>Applications</h2>
-                <div className='application-btn'>Add Application</div>
+
+                
+                <button className='application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
+                <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
             </header>
+
+            {/* working hereworking hereworking hereworking here */}
+
             <div id='applications-display'>
                 <div id='application-stage-selection'>
                     <div className='application-stage-btn' onClick={() => setSelectedTab('Draft')}>Draft</div>

@@ -7,27 +7,29 @@ const router = express.Router();
 
 // User Sign Up
 router.post("/signup", (req, res) => {
-  const { first_name, last_name, email, password } = req.body;
-  const hashedPassword = generateHash(password);
+  const { first_name, last_name, email, hashed_pw } = req.body;
+  const hashedPassword = generateHash(hashed_pw);
 
-  db.query("SELECT FROM users WHERE email=$1", [email])
+  db.query("SELECT * FROM users WHERE email=$1", [email])
     .then(dbRes => {
       if (dbRes.rows.length === 1) {
-        req.statusCode(400).json({ message: "Sorry an account associated with that email already exists" });
+        res.status(400).json({ message: "Sorry an account associated with that email already exists" });
       } else {
         const sql = `INSERT INTO users(first_name, last_name, email, hashed_pw) VALUES($1, $2, $3, $4)`;
         db.query(sql, [first_name, last_name, email, hashedPassword])
           .then(() => {
-            req.json({ message: "Welcome to Appminder" });
+            res.json({ message: "Welcome to Appminder" });
           })
           .catch((err) => {
-            req.status(500).json({})
+            
+            res.status(500).json({})
           });
       }
 
     })
     .catch((err) => {
-      res.status(500).json({})
+        console.log(err, 'this is outside')
+        res.status(500).json({})
     });
 
 
