@@ -32,6 +32,10 @@ const Jobs = {
     updateJobDeleteStatus: (job_id, newStatus) => {
         const sql = 'UPDATE jobs SET deleted = $1 WHERE id = $2';
         return db.query(sql, [newStatus, job_id])
+    },
+    updateJobStage: (job_id, newStage) => {
+        const sql = 'UPDATE jobs SET app_stage = $1 WHERE id = $2';
+        return db.query(sql, [newStage, job_id])
     }
 };
 

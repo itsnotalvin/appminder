@@ -25,6 +25,12 @@
     justify-content: center;
     align-items: center;
 }
+.view-modal {
+    z-index: 1;
+    opacity: 1;
+    transform: scale(1);
+    transition: ease all 0.35s;
+}
 .disabled-inp {
     cursor: not-allowed;
     background-color: gray;
@@ -55,12 +61,6 @@ input:hover, textarea:hover {
 }
 select:focus,input:focus,textarea:focus {
     outline: none;
-}
-.view-modal {
-    z-index: 1;
-    opacity: 1;
-    transform: scale(1);
-    transition: ease all 0.35s;
 }
 .update-app-btn-group {
     display: flex;

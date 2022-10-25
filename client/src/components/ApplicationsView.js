@@ -4,6 +4,7 @@ import '../Dashboard.css';
 import '../ApplicationModals.css';
 import axios from 'axios';
 import { timestampCleanup } from "./TimestampCleanup";
+import { useDrop } from 'react-dnd';
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -58,6 +59,71 @@ export const ApplicationsView = () => {
     const updateAppStage = (e) => {
         setAppToUpdateStage(e.target.value);
     };
+
+    const dropIntoDraft = (id) => {
+        axios.patch(`/jobs/updateJobStage/Draft/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Draft`);
+                setInfoChange(infoChange === 0 ? 1 : 0);
+            })
+    };
+
+    const [{ isInDraft }, dropIntoDraftHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoDraft(item.id),
+        collect: monitor => ({
+            isInDraft: !!monitor.isOver()
+        })
+    }));
+
+    const dropIntoApplied = (id) => {
+        axios.patch(`/jobs/updateJobStage/Applied/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Applied`);
+                setInfoChange(infoChange === 0 ? 1 : 0);
+            })
+    };
+
+    const [{ isInApplied }, dropIntoAppliedHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoApplied(item.id),
+        collect: monitor => ({
+            isInApplied: !!monitor.isOver()
+        })
+    }));
+
+    const dropIntoInterviewing = (id) => {
+        axios.patch(`/jobs/updateJobStage/Interviewing/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Interviewing`);
+                setInfoChange(infoChange === 0 ? 1 : 0);
+            })
+    };
+
+    const [{ isInInterviewing }, dropIntoInterviewingHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoInterviewing(item.id),
+        collect: monitor => ({
+            isInInterviewing: !!monitor.isOver()
+        })
+    }));
+
+    const dropIntoAwaiting = (id) => {
+        axios.patch(`/jobs/updateJobStage/Awaiting/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Awaiting`);
+                setInfoChange(infoChange === 0 ? 1 : 0);
+            })
+    };
+
+    const [{ isInAwaiting }, dropIntoAwaitingHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoAwaiting(item.id),
+        collect: monitor => ({
+            isInAwaiting: !!monitor.isOver()
+        })
+    }));
+
     return (
         <>
             <header id='application-bar'>
@@ -66,10 +132,10 @@ export const ApplicationsView = () => {
             </header>
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Draft')}>Draft</div>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Applied')}>Applied</div>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
+                    <div className='application-stage-btn' ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
+                    <div className='application-stage-btn' ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied</div>
+                    <div className='application-stage-btn' ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
+                    <div className='application-stage-btn' ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
                 </div>
                 <div id='application-content'>
                     <div id='application-detail-header'>

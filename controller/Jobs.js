@@ -66,4 +66,12 @@ router.patch('/updateDeletionStatus/:newStatus/:jobId', (request, response) => {
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update deletion status for job - ${jobId} due to an internal error` }))
 });
 
+router.patch('/updateJobStage/:newStage/:jobId', (request, response) => {
+    const newStage = request.params.newStage;
+    const job_id = request.params.jobId;
+    Jobs.updateJobStage(job_id, newStage)
+        .then(dbRes => response.json({ message: `Changed job stage - for job - ${job_id} to ${newStage}` }))
+        .catch(err => response.status(500).json({ message: `Sorry! We were unable to update deletion status for job - ${job_id} due to an internal error` }))
+});
+
 module.exports = router;
