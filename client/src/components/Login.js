@@ -106,7 +106,7 @@ export const Login = () => {
                     <span>
                         { /*insert route */}
                         {/* <Link to="/signup">Sign Up</Link> */}
-                        <a href='#'>Sign Up</a>
+                        <a href='/'>Sign Up</a>
                     </span>
                 </p>
             </form>
