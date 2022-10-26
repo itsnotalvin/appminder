@@ -13,10 +13,13 @@ export const ApplicationsView = () => {
     const [droppedIntoStage, setDroppedIntoStage] = useState('');
     const [modalClass, setModalClass] = useState('modal');
     const [appToUpdateId, setAppToUpdateId] = useState(0);
-    const [appToUpdateStage, setAppToUpdateStage] = useState();
-    const [appToUpdateNotes, setAppToUpdateNotes] = useState();
-    const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState();
-    const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({});
+    const [appToUpdateStage, setAppToUpdateStage] = useState('');
+    const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
+    const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState('1900-01-01');
+    const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({
+        job: '',
+        company: ''
+    });
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
@@ -65,7 +68,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Draft/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Draft`);
-                setDroppedIntoStage('Draft');
+                setDroppedIntoStage(`Drafted ${id}`);
             })
     };
 
@@ -81,7 +84,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Applied/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Applied`);
-                setDroppedIntoStage('Applied');
+                setDroppedIntoStage(`Applied ${id}`);
             })
     };
 
@@ -97,7 +100,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Interviewing/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Interviewing`);
-                setDroppedIntoStage('Interviewing');
+                setDroppedIntoStage(`Interviewing ${id}`);
             })
     };
 
@@ -113,7 +116,7 @@ export const ApplicationsView = () => {
         axios.patch(`/jobs/updateJobStage/Awaiting/${id}`)
             .then(res => {
                 console.log(`Moved ${id} into Awaiting`);
-                setDroppedIntoStage('Awaiting');
+                setDroppedIntoStage(`Awaiting ${id}`);
             })
     };
 
@@ -157,11 +160,11 @@ export const ApplicationsView = () => {
                         <h3>Update Application</h3>
                         <div className='update-app-field'>
                             <label htmlFor="job_title">Job Title</label>
-                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onClick={(e) => e.preventDefault()} />
+                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onChange={(e) => e.preventDefault()} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="company_name">Company Name</label>
-                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onClick={(e) => e.preventDefault()} />
+                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onChange={(e) => e.preventDefault()} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="app_stage_dropdown">Application Stage</label>
