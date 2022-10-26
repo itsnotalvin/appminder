@@ -23,7 +23,7 @@ export const ApplicationsView = () => {
                 console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
-    }, [selectedTab, infoChange]);
+    }, [selectedTab, infoChange, isOpen]);
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
@@ -60,6 +60,11 @@ export const ApplicationsView = () => {
     const updateAppStage = (e) => {
         setAppToUpdateStage(e.target.value);
     };
+
+    const closeModal = (bool) => {
+        setIsOpen(bool);
+    }
+
     return (
         <>
             
@@ -70,7 +75,7 @@ export const ApplicationsView = () => {
 
                 
                 <button className='application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
-                <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
+                <Modal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></Modal>
             </header>
 
             {/* working hereworking hereworking hereworking here */}

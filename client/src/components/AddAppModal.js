@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import ReactDom from 'react-dom'
 import axios from '../axios.js'
 
-const ADDAPP_URL = '/jobs/createNewJob'
+const ADDAPP_URL = '/jobs'
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -27,7 +27,7 @@ const OVERLAY_STYLES = {
 }
 
 
-export default function Modal({ open, children, onClose }) {
+export default function Modal({ open, children, onClose, closeModal }) {
     const userRef = useRef();
     const errRef = useRef();
     
@@ -47,6 +47,8 @@ export default function Modal({ open, children, onClose }) {
     // const onSubmit = () => {
     //     setIsOpen={(false)}
     // }
+    
+    // const { job_title, company_name, app_stage, key_date, set_reminder, notes } = request.body;
 
     const handleAppSubmit = async (e) => {
         e.preventDefault();
@@ -54,12 +56,18 @@ export default function Modal({ open, children, onClose }) {
 
         try {
             const response = await axios.post(ADDAPP_URL,
-                JSON.stringify({ company_name: setAppAddCompany,  }),
+                JSON.stringify({ 
+                    company_name: appAddCompany,
+                    job_title: appAddRole,
+                    app_stage: appStage,
+                    key_date: appKeyDate,
+                    notes: appNotes
+                  }),
                 {
                     headers: { 'Content-Type': 'application/json'},
                     withCredentials: true
                 });
-
+                closeModal(false)
                 // onSubmit={() => setIsOpen(false)};
         } catch (err) {
             if(!err?.response) {
@@ -97,6 +105,7 @@ export default function Modal({ open, children, onClose }) {
                             required
                             onChange={(e) => setAppAddCompany(e.target.value)}
                         />
+                        < br/>
                     
 
                         {/* add position */}
@@ -109,16 +118,19 @@ export default function Modal({ open, children, onClose }) {
                             required
                             onChange={(e) => setAppAddRole(e.target.value)}
                         />
+                        < br/>
+
                         {/* add stage */}
                         <label htmlFor="appStage">
                             Stage:
                         </label>
-                        <select value={appStage} onChange={(e) => setAppStage}> 
+                        <select value={appStage} onChange={(e) => setAppStage(e.target.value)}> 
                             <option value='Draft'>Draft</option>
                             <option value='Applied'>Applied</option>
                             <option value='Interviewing'>Interviewing</option>
                             <option value='Awaiting'>Awaiting</option>
                         </select>
+                        < br/>
 
                         {/* add keydate */}                    
                         <label htmlFor="appKeyDate">
@@ -129,6 +141,7 @@ export default function Modal({ open, children, onClose }) {
                             required
                             onChange={(e) => setAppKeyDate(e.target.value)}
                         />
+                        < br/>
                     
                         {/* add notes */}                    
                         <label htmlFor="appKeyDate">
@@ -139,10 +152,12 @@ export default function Modal({ open, children, onClose }) {
                             autoComplete="off"
                             onChange={(e) => setAppNotes(e.target.value)}
                         />
+                        < br/>
+                        <br />
+                        <button type='submit'>Add Application</button>
+                        <br />
                     </form>
-                    <br />
-                    <button onClick={onClose}>Add Application</button>
-                    <br />
+                    
 
                     This is modal body
                 </div>
