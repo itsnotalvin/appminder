@@ -5,7 +5,7 @@ import { JobDetails } from './JobDetails.js'
 import { ApplicationsView } from './ApplicationsView';
 import { ArchiveView } from './ArchiveView';
 import { Profile } from './Profile.js';
-import { Settings } from './Settings.js';
+import { Logout } from './Logout.js';
 
 export const JobDashboard = ({ id }) => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -22,8 +22,8 @@ export const JobDashboard = ({ id }) => {
         else if (viewPage === 'Profile') {
             setComponentToView(<Profile />);
         }
-        else if (viewPage === 'Settings') {
-            setComponentToView(<Settings />);
+        else if (viewPage === 'Logout') {
+            setComponentToView(<Logout />);
         }
         else {
             setComponentToView(<ArchiveView />)
@@ -34,13 +34,18 @@ export const JobDashboard = ({ id }) => {
         jobInfo.length ? <div id='dashboard'>
             <div id='side-panel'>
                 <div id='side-panel-content'>
-                    <h3>App Minder</h3>
-                    <h3>Hello, first name</h3>
+                    <div>
+                        <h3 onClick={() => setViewPage('Applications')}>App Minder</h3>
+                    </div>
+                    <div>
+                        <h3>Hello, first name</h3>
+                    </div>
+                    
                     <div>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
                         <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
-                        <div className='nav-btn' onClick={() => setViewPage('Settings')} >Settings</div>
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
+                        <div className='nav-btn' onClick={() => setViewPage('Logout')} >Sign Out</div>
                     </div>
                 </div>
             </div>
