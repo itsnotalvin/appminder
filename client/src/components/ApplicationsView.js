@@ -17,6 +17,8 @@ export const ApplicationsView = () => {
     const [appToUpdateStage, setAppToUpdateStage] = useState('');
     const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
     const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState('1900-01-01');
+
+    const [isOpen, setIsOpen] = useState(false);
     const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({
         job: '',
         company: ''
