@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { JobDetails } from './JobDetails.js'
 import { ApplicationsView } from './ApplicationsView';
 import { ArchiveView } from './ArchiveView';
+import { Profile } from './Profile.js';
+import { Settings } from './Settings.js';
 
 export const JobDashboard = ({ id }) => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -18,10 +20,10 @@ export const JobDashboard = ({ id }) => {
             setComponentToView(<ApplicationsView />)
         }
         else if (viewPage === 'Profile') {
-            setComponentToView();
+            setComponentToView(<Profile />);
         }
         else if (viewPage === 'Settings') {
-            setComponentToView();
+            setComponentToView(<Settings />);
         }
         else {
             setComponentToView(<ArchiveView />)
