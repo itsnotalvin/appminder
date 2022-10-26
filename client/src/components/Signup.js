@@ -91,7 +91,7 @@ export const Signup = () => {
                     withCredentials: true
                 }
             );
-            const accessToken = response?.data.    accessToken;
+            const accessToken = response?.data. accessToken;
             console.log(response.data);
             console.log(response.accessToken);
             
