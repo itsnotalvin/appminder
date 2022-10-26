@@ -3,27 +3,37 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import { useState } from 'react';
-import { timestampCleanup } from './TimestampCleanup';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { useDrag } from 'react-dnd';
+import dateFormat, { masks } from 'dateformat';
 
 export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus, updateAppModal }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
     const { id, job_title, company_name, app_stage, key_date, archived, completed, deleted, last_updated, notes, set_reminder } = jobInfo;
 
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: 'application',
+        item: { id: id },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging()
+        })
+    }));
+
     const expandJobDetails = (id) => {
         setHideJobDetails(hideJobDetails ? false : true);
     };
 
-    const lastUpdatedDateTime = timestampCleanup(last_updated);
+    const lastUpdatedDateTime = dateFormat(last_updated, 'dd/mm/yy h:MM TT');
+    const formattedKeyDate = dateFormat(key_date, 'dd/mm/yy');
 
 
     return (
-        <div className='job-row'>
+        <div className='job-row' style={{ opacity: isDragging ? '0.5' : '1' }} ref={drag}>
             <div className='core-job-details'>
                 <div>{company_name}</div>
                 <div>{job_title}</div>
-                <div>{key_date.split('T')[0]}</div>
+                <div>{formattedKeyDate}</div>
                 <div>{lastUpdatedDateTime}</div>
                 {
                     !archived && <div>

@@ -3,27 +3,31 @@ import { useState, useEffect } from "react";
 import '../Dashboard.css';
 import '../ApplicationModals.css';
 import axios from 'axios';
-import { timestampCleanup } from "./TimestampCleanup";
+import { useDrop } from 'react-dnd';
+import dateFormat, { masks } from 'dateformat';
 import Modal from './AddAppModal.js';
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
     const [selectedTab, setSelectedTab] = useState('Draft');
     const [infoChange, setInfoChange] = useState(0);
+    const [droppedIntoStage, setDroppedIntoStage] = useState('');
     const [modalClass, setModalClass] = useState('modal');
     const [appToUpdateId, setAppToUpdateId] = useState(0);
-    const [appToUpdateStage, setAppToUpdateStage] = useState();
-    const [appToUpdateNotes, setAppToUpdateNotes] = useState();
-    const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState();
-    const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({});
-    const [isOpen, setIsOpen] = useState(false);
+    const [appToUpdateStage, setAppToUpdateStage] = useState('');
+    const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
+    const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState('1900-01-01');
+    const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({
+        job: '',
+        company: ''
+    });
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
                 console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
-    }, [selectedTab, infoChange, isOpen]);
+    }, [selectedTab, infoChange, droppedIntoStage, isOpen]);
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
@@ -35,7 +39,7 @@ export const ApplicationsView = () => {
             job: job_title,
             company: company_name
         });
-        setAppToUpdateKeyDate(timestampCleanup(key_date, 'update'));
+        setAppToUpdateKeyDate(dateFormat(key_date, 'yyyy-mm-dd'));
         setModalClass('modal view-modal');
     };
     const updateAppAction = () => {
@@ -61,19 +65,83 @@ export const ApplicationsView = () => {
         setAppToUpdateStage(e.target.value);
     };
 
+    const dropIntoDraft = (id) => {
+        axios.patch(`/jobs/updateJobStage/Draft/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Draft`);
+                setDroppedIntoStage(`Drafted ${id}`);
+            })
+    };
+
+    const [{ isInDraft }, dropIntoDraftHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoDraft(item.id),
+        collect: monitor => ({
+            isInDraft: !!monitor.isOver()
+        })
+    }));
+
+    const dropIntoApplied = (id) => {
+        axios.patch(`/jobs/updateJobStage/Applied/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Applied`);
+                setDroppedIntoStage(`Applied ${id}`);
+            })
+    };
+
+    const [{ isInApplied }, dropIntoAppliedHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoApplied(item.id),
+        collect: monitor => ({
+            isInApplied: !!monitor.isOver()
+        })
+    }));
+
+    const dropIntoInterviewing = (id) => {
+        axios.patch(`/jobs/updateJobStage/Interviewing/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Interviewing`);
+                setDroppedIntoStage(`Interviewing ${id}`);
+            })
+    };
+
+    const [{ isInInterviewing }, dropIntoInterviewingHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoInterviewing(item.id),
+        collect: monitor => ({
+            isInInterviewing: !!monitor.isOver()
+        })
+    }));
+
+    const dropIntoAwaiting = (id) => {
+        axios.patch(`/jobs/updateJobStage/Awaiting/${id}`)
+            .then(res => {
+                console.log(`Moved ${id} into Awaiting`);
+                setDroppedIntoStage(`Awaiting ${id}`);
+            })
+    };
+
+    const [{ isInAwaiting }, dropIntoAwaitingHook] = useDrop(() => ({
+        accept: 'application',
+        drop: (item, monitor) => dropIntoAwaiting(item.id),
+        collect: monitor => ({
+            isInAwaiting: !!monitor.isOver()
+        })
+    }));
+
     const closeModal = (bool) => {
         setIsOpen(bool);
     }
 
     return (
         <>
-            
+
             {/* working hereworking hereworking hereworking here */}
-            
+
             <header id='application-bar'>
                 <h2>Applications</h2>
 
-                
+
                 <button className='application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
                 <Modal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></Modal>
             </header>
@@ -82,10 +150,10 @@ export const ApplicationsView = () => {
 
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Draft')}>Draft</div>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Applied')}>Applied</div>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
-                    <div className='application-stage-btn' onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
+                    <div className='application-stage-btn' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
                 </div>
                 <div id='application-content'>
                     <div id='application-detail-header'>
@@ -106,11 +174,11 @@ export const ApplicationsView = () => {
                         <h3>Update Application</h3>
                         <div className='update-app-field'>
                             <label htmlFor="job_title">Job Title</label>
-                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onClick={(e) => e.preventDefault()} />
+                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onChange={(e) => e.preventDefault()} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="company_name">Company Name</label>
-                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onClick={(e) => e.preventDefault()} />
+                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onChange={(e) => e.preventDefault()} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="app_stage_dropdown">Application Stage</label>
@@ -123,7 +191,7 @@ export const ApplicationsView = () => {
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="key_date">Key Date</label>
-                            <input value={appToUpdateKeyDate} placeholder='Key Date' id='key_date' type='date' onChange={updateKeyDate} />
+                            <input value={appToUpdateKeyDate} id='key_date' type='date' onChange={updateKeyDate} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="notes">Notes</label>
