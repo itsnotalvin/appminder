@@ -2,7 +2,7 @@ const db = require('../database/db.js');
 
 const Jobs = {
     getUsersJobs: (email) => {
-        const sql = 'SELECT jobs.id,jobs.job_title,jobs.company_name,jobs.app_stage,jobs.key_date,jobs.set_reminder,jobs.archived,jobs.completed,jobs.deleted,jobs.notes,jobs.last_updated FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 ORDER BY jobs.last_updated DESC';
+        const sql = 'SELECT jobs.id,jobs.job_title,jobs.company_name,jobs.app_stage,jobs.key_date,jobs.set_reminder,jobs.archived,jobs.completed,jobs.deleted,jobs.notes,jobs.last_updated FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 ORDER BY jobs.key_date ASC';
         return db.query(sql, [email])
     },
     checkJobExists: (email, job_title, company_name) => {

@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import '../Dashboard.css';
 import '../ApplicationModals.css';
 import axios from 'axios';
-import { timestampCleanup } from "./TimestampCleanup";
 import { useDrop } from 'react-dnd';
+import dateFormat, { masks } from 'dateformat';
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -38,7 +38,7 @@ export const ApplicationsView = () => {
             job: job_title,
             company: company_name
         });
-        setAppToUpdateKeyDate(timestampCleanup(key_date, 'update'));
+        setAppToUpdateKeyDate(dateFormat(key_date, 'yyyy-mm-dd'));
         setModalClass('modal view-modal');
     };
     const updateAppAction = () => {
@@ -177,7 +177,7 @@ export const ApplicationsView = () => {
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="key_date">Key Date</label>
-                            <input value={appToUpdateKeyDate} placeholder='Key Date' id='key_date' type='date' onChange={updateKeyDate} />
+                            <input value={appToUpdateKeyDate} id='key_date' type='date' onChange={updateKeyDate} />
                         </div>
                         <div className='update-app-field'>
                             <label htmlFor="notes">Notes</label>
