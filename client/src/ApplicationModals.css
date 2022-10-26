@@ -43,7 +43,7 @@ select,input,textarea {
     margin: 0.5rem;
     padding: 10px;
     border-radius: 10px;
-    border: none;
+    /* border: none; */
     transform: scale(1);
     transition: 1s ease all;
 }

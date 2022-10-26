@@ -5,6 +5,7 @@ import '../ApplicationModals.css';
 import axios from 'axios';
 import { useDrop } from 'react-dnd';
 import dateFormat, { masks } from 'dateformat';
+import Modal from './AddAppModal.js';
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -26,7 +27,7 @@ export const ApplicationsView = () => {
                 console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
-    }, [selectedTab, infoChange, droppedIntoStage]);
+    }, [selectedTab, infoChange, droppedIntoStage, isOpen]);
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
@@ -128,12 +129,25 @@ export const ApplicationsView = () => {
         })
     }));
 
+    const closeModal = (bool) => {
+        setIsOpen(bool);
+    }
+
     return (
         <>
+
+            {/* working hereworking hereworking hereworking here */}
+
             <header id='application-bar'>
                 <h2>Applications</h2>
-                <div className='application-btn'>Add Application</div>
+
+
+                <button className='application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
+                <Modal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></Modal>
             </header>
+
+            {/* working hereworking hereworking hereworking here */}
+
             <div id='applications-display'>
                 <div id='application-stage-selection'>
                     <div className='application-stage-btn' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
