@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import axios from "../axios.js"
+import axios from "axios"
 
 const REGISTER_URL = '/users/signup'
 
