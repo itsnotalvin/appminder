@@ -5,7 +5,9 @@ import '../ApplicationModals.css';
 import axios from 'axios';
 import { useDrop } from 'react-dnd';
 import dateFormat, { masks } from 'dateformat';
-import Modal from './AddAppModal.js';
+import AddAppModal from './AddAppModal.js';
+
+
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -17,12 +19,14 @@ export const ApplicationsView = () => {
     const [appToUpdateStage, setAppToUpdateStage] = useState('');
     const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
     const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState('1900-01-01');
-
+    
     const [isOpen, setIsOpen] = useState(false);
+
     const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({
         job: '',
         company: ''
     });
+
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
@@ -33,6 +37,7 @@ export const ApplicationsView = () => {
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
+
     const updateAppModal = ({ id, key_date, notes, app_stage, job_title, company_name }) => {
         setAppToUpdateStage(app_stage);
         setAppToUpdateNotes(notes);
@@ -57,12 +62,15 @@ export const ApplicationsView = () => {
                 changedJobInfo();
             })
     };
+
     const updateNotes = (e) => {
         setAppToUpdateNotes(e.target.value);
     };
+
     const updateKeyDate = (e) => {
         setAppToUpdateKeyDate(e.target.value);
     };
+
     const updateAppStage = (e) => {
         setAppToUpdateStage(e.target.value);
     };
@@ -145,7 +153,7 @@ export const ApplicationsView = () => {
 
 
                 <button className='application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
-                <Modal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></Modal>
+                <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></AddAppModal>
             </header>
 
             {/* working hereworking hereworking hereworking here */}
@@ -170,6 +178,9 @@ export const ApplicationsView = () => {
                     <JobDetails jobs={jobInfo} selected={selectedTab} changedJobInfo={changedJobInfo} updateAppModal={updateAppModal} />
                 </div>
             </div>
+
+            {/* MODAL */}
+            <div onClick={() => setModalClass('modal')}>
             <div className={modalClass}>
                 <div className='modal-box'>
                     <div className='modal-content'>
@@ -206,6 +217,8 @@ export const ApplicationsView = () => {
                     </div>
                 </div>
             </div>
+            </div>
+            
         </>
 
     )
