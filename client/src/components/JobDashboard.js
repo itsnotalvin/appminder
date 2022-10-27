@@ -7,6 +7,7 @@ import { ArchiveView } from './ArchiveView';
 import { Profile } from './Profile.js';
 import { Logout } from './Logout.js';
 import { LogoutModal } from './LogoutModal.js'
+import appminder_logo from '../images/appminder_logo.png'
 import { Navigate } from 'react-router-dom'
 import { LoadingScreen } from './LoadingScreen';
 
@@ -65,6 +66,7 @@ export const JobDashboard = () => {
                 <div id='side-panel-content'>
                     <div>
                         <h3 onClick={() => setViewPage('Applications')}>App Minder</h3>
+                        <img src={appminder_logo} id='appminderlogo'/>
                     </div>
                     <div>
                         <h3>Hello, first name</h3>
@@ -76,8 +78,7 @@ export const JobDashboard = () => {
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
 
                         <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>
-                        {isOpen && <LogoutModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></LogoutModal>}
-
+                        {isOpen && <LogoutModal className='modal' open={isOpen} closeModal={closeModal}onClose={() => setIsOpen(false)}></LogoutModal>}
                     </div>
                 </div>
             </div>
