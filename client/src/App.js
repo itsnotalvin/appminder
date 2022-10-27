@@ -10,7 +10,7 @@ import ModalSample from './components/ModalSample.js'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <DndProvider backend={HTML5Backend}>
         <BrowserRouter>
           <Routes>
@@ -21,7 +21,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </DndProvider>
-    </div>
+    </>
   );
 }
 
