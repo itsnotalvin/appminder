@@ -26,10 +26,11 @@ const OVERLAY_STYLES = {
     zIndex: 2
 }
 
-export const LogoutModal = () => {
+export const LogoutModal = ( { closeModal }) => {
     const navigate = useNavigate();
     const [errMsg, setErrMsg] = useState('')
     const [loggedout, setLoggedout] = useState(false)
+    
     
     const navigateHome = () => {
         navigate('/login');
@@ -54,31 +55,33 @@ export const LogoutModal = () => {
     //         setErrMsg('Unable to log out')
     //     }
     // }
+    
 
     return (
-        <div>          
+        <div style={OVERLAY_STYLES} onClick={() => closeModal(false)} >
+            {/* // modal box */}
+            <div style={MODAL_STYLES}>          
             <br />
-            {/* modal header */}
-            <div>
-                <h3>are you sure you want to logout?</h3>
-            </div>
-            {/* modal body */}
-            <div>
-
+                {/* modal header */}
+                <div>
+                    <h3>Are you sure you want to logout?</h3>
+                </div>
+                {/* modal body */}
                 <div>
 
-                    <button onClick={navigateHome}>Yes</button>
+                    <div>
+                        <button className='yesButton'onClick={navigateHome}>Yes</button>
                     
-
-
-
-
-                    <button>No</button>
+                        <button className='noButton' onClick={() => closeModal(false)}>No</button>
+                    </div>
                 </div>
-            </div>
 
             {/* modal footer */}
                 
+            </div>
+            
         </div>
+        
+        
     )
 }

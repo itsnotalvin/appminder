@@ -27,7 +27,7 @@ const OVERLAY_STYLES = {
 }
 
 
-export default function Modal({ open, children, onClose, closeModal }) {
+export default function AddAppModal({ open, children, onClose, closeModal }) {
     const userRef = useRef();
     const errRef = useRef();
     
@@ -68,7 +68,6 @@ export default function Modal({ open, children, onClose, closeModal }) {
                     withCredentials: true
                 });
                 closeModal(false)
-                // onSubmit={() => setIsOpen(false)};
         } catch (err) {
             if(!err?.response) {
                 setErrMsg('No server response');
