@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Signup />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/dashboard' element={<JobDashboard id={1} />} />
+            <Route path='/dashboard' element={<JobDashboard />} />
             <Route path='/test' element={<ModalSample />} />
           </Routes>
         </BrowserRouter>
