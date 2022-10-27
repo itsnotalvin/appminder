@@ -63,7 +63,7 @@ export const Login = () => {
                 signupNav ? <Navigate to='/' replace={true} /> : success ? (
                     <Navigate to='/dashboard' replace={true} />
                 ) : (
-                    <div className="RegisterBox">
+                    <div className="RegisterBox login">
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
                         <h1>Sign In</h1>

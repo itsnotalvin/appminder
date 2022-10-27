@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     width: 70%;
+    max-width: 650px;
     align-items: center;
     background-color: rgb(74, 74, 252);
     color: white;
@@ -31,6 +32,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+.RegisterBox.login {
+    max-width: 475px;
 }
 #confirmnote, #pwdnote, .signup-comments {
     display: flex;
