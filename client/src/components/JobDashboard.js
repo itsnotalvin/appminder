@@ -8,13 +8,33 @@ import { Profile } from './Profile.js';
 import { Logout } from './Logout.js';
 import { LogoutModal } from './LogoutModal.js'
 import appminder_logo from '../images/appminder_logo.png'
+import { Navigate } from 'react-router-dom'
+import { LoadingScreen } from './LoadingScreen';
 
-export const JobDashboard = ({ id }) => {
+export const JobDashboard = () => {
     const [jobInfo, setJobInfo] = useState([]);
     const [viewPage, setViewPage] = useState('Applications');
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [componentToView, setComponentToView] = useState
-    (<ApplicationsView />);
+        (<ApplicationsView />);
+
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    useEffect(() => {
+        axios.get('/users/session')
+            .then(res => {
+                console.log(res);
+                if (res.status !== 401) {
+                    console.log('authenticated');
+                    setIsAuthenticated(true);
+                    setIsLoading(false);
+                }
+                else {
+                    setIsAuthenticated(false);
+                }
+            })
+            .catch(err => setIsAuthenticated(false))
+    }, []);
 
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
@@ -41,7 +61,7 @@ export const JobDashboard = ({ id }) => {
     };
 
     return (
-        jobInfo.length ? <div id='dashboard'>
+        isAuthenticated ? (isLoading ? <LoadingScreen /> : <div id='dashboard'>
             <div id='side-panel'>
                 <div id='side-panel-content'>
                     <div>
@@ -51,15 +71,14 @@ export const JobDashboard = ({ id }) => {
                     <div>
                         <h3>Hello, first name</h3>
                     </div>
-                    
+
                     <div>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
                         <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
-                        
+
                         <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>
                         {isOpen && <LogoutModal className='modal' open={isOpen} closeModal={closeModal}onClose={() => setIsOpen(false)}></LogoutModal>}
-                        
                     </div>
                 </div>
             </div>
@@ -68,7 +87,6 @@ export const JobDashboard = ({ id }) => {
                     componentToView
                 }
             </div>
-        </div> : <></>
-
+        </div>) : <Navigate to='/login' />
     )
 };

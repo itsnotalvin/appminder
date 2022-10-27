@@ -19,7 +19,16 @@ export const Signup = () => {
     const [allValid, setAllValid] = useState(false);
     let password, retypedPassword, signupBtn, checkLcLi, checkUcLi, checkDigLi, checkSpecLi, checkLenLi;
 
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     useEffect(() => {
+        axios.get('/users/session')
+            .then(res => {
+                if (res.status !== 401) {
+                    setIsAuthenticated(true);
+                }
+            })
+            .catch()
         userRef.current.focus();
         password = pwdInput.current;
         retypedPassword = retypedPwdInput.current;
@@ -216,6 +225,10 @@ export const Signup = () => {
         else {
             setValidInputs(false);
         }
+    }
+
+    if (isAuthenticated) {
+        return <Navigate to='/dashboard' />
     }
 
     return (
