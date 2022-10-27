@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import ReactDom from 'react-dom'
-import axios from '../axios.js'
+import axios from 'axios'
 
 const ADDAPP_URL = '/jobs'
 
