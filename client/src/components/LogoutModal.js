@@ -6,7 +6,7 @@ const LOGOUT_URL = '/sessions'
 
 
 export const LogoutModal = () => {
-    
+
     const [errMsg, setErrMsg] = useState('')
     const [loggedout, setLoggedout] = useState(false)
 
@@ -16,13 +16,13 @@ export const LogoutModal = () => {
         console.log('you are trying to log out')
 
         // axios.delete('/users/session')
-           
+
         try {
             console.log('you have logged out')
             axios.delete('/users/session')
-            .then(res => {
-                redirect('/')
-            })
+                .then(res => {
+                    redirect('/')
+                })
         } catch (err) {
             setErrMsg('Unable to log out')
         }
@@ -33,22 +33,22 @@ export const LogoutModal = () => {
             <br />
             {/* modal header */}
             <div>
-            <h3>are you sure you want to logout?</h3>
+                <h3>are you sure you want to logout?</h3>
             </div>
             {/* modal body */}
             <div>
 
-            <div>
-                
-                <button onClick={logout}>Yes</button>
-                
-                
-                
-                
-                <button>No</button>
+                <div>
+
+                    <button onClick={logout}>Yes</button>
+
+
+
+
+                    <button>No</button>
+                </div>
             </div>
-            </div>
-            
+
             {/* modal footer */}
 
         </div>
