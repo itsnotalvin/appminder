@@ -31,23 +31,23 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
     return (
         <div className='job-row' style={{ opacity: isDragging ? '0.5' : '1' }} ref={drag}>
             <div className='core-job-details'>
-                <div>{company_name}</div>
-                <div>{job_title}</div>
-                <div>{formattedKeyDate}</div>
-                <div>{lastUpdatedDateTime}</div>
+                <div className='app-name'>{company_name}</div>
+                <div className='app-title'>{job_title}</div>
+                <div className='app-keydate'>{formattedKeyDate}</div>
+                <div className='app-lastupdated'>{lastUpdatedDateTime}</div>
                 {
-                    !archived && <div>
+                    !archived && <div className='app-notification'>
                         {
                             set_reminder ? <NotificationsActiveIcon className='icon-mod' onClick={() => changeReminderStatus(id, false)} /> : <NotificationsNoneIcon className='icon-mod' onClick={() => changeReminderStatus(id, true)} />
                         }
                     </div>
                 }
-                <div>
+                <div className='app-expand'>
                     {
                         !hideJobDetails ? <ArrowDropDownIcon className='icon-mod' onClick={() => expandJobDetails(id)} /> : <ArrowDropUpIcon className='icon-mod' onClick={() => expandJobDetails(id)} />
                     }
                 </div>
-                <div>
+                <div className='app-archive'>
                     {
                         !archived ? <ArchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, true)} /> : <UnarchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, false)} />
                     }
@@ -58,7 +58,7 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
                     <strong style={{ margin: 0, padding: 0 }}>Notes</strong>
                 </div>
                 <div className='notes-and-appUpdateBtn'>
-                    <span>{notes}</span>
+                    <span className='notes-block'>{notes}</span>
                     {
                         !archived && <span className='application-btn' onClick={() => updateAppModal(true)}>Update Application</span>
                     }
