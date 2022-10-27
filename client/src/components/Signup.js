@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "../axios.js"
 import { Navigate } from 'react-router-dom'
-import '../Signup.css'
+import '../SignupLogin.css'
 
 const REGISTER_URL = '/users/signup'
 
@@ -227,12 +227,9 @@ export const Signup = () => {
                             <p className="signup-comments">
                                 Already have an account?
                             </p>
-                            <p className="signup-comments">
+                            <p className="signup-comments login-via-signup" onClick={() => setSuccess(true)}>
                                 Sign in here!
-                                <a href='/#'></a>
                             </p>
-
-
                         </form>
                     </div>
                 </div>

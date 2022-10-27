@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "../axios.js";
 import { Route, BrowserRouter, Routes, Link } from 'react-router-dom';
 import { Navigate } from 'react-router-dom'
+import '../SignupLogin.css'
 // import { JobDashboard } from './JobDashBoard.js';
 
 const LOGIN_URL = "/users/session";
@@ -17,6 +18,7 @@ export const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+    const [signupNav, setSignupNav] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -59,53 +61,46 @@ export const Login = () => {
 
 
     return (
-        <>
-            {success ? (
-                <Navigate to='/dashboard' replace={true} />
-            ) : (
-                <div>
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
+        <div className="signup-container">
+            {
+                signupNav ? <Navigate to='/' replace={true} /> : success ? (
+                    <Navigate to='/dashboard' replace={true} />
+                ) : (
+                    <div className="RegisterBox">
+                        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
-                    <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="text"
-                            id="email"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            required
-                        />
-                        < br />
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            ref={userRef}
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                        />
-                        < br />
-                        <button>Sign In</button>
+                        <h1>Sign In</h1>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                id="email"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                placeholder="Email"
+                                required
+                            />
+                            <input
+                                type="password"
+                                id="password"
+                                ref={userRef}
+                                onChange={(e) => setPwd(e.target.value)}
+                                value={pwd}
+                                placeholder="Password"
+                                required
+                            />
+                            <p className="submit-btn">Sign In</p>
 
-                        <p>
-                            Don't have an account? < br />
-                            <span>
-                                { /*insert route */}
-                                {/* <Link to="/signup">Sign Up</Link> */}
-                                <a href='/'>Sign Up</a>
-                            </span>
-                        </p>
-                    </form>
-                </div>
-
-            )
+                            <p className="signup-comments">
+                                Don't have an account?
+                            </p>
+                            <p className="signup-comments login-via-signup" onClick={() => setSignupNav(true)}>Sign Up</p>
+                        </form>
+                    </div >
+                )
             }
-
-        </>
+        </div>
 
 
 
