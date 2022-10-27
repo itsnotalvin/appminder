@@ -16,3 +16,9 @@ Dashboard - '/dashboard'
 Profile - '/profile'
 
 Setting - '/settings'
+
+# Please run these on your local machine:
+
+npm install react-dnd
+npm install dateformat
+npm install react-dnd-html5-backend
