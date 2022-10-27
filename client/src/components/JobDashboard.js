@@ -6,11 +6,15 @@ import { ApplicationsView } from './ApplicationsView';
 import { ArchiveView } from './ArchiveView';
 import { Profile } from './Profile.js';
 import { Logout } from './Logout.js';
+import { LogoutModal } from './LogoutModal.js'
 
 export const JobDashboard = ({ id }) => {
     const [jobInfo, setJobInfo] = useState([]);
     const [viewPage, setViewPage] = useState('Applications');
-    const [componentToView, setComponentToView] = useState(<ApplicationsView />);
+    const [isOpen, setIsOpen] = useState(false);
+    const [componentToView, setComponentToView] = useState
+    (<ApplicationsView />);
+
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
@@ -30,6 +34,11 @@ export const JobDashboard = ({ id }) => {
         }
     }, [viewPage]);
 
+    const closeModal = (bool) => {
+        console.log('hello siddarth')
+        setIsOpen(bool);
+    };
+
     return (
         jobInfo.length ? <div id='dashboard'>
             <div id='side-panel'>
@@ -45,7 +54,10 @@ export const JobDashboard = ({ id }) => {
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
                         <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
-                        <div className='nav-btn' onClick={() => setViewPage('Logout')} >Sign Out</div>
+                        
+                        <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>
+                        {isOpen && <LogoutModal open={isOpen} closeModal={closeModal}onClose={() => setIsOpen(false)}></LogoutModal>}
+                        
                     </div>
                 </div>
             </div>
