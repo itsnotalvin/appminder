@@ -1,35 +1,62 @@
 import { useState } from 'react';
 import axios from 'axios'
-import { redirect } from 'react-router-dom'
+import { Navigate, redirect, useNavigate } from 'react-router-dom'
 
 const LOGOUT_URL = '/sessions'
 
+const MODAL_STYLES = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 3,
+    padding: '100px',
+    backgroundColor: 'red'
+
+}
+
+const OVERLAY_STYLES = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#000000',
+    opacity: '70%',
+    zIndex: 2
+}
 
 export const LogoutModal = () => {
-
+    const navigate = useNavigate();
     const [errMsg, setErrMsg] = useState('')
     const [loggedout, setLoggedout] = useState(false)
+    
+    const navigateHome = () => {
+        navigate('/login');
+        axios.delete('/users/session');
+    }    
 
+    // const logout = (e) => {
+    //     e.preventDefault();
+    //     console.log('you are trying to log out')
+    //     // axios.delete('/users/session')
 
-    const logout = (e) => {
-        e.preventDefault();
-        console.log('you are trying to log out')
+    //     try {
+    //         console.log('you have logged out')
+    //         // axios.delete('/users/session')
+    //         // redirect('/')
+    //         axios.delete('/users/session');
 
-        // axios.delete('/users/session')
+    //         redirect('/')
+                    
+                
+    //     } catch (err) {
+    //         setErrMsg('Unable to log out')
+    //     }
+    // }
 
-        try {
-            console.log('you have logged out')
-            axios.delete('/users/session')
-                .then(res => {
-                    redirect('/')
-                })
-        } catch (err) {
-            setErrMsg('Unable to log out')
-        }
-    }
     return (
-        <div>
-            sample modal to log out
+        <div>          
             <br />
             {/* modal header */}
             <div>
@@ -40,7 +67,8 @@ export const LogoutModal = () => {
 
                 <div>
 
-                    <button onClick={logout}>Yes</button>
+                    <button onClick={navigateHome}>Yes</button>
+                    
 
 
 
@@ -50,7 +78,7 @@ export const LogoutModal = () => {
             </div>
 
             {/* modal footer */}
-
+                
         </div>
     )
 }
