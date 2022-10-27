@@ -5,9 +5,6 @@ import '../SignupLogin.css'
 
 const LOGIN_URL = "/users/session";
 
-
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-
 export const Login = () => {
     const userRef = useRef();
     const errRef = useRef();
@@ -15,6 +12,7 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [enterVals, setEnterVals] = useState(false);
     const [success, setSuccess] = useState(false);
     const [signupNav, setSignupNav] = useState(false);
 
@@ -28,32 +26,33 @@ export const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (email && pwd) {
+            try {
+                const response = await axios.post(
+                    LOGIN_URL,
+                    JSON.stringify({ email: email, password: pwd }),
+                    {
+                        headers: { "Content-Type": 'application/json' },
+                        withCredentials: true,
 
-        try {
-            console.log(email, pwd, 'after try')
-            const response = await axios.post(
-                LOGIN_URL,
-                JSON.stringify({ email: email, password: pwd }),
-                {
-                    headers: { "Content-Type": 'application/json' },
-                    withCredentials: true,
-
-                });
-            console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            setPwd('');
-            setSuccess(true);
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg("No Server Response");
-            } else if (err.response?.status === 400) {
-                setErrMsg("Missing Email or Password");
-            } else if (err.response?.status === 401) {
-                setErrMsg("Unauthorized");
-            } else {
-                setErrMsg("Login Failed")
+                    });
+                setPwd('');
+                setSuccess(true);
+            } catch (err) {
+                if (!err?.response) {
+                    setErrMsg("Sorry! No Server Response");
+                } else if (err.response?.status === 400) {
+                    setErrMsg("Email or Password is incorrect!");
+                } else if (err.response?.status === 401) {
+                    setErrMsg("Unauthorized");
+                } else {
+                    setErrMsg("Login Failed")
+                }
+                errRef.current.focus();
             }
-            errRef.current.focus();
+        }
+        else {
+            setEnterVals(true);
         }
     }
 
@@ -74,7 +73,11 @@ export const Login = () => {
                                 id="email"
                                 ref={userRef}
                                 autoComplete="off"
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setEmail(e.target.value)
+                                    setErrMsg("")
+                                    setEnterVals(false)
+                                }}
                                 value={email}
                                 placeholder="Email"
                                 required
@@ -83,11 +86,21 @@ export const Login = () => {
                                 type="password"
                                 id="password"
                                 ref={userRef}
-                                onChange={(e) => setPwd(e.target.value)}
+                                onChange={(e) => {
+                                    setPwd(e.target.value)
+                                    setErrMsg("")
+                                    setEnterVals(false)
+                                }}
                                 value={pwd}
                                 placeholder="Password"
                                 required
                             />
+                            <div className="signup-comments" style={{ display: errMsg.length ? 'block' : 'none' }}>
+                                <p style={{ color: 'red', margin: 0 }}>{errMsg}</p>
+                            </div>
+                            <div className="signup-comments" style={{ display: enterVals ? 'block' : 'none' }}>
+                                <p style={{ color: 'red', margin: 0 }}>Please enter both details</p>
+                            </div>
                             <p className="submit-btn" onClick={handleSubmit}>Sign In</p>
 
                             <p className="signup-comments">

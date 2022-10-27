@@ -5,11 +5,141 @@ import '../SignupLogin.css'
 
 const REGISTER_URL = '/users/signup'
 
-
 const NAME_REGEX = /^[A-Za-z]+$/;
-const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,24}$/;
 
 export const Signup = () => {
+    const pwdInput = useRef(null);
+    const retypedPwdInput = useRef(null);
+    const lc = useRef(null);
+    const uc = useRef(null);
+    const dig = useRef(null);
+    const spec = useRef(null);
+    const minLength = useRef(null);
+    const signupBtnRef = useRef(null);
+    const [allValid, setAllValid] = useState(false);
+    let password, retypedPassword, signupBtn, checkLcLi, checkUcLi, checkDigLi, checkSpecLi, checkLenLi;
+
+    useEffect(() => {
+        userRef.current.focus();
+        password = pwdInput.current;
+        retypedPassword = retypedPwdInput.current;
+        checkLcLi = lc.current;
+        checkUcLi = uc.current;
+        checkDigLi = dig.current;
+        checkSpecLi = spec.current;
+        checkLenLi = minLength.current;
+        signupBtn = signupBtnRef.current;
+        signupBtn.classList.add('disabled');
+        [password, retypedPassword].forEach((element) => {
+            element.addEventListener('input', validityChecks);
+        });
+    }, []);
+
+    function changeSubmitBtn(btn, bool) {
+        if (!bool) {
+            btn.classList.add('disabled');
+            setAllValid(false);
+        }
+        else {
+            btn.classList.remove('disabled');
+            setAllValid(true);
+        }
+    }
+
+    function validityChecks() {
+        passwordValidityChecker();
+        if (password.value !== retypedPassword.value) {
+            changeSubmitBtn(signupBtn, false);
+        }
+        else {
+            passwordValidityChecker();
+        }
+    }
+
+    function passwordValidityChecker() {
+        changeSubmitBtn(signupBtn, true);
+        if (!checkLc(password.value)) {
+            changeSubmitBtn(signupBtn, true);
+            checkLcLi.classList.remove('list-items');
+        }
+        else {
+            checkLcLi.classList.add('list-items');
+        }
+        if (!checkUc(password.value)) {
+            changeSubmitBtn(signupBtn, true);
+            checkUcLi.classList.remove('list-items');
+        }
+        else {
+            checkUcLi.classList.add('list-items');
+        }
+        if (!checkSpec(password.value)) {
+            changeSubmitBtn(signupBtn, true);
+            checkSpecLi.classList.remove('list-items');
+        }
+        else {
+            checkSpecLi.classList.add('list-items');
+        }
+        if (!checkDig(password.value)) {
+            changeSubmitBtn(signupBtn, true);
+            checkDigLi.classList.remove('list-items');
+        }
+        else {
+            checkDigLi.classList.add('list-items');
+        }
+        if (!checkLen(password.value)) {
+            changeSubmitBtn(signupBtn, true);
+            checkLenLi.classList.remove('list-items');
+        }
+        else {
+            checkLenLi.classList.add('list-items');
+        }
+    }
+
+    function checkLc(password) {
+        if (/(?=.*[a-z])/.test(password)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    function checkUc(password) {
+        if (/(?=.*[A-Z])/.test(password)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    function checkDig(password) {
+        if (/(?=.*\d)/.test(password)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    function checkSpec(password) {
+        if (/(?=.*[-+_!@#$%^&*.,?])/.test(password)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    function checkLen(password) {
+        if (password.length >= 8) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -36,22 +166,15 @@ export const Signup = () => {
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
+    const [validInputs, setValidInputs] = useState(true);
 
     useEffect(() => {
         const result = NAME_REGEX.test(firstName);
-        console.log(result);
-        console.log(firstName);
         setValidFirstName(result);
     }, [firstName])
 
     useEffect(() => {
         const result = NAME_REGEX.test(lastName);
-        console.log(result);
-        console.log(lastName);
         setValidLastName(result);
     }, [lastName])
 
@@ -59,73 +182,48 @@ export const Signup = () => {
         setValidEmail(email ? true : false);
     }, [email])
 
-    useEffect(() => {
-        const result = PWD_REGEX.test(pwd);
-        setValidPwd(result)
-        setValidFirstName(result);
-        const match = pwd === matchPwd;
-        setValidMatch(match)
-    }, [pwd, matchPwd])
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [firstName, lastName, pwd, matchPwd])
-
-    // useEffect(() => {
-    //     setValidName(USER_REGEX.test(user));
-    // }, [user]);
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const v1 = NAME_REGEX.test(firstName);
-        const v2 = PWD_REGEX.test(pwd);
-        if (!v1 || !v2) {
-            setErrMsg("Invalid Entry");
-            return;
-        }
+        if (validFirstName && validLastName && validEmail && allValid) {
+            try {
+                const response = await axios.post(REGISTER_URL,
+                    JSON.stringify({ first_name: firstName, last_name: lastName, email: email, hashed_pw: pwd }),
+                    {
+                        headers: { 'Content-Type': 'application/json' },
+                        withCredentials: true
+                    }
+                );
 
-        try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ first_name: firstName, last_name: lastName, email: email, hashed_pw: pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+                // clear input fields after submit
+                setFirstName("");
+                setLastName("");
+                setEmail("");
+                setPwd("");
+                setMatchPwd("")
+                setSuccess(true);
+
+            } catch (err) {
+                if (!err?.response) {
+                    setErrMsg('No server Response');
+                } else if (err.response.status === 400) {
+                    setErrMsg(err.response.data.message);
+                } else {
+                    setErrMsg('Registration Unsuccessful')
                 }
-            );
-            const accessToken = response?.data.accessToken;
-            console.log(response.data);
-            console.log(response.accessToken);
-
-            // clear input fields after submit
-            setFirstName("");
-            setLastName("");
-            setEmail("");
-            setPwd("");
-            setMatchPwd("")
-            setSuccess(true);
-
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username already associated with an account');
-            } else {
-                setErrMsg('Registration Unsuccessful')
+                errRef.current.focus();
             }
-            errRef.current.focus();
+        }
+        else {
+            setValidInputs(false);
         }
     }
 
-
     return (
         <>
-            {success ? (
-                <Navigate to='/login' replace={true} />
-            ) : (
+            {success ?
+                <Navigate to='/login' replace={true} /> :
                 <div className="signup-container">
                     <div className="RegisterBox">
-                        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                         <h1>Register</h1>
 
                         <form onSubmit={handleSubmit}>
@@ -136,15 +234,20 @@ export const Signup = () => {
                                 ref={userRef}
                                 autoComplete="off"
                                 placeholder="First Name"
-                                onChange={(e) => setFirstName(e.target.value)}
+                                onChange={(e) => {
+                                    setFirstName(e.target.value)
+                                    setValidInputs(true)
+                                    setErrMsg("")
+                                }
+                                }
                                 required
                                 aria-invalid={validFirstName ? "false" : "true"}
                                 aria-describedby="fnnote"
-                                onFocus={() => setFirstNameFocus(true)}
+                                onFocus={() => {
+                                    setFirstNameFocus(true)
+                                }}
                                 onBlur={() => setFirstNameFocus(false)}
                             />
-                            {/* <p id="fnnote" className={firstNameFocus && firstName && !validFirstName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
-                 </p> */}
                             {/* lastname */}
                             <input
                                 type="text"
@@ -152,22 +255,28 @@ export const Signup = () => {
                                 ref={userRef}
                                 autoComplete="off"
                                 placeholder="Last Name"
-                                onChange={(e) => setLastName(e.target.value)}
+                                onChange={(e) => {
+                                    setLastName(e.target.value)
+                                    setValidInputs(true)
+                                    setErrMsg("")
+                                }}
                                 required
                                 aria-invalid={validLastName ? "false" : "true"}
                                 aria-describedby="lnnote"
                                 onFocus={() => setLastNameFocus(true)}
                                 onBlur={() => setLastNameFocus(false)}
                             />
-                            {/* <p id="lnnote" className={lastNameFocus && lastName && !validLastName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
-                 </p> */}
                             {/* email */}
                             <input
                                 type="text"
                                 id="email"
                                 ref={userRef}
                                 autoComplete="off"
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setEmail(e.target.value)
+                                    setValidInputs(true)
+                                    setErrMsg("")
+                                }}
                                 required
                                 aria-invalid={validEmail ? "false" : "true"}
                                 aria-describedby="emailnote"
@@ -175,7 +284,6 @@ export const Signup = () => {
                                 onBlur={() => setEmailFocus(false)}
                                 placeholder="Email Address"
                             />
-                            {/* <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>Enter a valid email followed by @ to valid hosting address<br /> sample text</p> */}
 
                             {/* password */}
                             <span className={validPwd ? "valid" : "hide"}>
@@ -185,8 +293,13 @@ export const Signup = () => {
                             </span>
                             <input
                                 type="password"
+                                ref={pwdInput}
                                 id="password"
-                                onChange={(e) => setPwd(e.target.value)}
+                                onChange={(e) => {
+                                    setPwd(e.target.value)
+                                    setValidInputs(true)
+                                    setErrMsg("")
+                                }}
                                 required
                                 aria-invalid={validPwd ? "false" : "true"}
                                 aria-describedby="pwdnote"
@@ -194,18 +307,34 @@ export const Signup = () => {
                                 onBlur={() => setPwdFocus(false)}
                                 placeholder="Password"
                             />
-                            <p id="pwdnote" className={pwdFocus && !validPwd ? 'instruction pwdnote' : 'offscreen pwdnote'}>
-                                8 to 24 characters
-                            </p>
-                            <p className="signup-comments">
-                                Must include uppercase and lower letters 1 special character and 1 special number
-                            </p>
+                            <div className="signup-comments pwd-pointers">
+                                <ul className="pointers-pw">
+                                    <li id="lc" ref={lc}> Atleast one lowercase character</li>
+                                    <li id="uc" ref={uc}> Atleast one uppercase character</li>
+                                    <li id="dig" ref={dig}> Atleast one number</li>
+                                    <li id="spec" ref={spec}> Atleast one special character</li>
+                                    <li id="eight" ref={minLength}> Atleast eight characters</li>
+                                </ul>
+                            </div>
+
+                            <div className="signup-comments" style={{ display: validInputs ? 'none' : 'block', margin: 0 }}>
+                                <p style={{ color: 'red' }}>Enter all fields please!</p>
+                            </div>
+
+                            <div className="signup-comments" style={{ display: errMsg.length === 0 ? 'block' : 'block', margin: 0 }}>
+                                <p style={{ color: 'red' }}>{errMsg}</p>
+                            </div>
 
                             {/* confirm password */}
                             <input
                                 type="password"
                                 id="confirm_pwd"
-                                onChange={(e) => setMatchPwd(e.target.value)}
+                                ref={retypedPwdInput}
+                                onChange={(e) => {
+                                    setMatchPwd(e.target.value)
+                                    setValidInputs(true)
+                                    setErrMsg("")
+                                }}
                                 value={matchPwd}
                                 required
                                 aria-invalid={validMatch ? "false" : "true"}
@@ -215,13 +344,9 @@ export const Signup = () => {
                                 className="form-control form-control-lg"
                                 placeholder="Confirm Password"
                             />
-                            <p
-                                id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                                Must match the first password input field.
-                            </p>
                             {/* submit button */}
 
-                            <p className="submit-btn" disable={!validFirstName && validEmail && validPwd && validMatch ? true : false}>
+                            <p className="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
                             </p>
                             <p className="signup-comments">
@@ -233,7 +358,7 @@ export const Signup = () => {
                         </form>
                     </div>
                 </div>
-            )}
+            }
         </>
     )
 }
