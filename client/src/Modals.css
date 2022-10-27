@@ -1,0 +1,46 @@
+.modalContainer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    padding: 100px;
+    background-color: pink;
+    display: block;
+}
+
+.modalPage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    opacity: 70%;
+    z-index: 2;
+    
+    height: 100%;
+    width: 100%;
+}
+
+/* .modal{
+    z-index: 1;
+} */
+
+.ModalBody{
+    justify-content: left;
+    align-items: center;
+    align-content: center;
+}
+
+.yes-button{
+    background-color: lightblue;
+}
+
+.modal-form-row{
+    display: flex;
+    justify-items: space-between;
+    align-items: center;
+    /* justify-content: center; */
+    width: 100%;
+}
