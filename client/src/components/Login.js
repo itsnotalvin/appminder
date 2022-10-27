@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
+import { redirect } from 'react-router-dom'
 
 const LOGIN_URL = "/users/session";
 
@@ -23,6 +24,22 @@ export const Login = () => {
     useEffect(() => {
         setErrMsg('');
     }, [email, pwd])
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        axios.get('/users/session')
+            .then(res => {
+                if (res.status !== 401) {
+                    setIsAuthenticated(true);
+                }
+            })
+            .catch()
+    }, []);
+
+    if (isAuthenticated) {
+        return <Navigate to='/dashboard' />
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
