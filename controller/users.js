@@ -21,15 +21,15 @@ router.post("/signup", (req, res) => {
             res.json({ message: "Welcome to Appminder" });
           })
           .catch((err) => {
-            
+
             res.status(500).json({})
           });
       }
 
     })
     .catch((err) => {
-        console.log(err, 'this is outside')
-        res.status(500).json({})
+      console.log(err, 'this is outside')
+      res.status(500).json({})
     });
 
 
@@ -40,7 +40,7 @@ router.post("/session", (req, res) => {
   const { email, password } = req.body;
   console.log(email, password, 'inside controller')
   db.query("SELECT id, email, hashed_pw FROM users WHERE email=$1", [email])
-  
+
     .then((dbRes) => {
       if (dbRes.rows.length === 0) {
         return res.status(400).json({
@@ -52,7 +52,7 @@ router.post("/session", (req, res) => {
       const hashedPassword = user.hashed_pw;
       console.log(password, hashedPassword)
       if (isValidPassword(password, hashedPassword)) {
-          console.log(user)
+        console.log(user)
         req.session.email = user.email;
         req.session.user_id = user.id;
         req.session.name = user.first_name;
@@ -65,21 +65,20 @@ router.post("/session", (req, res) => {
       }
     })
     .catch((err) => {
-        console.log(err)
+      console.log(err)
       res.status(500).json({});
-    
+
     });
 });
 
 // Check if user currently logged in
 router.get("/session", (req, res) => {
-  const user_id = req.session.user_id;
-  const name = req.session.name;
+  const email = req.session.email;
 
-  if (!user_id || !name) {
+  if (!email) {
     return res.status(401).json({ message: "Unable to sign in " });
   } else {
-    return res.json({ id: user_id, name: name });
+    return res.json({ email: email });
   }
 });
 
@@ -102,15 +101,15 @@ router.delete("/session", (req, res) => {
 // Update User Details
 
 router.put("/updateUserDetail", (req, res) => {
-    const { id, email, password, secQns, secAns, loggedInUserId } = req.body;
-    const updateUserDetails = ( id, email, password, secQns, secAns) => {
-        if (password === 'undefined' && secAns === 'undefined') {
+  const { id, email, password, secQns, secAns, loggedInUserId } = req.body;
+  const updateUserDetails = (id, email, password, secQns, secAns) => {
+    if (password === 'undefined' && secAns === 'undefined') {
 
 
-        }
     }
+  }
 })
-  
+
 
 
 
