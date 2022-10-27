@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import ReactDom from 'react-dom'
 import axios from 'axios'
+import '../Modals.css';
+import '../App.css'
 
 const ADDAPP_URL = '/jobs'
 
@@ -11,7 +13,10 @@ const MODAL_STYLES = {
     transform: 'translate(-50%, -50%)',
     zIndex: 3,
     padding: '100px',
-    backgroundColor: 'red'
+    backgroundColor: 'red',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'right'
 
 }
 
@@ -79,14 +84,21 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
 
     if (!open) return null
 
-    return (
+    return ReactDom.createPortal(
         <>
-            <div style={OVERLAY_STYLES} onClick={onClose}>
+            <div 
+                className='modalPage' 
+                // style={OVERLAY_STYLES}
+                onClick={onClose}
+            >
             </div>
             {/* add application modal */}
-            <div className='addAppModal'style={MODAL_STYLES}>
+            <div
+                className='modalContainer'
+                // style={MODAL_STYLES}
+             >
                 <div className='ModalHeader'>
-                    This is modal header
+                    
                     <h3>Add a new Job Application</h3>
 
                 </div>
@@ -95,83 +107,114 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
                     
                     <form onSubmit={handleAppSubmit}>
                         {/* add company */}
-                        <label htmlFor="appAddCompany">
-                            Company Name:
-                        </label>
-                        <input
-                            type="text"
-                            autoComplete="off"
-                            required
-                            onChange={(e) => setAppAddCompany(e.target.value)}
-                        />
-                        < br/>
+                        <div className='modal-form-row' >
+                            <div>
+                            <label htmlFor="appAddCompany">
+                                Company Name:
+                            </label>
+                            </div>
+                            
+                            
+
+                            <div>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                required
+                                onChange={(e) => setAppAddCompany(e.target.value)}
+                            />
+                            </div>
+                           
+                        </div>
+                        
                     
 
                         {/* add position */}
-                        <label htmlFor="appAddRole">
-                            Role:
-                        </label>
-                        <input
-                            type="text"
-                            autoComplete="off"
-                            required
-                            onChange={(e) => setAppAddRole(e.target.value)}
-                        />
-                        < br/>
+                        <div className='modal-form-row'>
+                            <div>
+                            <label htmlFor="appAddRole">
+                                Role:
+                            </label>
+
+                            </div>
+                            <div>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                required
+                                onChange={(e) => setAppAddRole(e.target.value)}
+                            />
+
+                            </div>
+                            
+
+                        </div>
 
                         {/* add stage */}
-                        <label htmlFor="appStage">
-                            Stage:
-                        </label>
-                        <select value={appStage} onChange={(e) => setAppStage(e.target.value)}> 
-                            <option value='Draft'>Draft</option>
-                            <option value='Applied'>Applied</option>
-                            <option value='Interviewing'>Interviewing</option>
-                            <option value='Awaiting'>Awaiting</option>
-                        </select>
+                        <div className='modal-form-row'>
+                            <label htmlFor="appStage">
+                                Stage:
+                            </label>
+                            <select value={appStage} onChange={(e) => setAppStage(e.target.value)}> 
+                                <option value='Draft'>Draft</option>
+                                <option value='Applied'>Applied</option>
+                                <option value='Interviewing'>Interviewing</option>
+                                <option value='Awaiting'>Awaiting</option>
+                            </select>
+                        </div>
+                        
                         < br/>
 
-                        {/* add keydate */}                    
-                        <label htmlFor="appKeyDate">
-                            Key Date:
-                        </label>
-                        <input
-                            type="date"
-                            required
-                            onChange={(e) => setAppKeyDate(e.target.value)}
-                        />
-                        < br/>
+                        {/* add keydate */}
+                        <div className='modal-form-row'>
+                            <label htmlFor="appKeyDate">
+                                Key Date:
+                            </label>
+                            <input
+                                type="date"
+                                required
+                                onChange={(e) => setAppKeyDate(e.target.value)}
+                            />
+                        </div>                
+                        
                     
-                        {/* add notes */}                    
-                        <label htmlFor="appKeyDate">
-                            Notes:
-                        </label>
-                        <input
-                            type="text"
-                            autoComplete="off"
-                            onChange={(e) => setAppNotes(e.target.value)}
-                        />
-                        < br/>
+                        {/* add notes */}
+                        <div className='modal-form-row'>
+                            <label htmlFor="appKeyDate">
+                                Notes:
+                            </label>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                onChange={(e) => setAppNotes(e.target.value)}
+                            />
+                        </div>                 
+                        {/* reminder */}
+                        <div className='modal-form-row' >
+
+                        </div>
+                    
                         <br />
-                        <button type='submit'>Add Application</button>
-                        <br />
+                        <div className='modal-form-row'>
+                        <button className='yes-button'type='submit'>Add Application</button>
+                        <button className='no-button' onClick={onClose}>Discard Application</button>
+
+                        </div>
+                        
                     </form>
                     
-
-                    This is modal body
                 </div>
 
                 <div className='ModalFooter'>
-                    <br />
-                    This is modal footer
-                    <button onClick={onClose}>Close Modal</button>
+                    
 
                 </div>                
                 
-                {children}
+                
             </div>
+            {children}
         </>
-        // ,
-        // document.getElementById('portal')
+        ,
+        document.getElementById('portal')
     )
 }

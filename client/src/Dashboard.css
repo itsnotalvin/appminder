@@ -33,8 +33,8 @@
 }
 #main-screen {
     border: 1px solid black;
-    width: 80vw;
-    padding: 10px;
+    width: 80%;
+    padding: 5% 5% 5% 5%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -69,29 +69,60 @@
     flex-direction: column;
     justify-content: center;
 }
+#main-screen{
+    background-color: grey;
+}
 #application-stage-selection {
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
     width: 100%;
-    background-color: aquamarine;
+    /* background-color: orange; */
     border-radius: 10px;
-    margin-bottom: 10px;
+    
 }
-.application-stage-btn {
-    background-color: aquamarine;
+/* .application-stage-btn {
+    background-color: pink;
     padding: 10px;
     cursor: pointer;
     transition: 1s ease all;
     border-radius: 10px;
+} */
+.draft-stage-tab{
+    background-color:#6bc1ff;
+    padding: 1.5vh 2.5vh;
+    min-width: 25%;
+    border-radius: 15px 15px 0 0;
+}
+.applied-stage-tab{
+    background-color:#a9ffcb;
+    padding: 1.5vh 2.5vh;
+    min-width: 25%;
+    border-radius: 15px 15px 0 0;
+}
+.interview-stage-tab{
+    background-color:#fff5bf;
+    padding: 1.5vh 2.5vh;
+    min-width: 25%;
+    border-radius: 15px 15px 0 0;
+}
+.awaiting-stage-tab{
+    background-color:#ff9cc0;
+    padding: 1.5vh 2.5vh;
+    min-width: 25%;
+    border-radius: 15px 15px 0 0;
 }
 #application-content {
     background-color: aquamarine;
     height: 80%;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 10px;
+    padding-top: 1vh;
+    overflow-y: auto;
+    
 }
 #application-detail-header {
     display: flex;
     justify-content: space-evenly;
+    padding: 1vh 0vh;
 }
 .application-stage-btn:hover {
     background-color: blueviolet;
@@ -107,6 +138,7 @@
 .core-job-details {
     display: flex;
     justify-content: space-evenly;
+    
 }
 .expanded-job-content {
     flex-direction: column;
