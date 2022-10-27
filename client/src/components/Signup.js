@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios"
+import { Navigate } from 'react-router-dom'
+import '../SignupLogin.css'
 
 const REGISTER_URL = '/users/signup'
 
@@ -31,7 +33,7 @@ export const Signup = () => {
     const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
-  
+
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
 
@@ -82,19 +84,19 @@ export const Signup = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        
+
         try {
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ first_name: firstName,last_name: lastName ,email: email, hashed_pw: pwd }),
+                JSON.stringify({ first_name: firstName, last_name: lastName, email: email, hashed_pw: pwd }),
                 {
-                    headers: { 'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             );
-            const accessToken = response?.data. accessToken;
+            const accessToken = response?.data.accessToken;
             console.log(response.data);
             console.log(response.accessToken);
-            
+
             // clear input fields after submit
             setFirstName("");
             setLastName("");
@@ -104,7 +106,7 @@ export const Signup = () => {
             setSuccess(true);
 
         } catch (err) {
-            if(!err?.response) {
+            if (!err?.response) {
                 setErrMsg('No server Response');
             } else if (err.response?.status === 409) {
                 setErrMsg('Username already associated with an account');
@@ -118,135 +120,120 @@ export const Signup = () => {
 
     return (
         <>
-        {success ? (
-            <section>
-                <h1>Success!</h1>
-            </section>
-        ) : (
-        <div className="RegisterBox">
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Register</h1>
+            {success ? (
+                <Navigate to='/login' replace={true} />
+            ) : (
+                <div className="signup-container">
+                    <div className="RegisterBox">
+                        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                        <h1>Register</h1>
 
-            <form onSubmit={handleSubmit}>
-                {/* firstname */}
-                <label htmlFor="firstName">
-                    First Name:
-                </label>
-                <input
-                    type="text"
-                    id="firstName"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                    aria-invalid={validFirstName ? "false" : "true"}
-                    aria-describedby="fnnote"
-                    onFocus={() => setFirstNameFocus(true)}
-                    onBlur={() => setFirstNameFocus(false)}
-                 />
-                 {/* <p id="fnnote" className={firstNameFocus && firstName && !validFirstName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
+                        <form onSubmit={handleSubmit}>
+                            {/* firstname */}
+                            <input
+                                type="text"
+                                id="firstName"
+                                ref={userRef}
+                                autoComplete="off"
+                                placeholder="First Name"
+                                onChange={(e) => setFirstName(e.target.value)}
+                                required
+                                aria-invalid={validFirstName ? "false" : "true"}
+                                aria-describedby="fnnote"
+                                onFocus={() => setFirstNameFocus(true)}
+                                onBlur={() => setFirstNameFocus(false)}
+                            />
+                            {/* <p id="fnnote" className={firstNameFocus && firstName && !validFirstName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
                  </p> */}
-                 < br/>
-
-                 {/* lastname */}
-                <label htmlFor="lastName">
-                    Last Name:
-                </label>
-                <input
-                    type="text"
-                    id="lastName"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                    aria-invalid={validLastName ? "false" : "true"}
-                    aria-describedby="lnnote"
-                    onFocus={() => setLastNameFocus(true)}
-                    onBlur={() => setLastNameFocus(false)}
-                 />
-                 {/* <p id="lnnote" className={lastNameFocus && lastName && !validLastName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
+                            {/* lastname */}
+                            <input
+                                type="text"
+                                id="lastName"
+                                ref={userRef}
+                                autoComplete="off"
+                                placeholder="Last Name"
+                                onChange={(e) => setLastName(e.target.value)}
+                                required
+                                aria-invalid={validLastName ? "false" : "true"}
+                                aria-describedby="lnnote"
+                                onFocus={() => setLastNameFocus(true)}
+                                onBlur={() => setLastNameFocus(false)}
+                            />
+                            {/* <p id="lnnote" className={lastNameFocus && lastName && !validLastName ? "instructions" : "offscreen"}>Must only contain alphabetical letters
                  </p> */}
+                            {/* email */}
+                            <input
+                                type="text"
+                                id="email"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                aria-invalid={validEmail ? "false" : "true"}
+                                aria-describedby="emailnote"
+                                onFocus={() => setEmailFocus(true)}
+                                onBlur={() => setEmailFocus(false)}
+                                placeholder="Email Address"
+                            />
+                            {/* <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>Enter a valid email followed by @ to valid hosting address<br /> sample text</p> */}
 
-                 < br/>
+                            {/* password */}
+                            <span className={validPwd ? "valid" : "hide"}>
+                            </span>
+                            <span className={validPwd || !pwd ? "hide" : "invalid"}>
 
-                 {/* email */}
-                <label htmlFor="email">
-                    Email:
-                </label>
-                <input
-                    type="text"
-                    id="email"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    aria-invalid={validEmail ? "false" : "true"}
-                    aria-describedby="emailnote"
-                    onFocus={() => setEmailFocus(true)}
-                    onBlur={() => setEmailFocus(false)}
-                    placeholder="youremail@emailaddress.com"
-                 />
-                 {/* <p id="emailnote" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>Enter a valid email followed by @ to valid hosting address<br /> sample text</p> */}
-                 < br/>
+                            </span>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={(e) => setPwd(e.target.value)}
+                                required
+                                aria-invalid={validPwd ? "false" : "true"}
+                                aria-describedby="pwdnote"
+                                onFocus={() => setPwdFocus(true)}
+                                onBlur={() => setPwdFocus(false)}
+                                placeholder="Password"
+                            />
+                            <p id="pwdnote" className={pwdFocus && !validPwd ? 'instruction pwdnote' : 'offscreen pwdnote'}>
+                                8 to 24 characters
+                            </p>
+                            <p className="signup-comments">
+                                Must include uppercase and lower letters 1 special character and 1 special number
+                            </p>
 
-                 {/* password */}
-                 <label htmlFor="password">
-                     Password
-                     <span className={validPwd ? "valid" : "hide" }>
-                     </span>
-                     <span className={validPwd || !pwd ? "hide" : "invalid"}>
+                            {/* confirm password */}
+                            <input
+                                type="password"
+                                id="confirm_pwd"
+                                onChange={(e) => setMatchPwd(e.target.value)}
+                                value={matchPwd}
+                                required
+                                aria-invalid={validMatch ? "false" : "true"}
+                                aria-describedby="confirmnote"
+                                onFocus={() => setMatchFocus(true)}
+                                onBlur={() => setMatchFocus(false)}
+                                className="form-control form-control-lg"
+                                placeholder="Confirm Password"
+                            />
+                            <p
+                                id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                                Must match the first password input field.
+                            </p>
+                            {/* submit button */}
 
-                     </span>
-                 </label>
-                 <input
-                    type="password"
-                    id="password"
-                    onChange={(e) => setPwd(e.target.value)}
-                    required
-                    aria-invalid={validPwd? "false" : "true"}
-                    aria-describedby="pwdnote"
-                    onFocus={() => setPwdFocus(true)}
-                    onBlur={() => setPwdFocus(false)}
-                 />
-                 <p id="pwdnote" className={pwdFocus && !validPwd ? "instruction" : "offscreen"}>
-                     8 to 24 characters
-                     Must include uppercase and lower letters 1 special character and 1 special number
-                 </p>
-
-                {/* confirm password */}
-                <label htmlFor="confirm_pwd">Confirm Password:</label>
-                <input
-                  type="password"
-                  id="confirm_pwd"
-                  onChange={(e) => setMatchPwd(e.target.value)}
-                  value={matchPwd}
-                  required
-                  aria-invalid={validMatch ? "false" : "true"}
-                  aria-describedby="confirmnote"
-                  onFocus={() => setMatchFocus(true)}
-                  onBlur={() => setMatchFocus(false)}
-                  className="form-control form-control-lg"
-                  placeholder="Enter a confirm password"
-                />
-                <p
-                  id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                  Must match the first password input field.
-                </p>
-
-                {/* submit button */}
-                <button disable={!validFirstName && validEmail && validPwd  && validMatch ? true : false}>
-                  Start tracking
-                </button>
-                <p>
-                    Already have an account? < br/>
-                    Sign in here!
-                    <a href='/#'></a>
-                </p>
-
-                
-            </form>
-        </div>
-        )}
+                            <p className="submit-btn" disable={!validFirstName && validEmail && validPwd && validMatch ? true : false}>
+                                Start tracking
+                            </p>
+                            <p className="signup-comments">
+                                Already have an account?
+                            </p>
+                            <p className="signup-comments login-via-signup" onClick={() => setSuccess(true)}>
+                                Sign in here!
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
