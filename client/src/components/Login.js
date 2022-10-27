@@ -1,9 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "../axios.js";
-import { Route, BrowserRouter, Routes, Link } from 'react-router-dom';
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
-// import { JobDashboard } from './JobDashBoard.js';
 
 const LOGIN_URL = "/users/session";
 
@@ -90,7 +88,7 @@ export const Login = () => {
                                 placeholder="Password"
                                 required
                             />
-                            <p className="submit-btn">Sign In</p>
+                            <p className="submit-btn" onClick={handleSubmit}>Sign In</p>
 
                             <p className="signup-comments">
                                 Don't have an account?
