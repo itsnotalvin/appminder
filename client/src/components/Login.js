@@ -87,7 +87,7 @@ export const Login = () => {
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
                         <h1>Sign In</h1>
-                        <form onSubmit={handleSubmit}>
+                        <form onFormSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 id="email"
@@ -121,7 +121,7 @@ export const Login = () => {
                             <div className="signup-comments" style={{ display: enterVals ? 'block' : 'none' }}>
                                 <p style={{ color: 'red', margin: 0 }}>Please enter both details</p>
                             </div>
-                            <p className="submit-btn" onClick={handleSubmit}>Sign In</p>
+                            <button className="submit-btn" type='submit' onClick={handleSubmit}>Sign In</button>
 
                             <p className="signup-comments">
                                 Don't have an account?

@@ -71,9 +71,10 @@
     background-color: rgb(255, 255, 255);
     padding: 15px 50px;
     border-radius: 10px;
-    box-shadow: 0px 0px 15px 4px grey;
-    color: rgba(0, 0, 255, 0.588);
+    /* box-shadow: 0px 0px 15px 4px grey; */
+    color: #6d55ff;
     cursor: pointer;
+    border: none;
 }
 .submit-btn:hover {
     background-color: rgb(208, 208, 208);

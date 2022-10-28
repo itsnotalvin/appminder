@@ -256,7 +256,7 @@ export const Signup = () => {
                     <img src={appminder_logo} id='appminderlogo-landing' />
                         <h1>Register</h1>
 
-                        <form onSubmit={handleSubmit}>
+                        <form onFormSubmit={handleSubmit}>
                             {/* firstname */}
                             <input
                                 type="text"
@@ -381,9 +381,9 @@ export const Signup = () => {
 
                             {/* submit button */}
 
-                            <p className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
+                            <button type ='submit' className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
-                            </p>
+                            </button>
                             <p className="signup-comments">
                                 Already have an account?
                             </p>
