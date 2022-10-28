@@ -29,7 +29,7 @@ export const Signup = () => {
                     setIsAuthenticated(true);
                 }
             })
-            .catch()
+            .catch(err => { })
         userRef.current.focus();
         password = pwdInput.current;
         retypedPassword = retypedPwdInput.current;
@@ -198,8 +198,8 @@ export const Signup = () => {
             axios.post('/email/send', ({
                 email: storedEmail
             }))
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
+                .then(res => { })
+                .catch(err => { })
         }
     }, [success]);
 
@@ -214,10 +214,8 @@ export const Signup = () => {
                         withCredentials: true
                     }
                 );
-                // set stored email so email can be sent
                 setStoredEmail(email);
 
-                // clear input fields after submit
                 setFirstName("");
                 setLastName("");
                 setEmail("");
@@ -250,17 +248,18 @@ export const Signup = () => {
             {success ?
                 <Navigate to='/login' replace={true} /> :
                 <div className="signup-container">
-                    
-                    
+
+
                     <div className="RegisterBox">
-                    <img src={appminder_logo} id='appminderlogo-landing' />
+                        <img src={appminder_logo} id='appminderlogo-landing' />
                         <h1>Register</h1>
 
-                        <form onFormSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             {/* firstname */}
                             <input
                                 type="text"
                                 id="firstName"
+                                className="login-inp"
                                 ref={userRef}
                                 autoComplete="off"
                                 placeholder="First Name"
@@ -282,6 +281,7 @@ export const Signup = () => {
                             <input
                                 type="text"
                                 id="lastName"
+                                className="login-inp"
                                 ref={userRef}
                                 autoComplete="off"
                                 placeholder="Last Name"
@@ -300,6 +300,7 @@ export const Signup = () => {
                             <input
                                 type="email"
                                 id="email"
+                                className="login-inp"
                                 ref={userRef}
                                 autoComplete="off"
                                 onChange={(e) => {
@@ -324,6 +325,7 @@ export const Signup = () => {
                             <input
                                 type="password"
                                 ref={pwdInput}
+                                className="login-inp"
                                 id="password"
                                 onChange={(e) => {
                                     setPwd(e.target.value)
@@ -371,17 +373,11 @@ export const Signup = () => {
                                 aria-describedby="confirmnote"
                                 onFocus={() => setMatchFocus(true)}
                                 onBlur={() => setMatchFocus(false)}
-                                className="form-control form-control-lg"
+                                className="form-control form-control-lg login-inp"
                                 placeholder="Confirm Password"
                             />
-
-                        
-
-
-
                             {/* submit button */}
-
-                            <button type ='submit' className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
+                            <button type='submit' className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
                             </button>
                             <p className="signup-comments">
@@ -392,7 +388,7 @@ export const Signup = () => {
                             </p>
                         </form>
                     </div>
-                    
+
                 </div>
             }
         </>

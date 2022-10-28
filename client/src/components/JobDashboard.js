@@ -1,14 +1,40 @@
 import '../Dashboard.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { JobDetails } from './JobDetails.js'
 import { ApplicationsView } from './ApplicationsView';
+import { ProfileView } from './ProfileView';
 import { ArchiveView } from './ArchiveView';
-import { Logout } from './Logout.js';
 import { LogoutModal } from './LogoutModal.js'
 import appminder_logo from '../images/appminder_logo.png'
 import { Navigate } from 'react-router-dom'
 import { LoadingScreen } from './LoadingScreen';
+
+const data = [
+    {
+        "id": "elixir",
+        "label": "elixir",
+        "value": 196,
+        "color": "hsl(127, 70%, 50%)"
+    },
+    {
+        "id": "lisp",
+        "label": "lisp",
+        "value": 410,
+        "color": "hsl(104, 70%, 50%)"
+    },
+    {
+        "id": "python",
+        "label": "python",
+        "value": 151,
+        "color": "hsl(109, 70%, 50%)"
+    },
+    {
+        "id": "ruby",
+        "label": "ruby",
+        "value": 54,
+        "color": "hsl(11, 70%, 50%)"
+    }
+];
 
 export const JobDashboard = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -18,16 +44,12 @@ export const JobDashboard = () => {
     const [componentToView, setComponentToView] = useState
         (<ApplicationsView />);
     const [username, setUsername] = useState('');
-
-
-
     const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [appBreakdown, setAppBreakdown] = useState({});
     useEffect(() => {
         axios.get('/users/session')
             .then(res => {
-                console.log(res);
                 if (res.status !== 401) {
-                    console.log('authenticated');
                     setIsAuthenticated(true);
                     setIsLoading(false);
                 }
@@ -38,6 +60,40 @@ export const JobDashboard = () => {
             .catch(err => setIsAuthenticated(false))
     }, []);
 
+    const updateAppBreakdown = ({ draftCount, appliedCount, interviewingCount, awaitingCount }) => {
+        // setAppBreakdown({
+        //     draft: draftCount,
+        //     applied: appliedCount,
+        //     interviewing: interviewingCount,
+        //     awaiting: awaitingCount
+        // });
+        console.log(draftCount);
+        setAppBreakdown([{
+            "id": "Draft",
+            "label": "Draft",
+            "value": draftCount,
+            "color": "hsl(127, 70%, 50%)"
+        },
+        {
+            "id": "Applied",
+            "label": "Applied",
+            "value": appliedCount,
+            "color": "hsl(104, 70%, 50%)"
+        },
+        {
+            "id": "Interviewing",
+            "label": "Interviewing",
+            "value": interviewingCount,
+            "color": "hsl(109, 70%, 50%)"
+        },
+        {
+            "id": "Awaiting",
+            "label": "Awaiting",
+            "value": awaitingCount,
+            "color": "hsl(11, 70%, 50%)"
+        }])
+    };
+
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
@@ -45,7 +101,10 @@ export const JobDashboard = () => {
             })
             .catch(err => { })
         if (viewPage === 'Applications') {
-            setComponentToView(<ApplicationsView />)
+            setComponentToView(<ApplicationsView updateAppBreakdown={updateAppBreakdown} />)
+        }
+        else if (viewPage === 'Profile') {
+            setComponentToView(<ProfileView data={appBreakdown} />)
         }
         else {
             setComponentToView(<ArchiveView />)
@@ -60,7 +119,6 @@ export const JobDashboard = () => {
     }, [jobInfo])
 
     const closeModal = (bool) => {
-        console.log('hello siddarth')
         setIsOpen(bool);
     };
 
@@ -80,9 +138,8 @@ export const JobDashboard = () => {
 
                     <div className='nav-btn-container'>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
-
+                        <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
-
                         <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>
                         {isOpen && <LogoutModal className='modal' open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></LogoutModal>}
                     </div>

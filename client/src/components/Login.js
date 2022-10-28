@@ -3,7 +3,6 @@ import axios from "axios";
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
 import appminder_logo from '../images/appminder_logo.png'
-import { redirect } from 'react-router-dom'
 
 const LOGIN_URL = "/users/session";
 
@@ -35,7 +34,7 @@ export const Login = () => {
                     setIsAuthenticated(true);
                 }
             })
-            .catch()
+            .catch(err => { })
     }, []);
 
     if (isAuthenticated) {
@@ -55,7 +54,6 @@ export const Login = () => {
 
                     });
                 setPwd('');
-                console.log('logged in');
                 setSuccess(true);
             } catch (err) {
                 if (!err?.response) {
@@ -87,11 +85,12 @@ export const Login = () => {
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
                         <h1>Sign In</h1>
-                        <form onFormSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 id="email"
                                 ref={userRef}
+                                className='login-inp'
                                 autoComplete="off"
                                 onChange={(e) => {
                                     setEmail(e.target.value)
@@ -106,6 +105,7 @@ export const Login = () => {
                                 type="password"
                                 id="password"
                                 ref={userRef}
+                                className='login-inp'
                                 onChange={(e) => {
                                     setPwd(e.target.value)
                                     setErrMsg("")

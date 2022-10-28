@@ -2,9 +2,10 @@ import { JobDetails } from "./JobDetails";
 import { useState, useEffect } from "react";
 import '../Dashboard.css';
 import '../ApplicationModals.css';
+import '../Modals.css';
 import axios from 'axios';
 import { useDrop } from 'react-dnd';
-import dateFormat, { masks } from 'dateformat';
+import dateFormat from 'dateformat';
 import AddAppModal from './AddAppModal.js';
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody';
@@ -14,7 +15,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export const ApplicationsView = () => {
+export const ApplicationsView = ({ updateAppBreakdown }) => {
     const [jobInfo, setJobInfo] = useState([]);
     const [selectedTab, setSelectedTab] = useState('Draft');
     const [infoChange, setInfoChange] = useState(0);
@@ -39,7 +40,6 @@ export const ApplicationsView = () => {
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
-                console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
     }, [selectedTab, infoChange, droppedIntoStage, isOpen]);
@@ -47,37 +47,25 @@ export const ApplicationsView = () => {
     useEffect(() => {
         axios.get('/jobs/categoryCount')
             .then(res => {
-                console.log('calling api to get job count by category');
                 const draftCategory = res.data.filter(category => category.app_stage === 'Draft');
-                if (draftCategory.length) {
-                    setDraftCount(draftCategory[0].count)
-                }
-                else {
-                    setDraftCount(0);
-                }
+                draftCategory.length ? setDraftCount(draftCategory[0].count) : setDraftCount(0);
                 const appliedCategory = res.data.filter(category => category.app_stage === 'Applied');
-                if (appliedCategory.length) {
-                    setAppliedCount(appliedCategory[0].count)
-                }
-                else {
-                    setAppliedCount(0);
-                }
+                appliedCategory.length ? setAppliedCount(appliedCategory[0].count) : setAppliedCount(0);
                 const interviewingCategory = res.data.filter(category => category.app_stage === 'Interviewing');
-                if (interviewingCategory.length) {
-                    setInterviewingCount(interviewingCategory[0].count)
-                }
-                else {
-                    setInterviewingCount(0);
-                }
+                interviewingCategory.length ? setInterviewingCount(interviewingCategory[0].count) : setInterviewingCount(0);
                 const awaitingCategory = res.data.filter(category => category.app_stage === 'Awaiting');
-                if (awaitingCategory.length) {
-                    setAwaitingCount(awaitingCategory[0].count)
-                }
-                else {
-                    setAwaitingCount(0);
-                }
+                awaitingCategory.length ? setAwaitingCount(awaitingCategory[0].count) : setAwaitingCount(0);
             })
     }, [infoChange, droppedIntoStage]);
+
+    useEffect(() => {
+        updateAppBreakdown({
+            draftCount: draftCount,
+            appliedCount: appliedCount,
+            interviewingCount: interviewingCount,
+            awaitingCount: awaitingCount
+        });
+    }, [draftCount, appliedCount, interviewingCount, awaitingCount]);
 
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
@@ -103,7 +91,6 @@ export const ApplicationsView = () => {
             notes: appToUpdateNotes
         })
             .then(res => {
-                console.log('calling api to update job info');
                 changedJobInfo();
             })
     };
@@ -123,7 +110,6 @@ export const ApplicationsView = () => {
     const dropIntoDraft = (id) => {
         axios.patch(`/jobs/updateJobStage/Draft/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Draft`);
                 setDroppedIntoStage(`Drafted ${id}`);
             })
     };
@@ -139,7 +125,6 @@ export const ApplicationsView = () => {
     const dropIntoApplied = (id) => {
         axios.patch(`/jobs/updateJobStage/Applied/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Applied`);
                 setDroppedIntoStage(`Applied ${id}`);
             })
     };
@@ -155,7 +140,6 @@ export const ApplicationsView = () => {
     const dropIntoInterviewing = (id) => {
         axios.patch(`/jobs/updateJobStage/Interviewing/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Interviewing`);
                 setDroppedIntoStage(`Interviewing ${id}`);
             })
     };
@@ -171,7 +155,6 @@ export const ApplicationsView = () => {
     const dropIntoAwaiting = (id) => {
         axios.patch(`/jobs/updateJobStage/Awaiting/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Awaiting`);
                 setDroppedIntoStage(`Awaiting ${id}`);
             })
     };
@@ -197,25 +180,17 @@ export const ApplicationsView = () => {
 
     return (
         <>
-
-
             <header id='application-bar'>
                 <h2>Applications</h2>
-
-
                 <button className='add-application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
                 <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} changedJobInfo={changedJobInfo} />
             </header>
 
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-
                     <div className='app-stage-tab draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft <br />({draftCount})</div>
-
                     <div className='app-stage-tab applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied <br />({appliedCount})</div>
-
                     <div className='app-stage-tab interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing <br />({interviewingCount})</div>
-
                     <div className='app-stage-tab awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting <br />({awaitingCount})</div>
                 </div>
                 <TableContainer component={Paper}>
@@ -241,50 +216,46 @@ export const ApplicationsView = () => {
             </div>
 
             {/* MODAL */}
-            <div onClick={() => setModalClass('modal')}>
-                <div className={modalClass}>
-                    <div className='modal-box'>
-                        <div className='modal-content'>
-                            <h3>Update Application</h3>
-                            <div className='update-app-field'>
-                                <label htmlFor="job_title">Job Title</label>
-                                <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onChange={(e) => e.preventDefault()} />
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="company_name">Company Name</label>
-                                <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onChange={(e) => e.preventDefault()} />
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="app_stage_dropdown">Application Stage</label>
-                                <select name="app-stage" id="app_stage_dropdown" value={appToUpdateStage} onChange={updateAppStage}>
-                                    <option value='Draft'>Draft</option>
-                                    <option value='Applied'>Applied</option>
-                                    <option value='Interviewing'>Interviewing</option>
-                                    <option value='Awaiting'>Awaiting</option>
-                                </select>
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="key_date">Key Date</label>
-                                <input value={appToUpdateKeyDate} id='key_date' type='date' onChange={updateKeyDate} />
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="notes">Notes</label>
-                                <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
-                            </div>
-                            <div className='update-app-btn-group'>
-                                <button className='yes-button'
+            <div className={modalClass}>
+                <div className='modal-box'>
+                    <div className='modal-content'>
+                        <h3>Update Application</h3>
+                        <div className='update-app-field'>
+                            <label htmlFor="job_title">Job Title</label>
+                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp login-inp add-inp' onChange={(e) => e.preventDefault()} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="company_name">Company Name</label>
+                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp login-inp add-inp' onChange={(e) => e.preventDefault()} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="app_stage_dropdown">Application Stage</label>
+                            <select name="app-stage" id="app_stage_dropdown" className='login-inp add-inp' value={appToUpdateStage} onChange={updateAppStage}>
+                                <option value='Draft'>Draft</option>
+                                <option value='Applied'>Applied</option>
+                                <option value='Interviewing'>Interviewing</option>
+                                <option value='Awaiting'>Awaiting</option>
+                            </select>
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="key_date">Key Date</label>
+                            <input value={appToUpdateKeyDate} id='key_date' className='login-inp add-inp' type='date' onChange={updateKeyDate} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="notes">Notes</label>
+                            <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
+                        </div>
+                        <div className='submit-btns modal-form-row'>
+                            <button className='add-app-btn yes-button'
                                 onClick={updateAppAction}>Update Application
-                                </button>
-                                <button 
-                                className='no-button'
+                            </button>
+                            <button
+                                className='add-app-btn no-button'
                                 onClick={() => setModalClass('modal')}>Discard Update</button>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </>
-
     )
 };

@@ -1,9 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-body {
-    margin: 0;
-}
 @media screen and (min-width: 400px) {
     #application-bar>h2 {
             font-size: 20px;
@@ -126,19 +120,6 @@ body {
     border: 0;
     font-family: 'Comfortaa', cursive;
     font-family: 'Montserrat Alternates', sans-serif;
-}
-.application-btn {
-    background-color: aquamarine;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: 1s ease all;
-    border-radius: 10px;
-}
-.application-btn:hover {
-    background-color: blueviolet;
 }
 #applications-display {
     width: 90%;
@@ -343,6 +324,9 @@ body {
     width: 100%;
     margin: 5px;
     text-align: justify;
+}
+.notes-content.text {
+    margin-left: 1.2rem;
 }
 .icon-mod {
     cursor: pointer;
