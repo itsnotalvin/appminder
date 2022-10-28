@@ -31,14 +31,13 @@ const OVERLAY_STYLES = {
     zIndex: 2
 }
 
-
 export default function AddAppModal({ open, children, onClose, closeModal, changedJobInfo }) {
     const userRef = useRef();
     const errRef = useRef();
 
     const [appAddCompany, setAppAddCompany] = useState('');
     const [appAddRole, setAppAddRole] = useState('');
-    const [appStage, setAppStage] = useState('');
+    const [appStage, setAppStage] = useState('Draft');
     const [appKeyDate, setAppKeyDate] = useState('');
     const [appNotes, setAppNotes] = useState('');
     const [appReminder, setAppReminder] = useState(false)
@@ -50,7 +49,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
         setErrMsg('');
     }, [appAddCompany])
 
-    
+
 
     const handleAppSubmit = async (e) => {
         e.preventDefault();
@@ -87,14 +86,14 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
         <>
             <div
                 className='modalPage'
-                
+
                 onClick={onClose}
             >
             </div>
             {/* add application modal */}
             <div
                 className='modalContainer'
-            
+
             >
                 <div className='ModalHeader'>
 
@@ -197,11 +196,11 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             <label htmlFor="appReminder">
                                 Reminders?
                             </label>
-                            <input 
-                            type='checkbox'
-                            className=''
-                            onChange={(e) => setAppReminder(e.target.value)}
-                            
+                            <input
+                                type='checkbox'
+                                className=''
+                                onChange={(e) => setAppReminder(e.target.value)}
+
                             />
 
 
