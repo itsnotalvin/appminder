@@ -6,8 +6,13 @@ import axios from 'axios';
 import { useDrop } from 'react-dnd';
 import dateFormat, { masks } from 'dateformat';
 import AddAppModal from './AddAppModal.js';
-
-
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 export const ApplicationsView = () => {
     const [jobInfo, setJobInfo] = useState([]);
@@ -208,29 +213,32 @@ export const ApplicationsView = () => {
             <div id='applications-display'>
                 <div id='application-stage-selection'>
 
-                    <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft <br/>({draftCount})</div>
+                    <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft <br />({draftCount})</div>
 
-                    <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied <br/>({appliedCount})</div>
+                    <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied <br />({appliedCount})</div>
 
-                    <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing <br/>({interviewingCount})</div>
+                    <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing <br />({interviewingCount})</div>
 
-                    <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting <br/>({awaitingCount})</div>
+                    <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting <br />({awaitingCount})</div>
                 </div>
-                <div id='application-module'
-                    style={{
-                        backgroundColor: selectedTabColor[selectedTab]
-                    }}>
-                    <div id='application-detail-header'>
-                        <span>Company</span>
-                        <span>Position</span>
-                        <span>Key Date</span>
-                        <span>Last Updated</span>
-                        <span>Set Reminder</span>
-                        <span>Details</span>
-                        <span>Archive</span>
-                    </div>
-                    <JobDetails jobs={jobInfo} selected={selectedTab} changedJobInfo={changedJobInfo} updateAppModal={updateAppModal} />
-                </div>
+                <TableContainer component={Paper}>
+                    <Table size="medium" sx={{ minWidth: 650 }} aria-label="application-table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Company</TableCell>
+                                <TableCell>Position</TableCell>
+                                <TableCell>Key Date</TableCell>
+                                <TableCell align="right">Last Updated</TableCell>
+                                <TableCell align="right">Set Reminder</TableCell>
+                                <TableCell align="right">Details</TableCell>
+                                <TableCell align="right">Archive</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <JobDetails jobs={jobInfo} selected={selectedTab} changedJobInfo={changedJobInfo} updateAppModal={updateAppModal} />
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
 
             {/* MODAL */}
