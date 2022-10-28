@@ -18,7 +18,7 @@ export const JobDashboard = () => {
     const [componentToView, setComponentToView] = useState
         (<ApplicationsView />);
     const [username, setUsername] = useState('');
-    
+
 
 
     const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -41,9 +41,9 @@ export const JobDashboard = () => {
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
-                
                 setJobInfo(res.data)
             })
+            .catch(err => { })
         if (viewPage === 'Applications') {
             setComponentToView(<ApplicationsView />)
         }
@@ -56,35 +56,35 @@ export const JobDashboard = () => {
         if (jobInfo.length) {
             setUsername(jobInfo[0].first_name)
         }
-        
+
     }, [jobInfo])
 
     const closeModal = (bool) => {
         console.log('hello siddarth')
         setIsOpen(bool);
     };
-    
+
     return (
         isAuthenticated ? (isLoading ? <LoadingScreen /> : <div id='dashboard'>
             <div id='side-panel'>
                 <div id='side-panel-content'>
                     <div className='home-logo'>
-                        <div onClick={() => setViewPage('Applications')}>  
-                        <img src={appminder_logo} id='appminderlogo' />
+                        <div onClick={() => setViewPage('Applications')}>
+                            <img src={appminder_logo} id='appminderlogo' />
 
                         </div>
                     </div>
                     <div>
-                        <h3>Hello, {username}</h3>
+                        <h3 className='welcome'>Hello, {username}</h3>
                     </div>
 
                     <div className='nav-btn-container'>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
-                        
+
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
 
                         <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>
-                        {isOpen && <LogoutModal className='modal' open={isOpen} closeModal={closeModal}onClose={() => setIsOpen(false)}></LogoutModal>}
+                        {isOpen && <LogoutModal className='modal' open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)}></LogoutModal>}
                     </div>
                 </div>
             </div>

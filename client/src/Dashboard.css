@@ -1,6 +1,19 @@
 * {
     box-sizing: border-box;
 }
+body {
+    margin: 0;
+}
+@media screen and (min-width: 400px) {
+    #application-bar>h2 {
+            font-size: 20px;
+        }
+}
+@media screen and (min-width: 800px) {
+    #application-bar>h2 {
+        font-size: 25px;
+    }
+}
 #dashboard {
     height: 100vh;
     display: flex;
@@ -8,10 +21,10 @@
 }
 #side-panel {
     border: 1px solid black;
-    width: 20vw;
     background-color: #6d55ff;
     color: white;
     display: flex;
+    width: 20vw;
     flex-direction: column;
 }
 #side-panel-content {
@@ -23,38 +36,55 @@
     align-items: center;
 }
 @media screen and (min-width: 601px) {
-    div.nav-btn-container {
-      font-size: 20px;
+    div.nav-btn {
+      font-size: 2.1vw;
     }
+  }
+
+  @media screen and (min-width: 750px) {
+      div.nav-btn {
+          font-size: 15px;
+      }
+  }
+
+  @media screen and (min-width: 1000px) {
+      div.nav-btn, .welcome, .main-screen {
+            font-size: 25px;
+      }
   }
   
 @media screen and (max-width: 600px) {
-    div.nav-btn-container {
+    div.nav-btn {
       font-size: 10px;
     }
   }
 
 .nav-btn-container{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .nav-btn {
-    padding: 10% 20%;
     cursor: pointer;
     transition: 1s ease all;
-    
-    min-width: 50%;
     width: 100%;
-    border: 15%;
-    
+    display: flex;
+    /* justify-content: flex-start; */
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    /* padding: 0.25rem 0.4rem; */
 }
 .nav-btn:hover {
     background-color: aqua;
 }
 #main-screen {
     border: 1px solid #cdfcff;
-    width: 80%;
     padding: 5% 5% 5% 5%;
     display: flex;
+    width: 85%;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -63,21 +93,36 @@
 #application-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 90%;
     padding: 10px;
 }
+@media screen and (max-width: 600px) {
+    .add-application-btn {
+        height: 20px;
+        font-size: 8px;
+        border-radius: 10px;
+    }
+}
+@media screen and (min-width: 601px) {
+    .add-application-btn {
+        height: 35px;
+        border-radius: 20px;
+    }
+}
 .add-application-btn{
     background-color:#6d55ff;
-    padding: 10px;
+    padding: 4px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: 1s ease all;
-    border-radius: 10px;
     color: #ffffff;
     font-weight: bold;
     border: 0;
+    font-family: 'Comfortaa', cursive;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 .application-btn {
     background-color: aquamarine;
@@ -110,83 +155,64 @@
     display: flex;
     justify-content: left;
     width: 100%;
-    /* background-color: orange; */
     border-radius: 10px;
     
 }
-/* .application-stage-btn {
-    background-color: pink;
-    padding: 10px;
-    cursor: pointer;
-    transition: 1s ease all;
-    border-radius: 10px;
-} */
-.draft-stage-tab{
-    background-color:#6bc1ff;
-    padding: 1.5vh 2.5vh;
+.app-stage-tab {
+    padding: 1.5vh 0;
     min-width: 25%;
     border-radius: 15px 15px 0 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.draft-stage-tab{
+    background-color:#6bc1ff;
 }
 @media (hover: hover) and (pointer: fine) {
     .draft-stage-tab:hover{
         background-color: #85cafb;
         cursor: pointer;
-
     }
     .applied-stage-tab:hover{
         background-color: #c2fad9;
         cursor: pointer;
-    
     }
     .awaiting-stage-tab:hover{
         background-color: #f8c1d5;
         cursor: pointer;
-    
     }
     .interview-stage-tab:hover{
         background-color: #fffadc;
         cursor: pointer;
-    
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .app-stage-tab {
+        font-size: 8px;
+    }
+}
+@media screen and (min-width: 501px) {
+    .app-stage-tab {
+        font-size: 12px;
+    }
+}
+@media screen and (min-width: 1001px) {
+    .app-stage-tab {
+        font-size: 15px;
     }
 }
 
 .applied-stage-tab{
     background-color:#a9ffcb;
-    padding: 1.5vh 2.5vh;
-    min-width: 25%;
-    border-radius: 15px 15px 0 0;
-    text-align: center;
 }
-/* .applied-stage-tab:hover{
-    background-color: #c2fad9;
-    cursor: pointer;
-
-} */
 .interview-stage-tab{
     background-color:#fff5bf;
-    padding: 1.5vh 2.5vh;
-    min-width: 25%;
-    border-radius: 15px 15px 0 0;
-    text-align: center;
 }
-/* .interview-stage-tab:hover{
-    background-color: #fbf5cf;
-    cursor: pointer;
-
-} */
 .awaiting-stage-tab{
     background-color:#ff9cc0;
-    padding: 1.5vh 2.5vh;
-    min-width: 25%;
-    border-radius: 15px 15px 0 0;
-    text-align: center;
 }
-/* .awaiting-stage-tab:hover{
-    background-color: #f8c1d5;
-    cursor: pointer;
-
-} */
 #application-content {
     background-color: aquamarine;
     height: 80%;
@@ -332,8 +358,11 @@
     #appminderlogo {
         padding-top: 15%;
         padding-bottom: 10%;
-        
-        /* height:fit-content; */
-        
+        width: 20vw;
+    }
+}
+@media screen and (min-width: 750px) {
+    #appminderlogo {
+        width: 35vw;
     }
 }
