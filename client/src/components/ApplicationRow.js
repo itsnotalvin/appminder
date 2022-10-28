@@ -79,11 +79,10 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
                         !archived ? <ArchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, true)} /> : <UnarchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, false)} />
                     }
                 </TableCell>
-                <TableCell align='right' className='app-archive'>
-                    {
-                        archived ? <DeleteForeverIcon className='icon-mod' onClick={() => changeDeleteStatus(id, true)} /> : <></>
-                    }
-                </TableCell>
+                {
+                    archived && <TableCell align='right' className='app-archive'> <DeleteForeverIcon className='icon-mod' onClick={() => changeDeleteStatus(id, true)} />
+                    </TableCell>
+                }
                 {/* </div> */}
             </TableRow>
             <TableCell colSpan={7} style={{ display: !hideJobDetails && 'none' }} id={id}>

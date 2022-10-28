@@ -219,7 +219,7 @@ export const ApplicationsView = () => {
                     <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting <br />({awaitingCount})</div>
                 </div>
                 <TableContainer component={Paper}>
-                    <Table size="medium" sx={{ minWidth: 800 }} aria-label="application-table">
+                    <Table size="medium" sx={{ minWidth: 650 }} aria-label="application-table">
                         <TableHead style={{
                             backgroundColor: selectedTabColor[selectedTab]
                         }}>
