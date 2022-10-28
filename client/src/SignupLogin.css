@@ -72,6 +72,8 @@
     color: #6d55ff;
     cursor: pointer;
     border: none;
+    font-family: 'Comfortaa', cursive;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 @media screen and (max-width:350px) {
     .submit-btn {
