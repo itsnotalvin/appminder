@@ -184,10 +184,10 @@ export const ApplicationsView = () => {
     }
 
     const selectedTabColor = {
-        'Draft': 'blue',
-        'Applied': 'orange',
-        'Interviewing': 'silver',
-        'Awaiting': 'gold',
+        'Draft': '#6bc1ff',
+        'Applied': '#a9ffcb',
+        'Interviewing': '#fff5bf',
+        'Awaiting': '#ff9cc0',
     }
 
     return (
@@ -208,13 +208,13 @@ export const ApplicationsView = () => {
             <div id='applications-display'>
                 <div id='application-stage-selection'>
 
-                    <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft ({draftCount})</div>
+                    <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft <br/>({draftCount})</div>
 
-                    <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied ({appliedCount})</div>
+                    <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied <br/>({appliedCount})</div>
 
-                    <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing ({interviewingCount})</div>
+                    <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing <br/>({interviewingCount})</div>
 
-                    <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting ({awaitingCount})</div>
+                    <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting <br/>({awaitingCount})</div>
                 </div>
                 <div id='application-module'
                     style={{

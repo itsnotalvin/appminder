@@ -124,24 +124,28 @@
     padding: 1.5vh 2.5vh;
     min-width: 25%;
     border-radius: 15px 15px 0 0;
+    text-align: center;
 }
 .applied-stage-tab{
     background-color:#a9ffcb;
     padding: 1.5vh 2.5vh;
     min-width: 25%;
     border-radius: 15px 15px 0 0;
+    text-align: center;
 }
 .interview-stage-tab{
     background-color:#fff5bf;
     padding: 1.5vh 2.5vh;
     min-width: 25%;
     border-radius: 15px 15px 0 0;
+    text-align: center;
 }
 .awaiting-stage-tab{
     background-color:#ff9cc0;
     padding: 1.5vh 2.5vh;
     min-width: 25%;
     border-radius: 15px 15px 0 0;
+    text-align: center;
 }
 #application-content {
     background-color: aquamarine;
@@ -153,7 +157,7 @@
 #application-module {
     background-color: white;
     height: 80%;
-    border-radius: 0 10px 10px 10px;
+    border-radius: 0 0 10px 10px;
     padding-top: 1vh;
     overflow-y: auto;   
 }

@@ -188,7 +188,8 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             <label htmlFor="appKeyDate">
                                 Notes:
                             </label>
-                            <input
+                            <textarea
+                                className='textarea'
                                 type="text"
                                 autoComplete="off"
                                 onChange={(e) => setAppNotes(e.target.value)}
