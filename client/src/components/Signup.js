@@ -163,6 +163,7 @@ export const Signup = () => {
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
+    const [storedEmail, setStoredEmail] = useState('');
 
 
     const [pwd, setPwd] = useState('');
@@ -191,6 +192,16 @@ export const Signup = () => {
         setValidEmail(email ? true : false);
     }, [email])
 
+    useEffect(() => {
+        if (success === true) {
+            axios.post('/email/send', ({
+                email: storedEmail
+            }))
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        }
+    }, [success]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validFirstName && validLastName && validEmail && allValid) {
@@ -202,6 +213,8 @@ export const Signup = () => {
                         withCredentials: true
                     }
                 );
+                // set stored email so email can be sent
+                setStoredEmail(email);
 
                 // clear input fields after submit
                 setFirstName("");
