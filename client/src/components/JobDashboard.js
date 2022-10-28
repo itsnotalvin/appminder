@@ -72,7 +72,7 @@ export const JobDashboard = () => {
                         <h3>Hello, first name</h3>
                     </div>
 
-                    <div>
+                    <div className='nav-btn-container'>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
                         <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>

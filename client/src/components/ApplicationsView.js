@@ -152,7 +152,7 @@ export const ApplicationsView = () => {
                 <h2>Applications</h2>
 
 
-                <button className='application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
+                <button className='add-application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
                 <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} />
             </header>
 
@@ -160,12 +160,19 @@ export const ApplicationsView = () => {
 
             <div id='applications-display'>
                 <div id='application-stage-selection'>
+                    
                     <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
+
                     <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied</div>
+
                     <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
+
                     <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
                 </div>
-                <div id='application-content'>
+                <div id='application-module' 
+                style={{
+                    backgroundColor: isInAwaiting && 'purple'
+                }}>
                     <div id='application-detail-header'>
                         <span>Company</span>
                         <span>Position</span>
