@@ -19,7 +19,11 @@ export const ApplicationsView = () => {
     const [appToUpdateStage, setAppToUpdateStage] = useState('');
     const [appToUpdateNotes, setAppToUpdateNotes] = useState('');
     const [appToUpdateKeyDate, setAppToUpdateKeyDate] = useState('1900-01-01');
-    
+    const [draftCount, setDraftCount] = useState(0);
+    const [appliedCount, setAppliedCount] = useState(0);
+    const [interviewingCount, setInterviewingCount] = useState(0);
+    const [awaitingCount, setAwaitingCount] = useState(0);
+
     const [isOpen, setIsOpen] = useState(false);
 
     const [appToUpdateOtherInfo, setAppToUpdateOtherInfo] = useState({
@@ -34,6 +38,42 @@ export const ApplicationsView = () => {
                 setJobInfo(res.data)
             })
     }, [selectedTab, infoChange, droppedIntoStage, isOpen]);
+
+    useEffect(() => {
+        axios.get('/jobs/categoryCount')
+            .then(res => {
+                console.log('calling api to get job count by category');
+                const draftCategory = res.data.filter(category => category.app_stage === 'Draft');
+                if (draftCategory.length) {
+                    setDraftCount(draftCategory[0].count)
+                }
+                else {
+                    setDraftCount(0);
+                }
+                const appliedCategory = res.data.filter(category => category.app_stage === 'Applied');
+                if (appliedCategory.length) {
+                    setAppliedCount(appliedCategory[0].count)
+                }
+                else {
+                    setAppliedCount(0);
+                }
+                const interviewingCategory = res.data.filter(category => category.app_stage === 'Interviewing');
+                if (interviewingCategory.length) {
+                    setInterviewingCount(interviewingCategory[0].count)
+                }
+                else {
+                    setInterviewingCount(0);
+                }
+                const awaitingCategory = res.data.filter(category => category.app_stage === 'Awaiting');
+                if (awaitingCategory.length) {
+                    setAwaitingCount(awaitingCategory[0].count)
+                }
+                else {
+                    setAwaitingCount(0);
+                }
+            })
+    }, [infoChange, droppedIntoStage]);
+
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
     };
@@ -160,26 +200,26 @@ export const ApplicationsView = () => {
 
 
                 <button className='add-application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
-                <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} />
+                <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} changedJobInfo={changedJobInfo} />
             </header>
 
             {/* working hereworking hereworking hereworking here */}
 
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-                    
-                    <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft</div>
 
-                    <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied</div>
+                    <div className='draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft ({draftCount})</div>
 
-                    <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing</div>
+                    <div className='applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied ({appliedCount})</div>
 
-                    <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting</div>
+                    <div className='interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing ({interviewingCount})</div>
+
+                    <div className='awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting ({awaitingCount})</div>
                 </div>
-                <div id='application-module' 
-                style={{
-                    backgroundColor: selectedTabColor[selectedTab]
-                }}>
+                <div id='application-module'
+                    style={{
+                        backgroundColor: selectedTabColor[selectedTab]
+                    }}>
                     <div id='application-detail-header'>
                         <span>Company</span>
                         <span>Position</span>
@@ -195,44 +235,44 @@ export const ApplicationsView = () => {
 
             {/* MODAL */}
             <div onClick={() => setModalClass('modal')}>
-            <div className={modalClass}>
-                <div className='modal-box'>
-                    <div className='modal-content'>
-                        <h3>Update Application</h3>
-                        <div className='update-app-field'>
-                            <label htmlFor="job_title">Job Title</label>
-                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onChange={(e) => e.preventDefault()} />
-                        </div>
-                        <div className='update-app-field'>
-                            <label htmlFor="company_name">Company Name</label>
-                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onChange={(e) => e.preventDefault()} />
-                        </div>
-                        <div className='update-app-field'>
-                            <label htmlFor="app_stage_dropdown">Application Stage</label>
-                            <select name="app-stage" id="app_stage_dropdown" value={appToUpdateStage} onChange={updateAppStage}>
-                                <option value='Draft'>Draft</option>
-                                <option value='Applied'>Applied</option>
-                                <option value='Interviewing'>Interviewing</option>
-                                <option value='Awaiting'>Awaiting</option>
-                            </select>
-                        </div>
-                        <div className='update-app-field'>
-                            <label htmlFor="key_date">Key Date</label>
-                            <input value={appToUpdateKeyDate} id='key_date' type='date' onChange={updateKeyDate} />
-                        </div>
-                        <div className='update-app-field'>
-                            <label htmlFor="notes">Notes</label>
-                            <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
-                        </div>
-                        <div className='update-app-btn-group'>
-                            <span onClick={updateAppAction}>Update Application</span>
-                            <span onClick={() => setModalClass('modal')}>Discard Update</span>
+                <div className={modalClass}>
+                    <div className='modal-box'>
+                        <div className='modal-content'>
+                            <h3>Update Application</h3>
+                            <div className='update-app-field'>
+                                <label htmlFor="job_title">Job Title</label>
+                                <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onChange={(e) => e.preventDefault()} />
+                            </div>
+                            <div className='update-app-field'>
+                                <label htmlFor="company_name">Company Name</label>
+                                <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onChange={(e) => e.preventDefault()} />
+                            </div>
+                            <div className='update-app-field'>
+                                <label htmlFor="app_stage_dropdown">Application Stage</label>
+                                <select name="app-stage" id="app_stage_dropdown" value={appToUpdateStage} onChange={updateAppStage}>
+                                    <option value='Draft'>Draft</option>
+                                    <option value='Applied'>Applied</option>
+                                    <option value='Interviewing'>Interviewing</option>
+                                    <option value='Awaiting'>Awaiting</option>
+                                </select>
+                            </div>
+                            <div className='update-app-field'>
+                                <label htmlFor="key_date">Key Date</label>
+                                <input value={appToUpdateKeyDate} id='key_date' type='date' onChange={updateKeyDate} />
+                            </div>
+                            <div className='update-app-field'>
+                                <label htmlFor="notes">Notes</label>
+                                <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
+                            </div>
+                            <div className='update-app-btn-group'>
+                                <span onClick={updateAppAction}>Update Application</span>
+                                <span onClick={() => setModalClass('modal')}>Discard Update</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-            
+
         </>
 
     )

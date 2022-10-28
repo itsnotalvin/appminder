@@ -5,12 +5,21 @@ const Jobs = require('../models/Jobs.js');
 
 router.get('/allUserJobs', (request, response) => {
     const loggedInEmail = request.session.email;
-    // const loggedInEmail = 'sid@sid.com';
     Jobs.getUsersJobs(loggedInEmail)
         .then(dbRes => {
             response.json(dbRes.rows)
         })
         .catch(err => response.status(500).json({ message: 'Unknown error has occurred on our end, sorry!' }))
+});
+
+router.get('/categoryCount', (request, response) => {
+    const loggedInEmail = request.session.email;
+    Jobs.getCategoryCount(loggedInEmail)
+        .then(dbRes => {
+            console.log(dbRes.rows);
+            response.json(dbRes.rows)
+        })
+        .catch(err => response.status(500).json({ message: 'Could not fetch job count for user due to internal server error!' }))
 });
 
 router.post('/', (request, response) => {

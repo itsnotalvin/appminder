@@ -5,10 +5,11 @@ import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import { useState } from 'react';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useDrag } from 'react-dnd';
 import dateFormat, { masks } from 'dateformat';
 
-export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus, updateAppModal }) => {
+export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus, updateAppModal, changeDeleteStatus }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
     const { id, job_title, company_name, app_stage, key_date, archived, completed, deleted, last_updated, notes, set_reminder } = jobInfo;
 
@@ -49,7 +50,7 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
                 </div>
                 <div className='app-archive'>
                     {
-                        !archived ? <ArchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, true)} /> : <UnarchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, false)} />
+                        !archived ? <ArchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, true)} /> : <><UnarchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, false)} /> <DeleteForeverIcon className='icon-mod' onClick={() => changeDeleteStatus(id, true)} /></>
                     }
                 </div>
             </div>
