@@ -49,7 +49,7 @@ body {
 
   @media screen and (min-width: 1000px) {
       div.nav-btn, .welcome, .main-screen {
-            font-size: 25px;
+            font-size: 20px;
       }
   }
   
@@ -71,14 +71,14 @@ body {
     transition: 1s ease all;
     width: 100%;
     display: flex;
-    /* justify-content: flex-start; */
     align-items: center;
     justify-content: center;
-    margin: 1rem 0;
-    /* padding: 0.25rem 0.4rem; */
+    padding: 1rem 0;
 }
-.nav-btn:hover {
-    background-color: aqua;
+@media (hover:hover) and (pointer:fine) {
+    .nav-btn:hover {
+            background-color: #ada1fd;
+        }
 }
 #main-screen {
     border: 1px solid #cdfcff;

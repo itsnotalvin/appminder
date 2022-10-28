@@ -28,7 +28,7 @@ export const ArchiveView = () => {
             </header>
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-                    <div className='draft-stage-tab'>Archive<br /></div>
+                    <div className='app-stage-tab draft-stage-tab'>Archive<br /></div>
                 </div>
                 <TableContainer component={Paper}>
                     <Table size="medium" sx={{ minWidth: 650 }} aria-label="archive-table">
