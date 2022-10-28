@@ -143,6 +143,13 @@ export const ApplicationsView = () => {
         setIsOpen(bool);
     }
 
+    const selectedTabColor = {
+        'Draft': 'blue',
+        'Applied': 'orange',
+        'Interviewing': 'silver',
+        'Awaiting': 'gold',
+    }
+
     return (
         <>
 
@@ -171,7 +178,7 @@ export const ApplicationsView = () => {
                 </div>
                 <div id='application-module' 
                 style={{
-                    backgroundColor: isInAwaiting && 'purple'
+                    backgroundColor: selectedTabColor[selectedTab]
                 }}>
                     <div id='application-detail-header'>
                         <span>Company</span>

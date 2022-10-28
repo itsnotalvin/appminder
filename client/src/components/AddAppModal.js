@@ -40,7 +40,8 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
     const [appAddRole, setAppAddRole] = useState('');
     const [appStage, setAppStage] = useState('');
     const [appKeyDate, setAppKeyDate] = useState('');
-    const [appNotes, setAppNotes] = useState('');    
+    const [appNotes, setAppNotes] = useState(''); 
+    const [appReminder, setAppReminder] = useState('')   
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState('false')
@@ -175,7 +176,10 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
                                 required
                                 onChange={(e) => setAppKeyDate(e.target.value)}
                             />
-                        </div>                
+                        </div>   
+                        <div className='modal-form-row'>
+                            test
+                        </div>             
                         
                     
                         {/* add notes */}
