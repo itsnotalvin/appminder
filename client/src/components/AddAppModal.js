@@ -98,7 +98,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
             >
                 <div className='ModalHeader'>
 
-                    <h3>Add a new Job Application</h3>
+                    <h2>Add a new Job Application</h2>
 
                 </div>
 

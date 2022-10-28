@@ -63,6 +63,10 @@ body, html {
   align-self: center;
 }
 
+#appminderlogo:hover{
+  cursor: pointer;
+}
+
 #appminderlogo-landing {
   display: flex;
   max-width: 10vh;

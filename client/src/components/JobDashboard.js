@@ -75,7 +75,7 @@ export const JobDashboard = () => {
                         </div>
                     </div>
                     <div>
-                        <h3>Hello, {username}</h3>
+                        <h2>Hello, {username}</h2>
                     </div>
 
                     <div className='nav-btn-container'>
