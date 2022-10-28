@@ -6,7 +6,7 @@ const Jobs = {
         return db.query(sql, [email])
     },
     getCategoryCount: (email) => {
-        const sql = 'SELECT jobs.app_stage,count(jobs.app_stage) FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 GROUP BY jobs.app_stage';
+        const sql = 'SELECT jobs.app_stage,count(jobs.app_stage) FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 AND jobs.archived = FALSE AND jobs.completed = FALSE and jobs.deleted = FALSE GROUP BY jobs.app_stage';
         return db.query(sql, [email])
     },
     checkJobExists: (email, job_title, company_name) => {
