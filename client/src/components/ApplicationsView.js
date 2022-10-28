@@ -271,8 +271,12 @@ export const ApplicationsView = () => {
                                 <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
                             </div>
                             <div className='update-app-btn-group'>
-                                <span onClick={updateAppAction}>Update Application</span>
-                                <span onClick={() => setModalClass('modal')}>Discard Update</span>
+                                <button className='yes-button'
+                                onClick={updateAppAction}>Update Application
+                                </button>
+                                <button 
+                                className='no-button'
+                                onClick={() => setModalClass('modal')}>Discard Update</button>
                             </div>
                         </div>
                     </div>

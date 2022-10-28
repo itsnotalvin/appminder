@@ -37,7 +37,7 @@
 }
 
 .yes-button{
-    background-color: limegreen;
+    background-color: #78f8ab;
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -45,10 +45,11 @@
     cursor: pointer;
     transition: 1s ease all;
     border-radius: 10px;
+    border: 0;
 }
 
 .no-button{
-    background-color: orange;
+    background-color: #ffea72;
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -56,6 +57,7 @@
     cursor: pointer;
     transition: 1s ease all;
     border-radius: 10px;
+    border: 0;
 }
 
 .modal-form-row{
