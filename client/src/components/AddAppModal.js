@@ -146,8 +146,6 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             </select>
                         </div>
 
-                        < br />
-
                         {/* add keydate */}
                         <div className='modal-form-row'>
                             <label htmlFor="appKeyDate">
@@ -189,7 +187,6 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             } />
                         </div>
 
-                        <br />
                         <div className='modal-form-row submit-btns'>
                             <button className='add-app-btn yes-button' type='submit'>Add Application</button>
                             <button className='add-app-btn no-button' onClick={onClose}>Discard Application</button>
