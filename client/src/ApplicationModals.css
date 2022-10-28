@@ -38,7 +38,7 @@
     background-color: gray;
     caret-color: transparent;
 }
-select,input,textarea {
+select,textarea {
     margin: 0.5rem;
     padding: 10px;
     border-radius: 10px;

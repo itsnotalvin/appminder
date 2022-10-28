@@ -29,7 +29,7 @@
     padding-top: 5%;
 }
 .RegisterBox > h1 {
-    margin-top: 0;
+    margin-top: 0.25rem;
 }
 .RegisterBox > form {
     display: flex;
@@ -50,8 +50,10 @@
     margin: 1% 10%;
     max-width: 250px;
 }
-.RegisterBox > form > input {
-    border-radius: 10px;
+.login-inp {
+    margin: 0.5rem;
+    padding: 10px;
+    border: 0;
     width: 60%;
     max-width: 250px;
 }
@@ -69,18 +71,30 @@
 }
 .submit-btn {
     background-color: rgb(255, 255, 255);
-    padding: 15px 50px;
-    border-radius: 10px;
-    /* box-shadow: 0px 0px 15px 4px grey; */
+    margin: 1rem;
     color: #6d55ff;
     cursor: pointer;
     border: none;
 }
-.submit-btn:hover {
-    background-color: rgb(208, 208, 208);
+@media screen and (max-width:350px) {
+    .submit-btn {
+        padding: 5px 15px;
+    }
 }
-.submit-btn:active {
-    box-shadow: 0px 0px 0px 0px;
+@media screen and (min-width:351px){
+    .submit-btn {
+        padding: 5px 30px;
+    }
+}
+@media screen and (min-width:601px) {
+    .submit-btn {
+        padding: 10px 50px;
+    }
+}
+@media (hover:hover) and (pointer:fine) {
+    .submit-btn:hover {
+            background-color: rgb(208, 208, 208);
+        }
 }
 .submit-btn.disabled {
     box-shadow: 0px 0px;

@@ -92,6 +92,7 @@ export const Login = () => {
                                 type="text"
                                 id="email"
                                 ref={userRef}
+                                className='login-inp'
                                 autoComplete="off"
                                 onChange={(e) => {
                                     setEmail(e.target.value)
@@ -106,6 +107,7 @@ export const Login = () => {
                                 type="password"
                                 id="password"
                                 ref={userRef}
+                                className='login-inp'
                                 onChange={(e) => {
                                     setPwd(e.target.value)
                                     setErrMsg("")
