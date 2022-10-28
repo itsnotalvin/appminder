@@ -102,8 +102,12 @@
     flex-direction: column;
     justify-content: flex-start;
 }
-
-
+.no-content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
 #application-stage-selection {
     display: flex;
     justify-content: left;

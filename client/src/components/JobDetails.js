@@ -1,5 +1,7 @@
 import { ApplicationRow } from './ApplicationRow.js';
+import '../Dashboard.css'
 import axios from 'axios';
+import TableCell from '@mui/material/TableCell';
 
 export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) => {
     let displayJobs;
@@ -36,7 +38,10 @@ export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) =
     return (
         <>
             {
-                displayJobs.length ? displayJobs.map((job, index) => <ApplicationRow key={job.id} jobInfo={job} changeReminderStatus={changeReminderStatus} changeArchiveStatus={changeArchiveStatus} updateAppModal={() => updateAppModal(job)} changeDeleteStatus={changeDeleteStatus} />) : <div>Nothing to show!</div>
+                displayJobs.length ? displayJobs.map((job, index) => <ApplicationRow key={job.id} jobInfo={job} changeReminderStatus={changeReminderStatus} changeArchiveStatus={changeArchiveStatus} updateAppModal={() => updateAppModal(job)} changeDeleteStatus={changeDeleteStatus} />) :
+                    <TableCell colSpan={4}>
+                        <h4>Nothing to show!</h4>
+                    </TableCell>
             }
         </>
     )
