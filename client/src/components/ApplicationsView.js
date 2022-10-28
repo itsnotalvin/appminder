@@ -198,7 +198,6 @@ export const ApplicationsView = () => {
     return (
         <>
 
-            {/* working hereworking hereworking hereworking here */}
 
             <header id='application-bar'>
                 <h2>Applications</h2>
@@ -208,7 +207,6 @@ export const ApplicationsView = () => {
                 <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} changedJobInfo={changedJobInfo} />
             </header>
 
-            {/* working hereworking hereworking hereworking here */}
 
             <div id='applications-display'>
                 <div id='application-stage-selection'>

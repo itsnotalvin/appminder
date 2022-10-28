@@ -98,19 +98,4 @@ router.delete("/session", (req, res) => {
 });
 
 
-// Update User Details
-
-router.put("/updateUserDetail", (req, res) => {
-  const { id, email, password, secQns, secAns, loggedInUserId } = req.body;
-  const updateUserDetails = (id, email, password, secQns, secAns) => {
-    if (password === 'undefined' && secAns === 'undefined') {
-
-
-    }
-  }
-})
-
-
-
-
 module.exports = router;

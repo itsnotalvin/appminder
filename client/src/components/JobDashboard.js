@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { JobDetails } from './JobDetails.js'
 import { ApplicationsView } from './ApplicationsView';
 import { ArchiveView } from './ArchiveView';
-import { Profile } from './Profile.js';
 import { Logout } from './Logout.js';
 import { LogoutModal } from './LogoutModal.js'
 import appminder_logo from '../images/appminder_logo.png'
@@ -48,12 +47,6 @@ export const JobDashboard = () => {
         if (viewPage === 'Applications') {
             setComponentToView(<ApplicationsView />)
         }
-        else if (viewPage === 'Profile') {
-            setComponentToView(<Profile />);
-        }
-        else if (viewPage === 'Logout') {
-            setComponentToView(<Logout />);
-        }
         else {
             setComponentToView(<ArchiveView />)
         }
@@ -87,7 +80,7 @@ export const JobDashboard = () => {
 
                     <div className='nav-btn-container'>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
-                        <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
+                        
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
 
                         <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>
