@@ -163,6 +163,7 @@ export const Signup = () => {
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
+    const [storedEmail, setStoredEmail] = useState('');
 
 
     const [pwd, setPwd] = useState('');
@@ -191,6 +192,16 @@ export const Signup = () => {
         setValidEmail(email ? true : false);
     }, [email])
 
+    useEffect(() => {
+        if (success === true) {
+            axios.post('/email/send', ({
+                email: storedEmail
+            }))
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        }
+    }, [success]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validFirstName && validLastName && validEmail && allValid) {
@@ -202,6 +213,8 @@ export const Signup = () => {
                         withCredentials: true
                     }
                 );
+                // set stored email so email can be sent
+                setStoredEmail(email);
 
                 // clear input fields after submit
                 setFirstName("");
@@ -330,11 +343,11 @@ export const Signup = () => {
                                 </ul>
                             </div>
 
-                            <div className="signup-comments" style={{ display: validInputs ? 'none' : 'block', margin: 0 }}>
+                            <div className={validInputs ? "signup-comments" : "signup-comments invalid-input"} style={{ display: validInputs ? 'none' : 'block', margin: 0 }}>
                                 <p style={{ color: 'red' }}>Enter all fields please!</p>
                             </div>
 
-                            <div className="signup-comments" style={{ display: errMsg.length === 0 ? 'block' : 'block', margin: 0 }}>
+                            <div className="signup-comments" style={{ display: errMsg.length === 0 ? 'none' : 'block', margin: 0 }}>
                                 <p style={{ color: 'red' }}>{errMsg}</p>
                             </div>
 
@@ -359,7 +372,7 @@ export const Signup = () => {
                             />
                             {/* submit button */}
 
-                            <p className="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
+                            <p className={validInputs ? "submit-btn" : "submit-btn invalid-input"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
                             </p>
                             <p className="signup-comments">
