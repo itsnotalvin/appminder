@@ -126,6 +126,29 @@
     border-radius: 15px 15px 0 0;
     text-align: center;
 }
+@media (hover: hover) and (pointer: fine) {
+    .draft-stage-tab:hover{
+        background-color: #85cafb;
+        cursor: pointer;
+
+    }
+    .applied-stage-tab:hover{
+        background-color: #c2fad9;
+        cursor: pointer;
+    
+    }
+    .awaiting-stage-tab:hover{
+        background-color: #f8c1d5;
+        cursor: pointer;
+    
+    }
+    .interview-stage-tab:hover{
+        background-color: #fffadc;
+        cursor: pointer;
+    
+    }
+}
+
 .applied-stage-tab{
     background-color:#a9ffcb;
     padding: 1.5vh 2.5vh;
@@ -133,6 +156,11 @@
     border-radius: 15px 15px 0 0;
     text-align: center;
 }
+/* .applied-stage-tab:hover{
+    background-color: #c2fad9;
+    cursor: pointer;
+
+} */
 .interview-stage-tab{
     background-color:#fff5bf;
     padding: 1.5vh 2.5vh;
@@ -140,6 +168,11 @@
     border-radius: 15px 15px 0 0;
     text-align: center;
 }
+/* .interview-stage-tab:hover{
+    background-color: #fbf5cf;
+    cursor: pointer;
+
+} */
 .awaiting-stage-tab{
     background-color:#ff9cc0;
     padding: 1.5vh 2.5vh;
@@ -147,6 +180,11 @@
     border-radius: 15px 15px 0 0;
     text-align: center;
 }
+/* .awaiting-stage-tab:hover{
+    background-color: #f8c1d5;
+    cursor: pointer;
+
+} */
 #application-content {
     background-color: aquamarine;
     height: 80%;
@@ -159,7 +197,8 @@
     height: 80%;
     border-radius: 0 0 10px 10px;
     padding-top: 1vh;
-    overflow-y: auto;   
+    overflow-y: auto;  
+    overflow-x: auto; 
 }
 #application-detail-header {
     display: flex;
@@ -260,4 +299,28 @@
 .icon-mod:hover {
     background-color: rgb(202, 202, 202);
     transition: 0.5s ease all;
+}
+
+
+.home-logo{
+    padding-top: 100px;
+}
+
+
+@media screen and (min-width: 601px) {
+    #appminderlogo {
+        padding-top: 15%;
+        padding-bottom: 10%;
+
+    }
+}
+  
+@media screen and (max-width: 600px) {
+    #appminderlogo {
+        padding-top: 15%;
+        padding-bottom: 10%;
+        
+        /* height:fit-content; */
+        
+    }
 }

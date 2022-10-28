@@ -4,7 +4,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    padding: 100px;
+    padding: 15%;
     background-color: #6d55ff;
     display: block;
     border-radius: 20px;
@@ -37,7 +37,25 @@
 }
 
 .yes-button{
-    background-color: lightblue;
+    background-color: limegreen;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s ease all;
+    border-radius: 10px;
+}
+
+.no-button{
+    background-color: orange;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s ease all;
+    border-radius: 10px;
 }
 
 .modal-form-row{
