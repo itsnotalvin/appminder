@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
+import appminder_logo from '../images/appminder_logo.png'
 import { redirect } from 'react-router-dom'
 
 const LOGIN_URL = "/users/session";
@@ -82,6 +83,7 @@ export const Login = () => {
                     <Navigate to='/dashboard' replace={true} />
                 ) : (
                     <div className="RegisterBox login">
+                        <img src={appminder_logo} id='appminderlogo-landing' />
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
                         <h1>Sign In</h1>

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios"
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
+import appminder_logo from '../images/appminder_logo.png'
 
 const REGISTER_URL = '/users/signup'
 
@@ -249,7 +250,10 @@ export const Signup = () => {
             {success ?
                 <Navigate to='/login' replace={true} /> :
                 <div className="signup-container">
+                    
+                    
                     <div className="RegisterBox">
+                    <img src={appminder_logo} id='appminderlogo-landing' />
                         <h1>Register</h1>
 
                         <form onSubmit={handleSubmit}>
@@ -388,6 +392,7 @@ export const Signup = () => {
                             </p>
                         </form>
                     </div>
+                    
                 </div>
             }
         </>
