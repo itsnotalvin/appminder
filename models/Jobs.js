@@ -5,6 +5,10 @@ const Jobs = {
         const sql = 'SELECT jobs.id,jobs.job_title,jobs.company_name,jobs.app_stage,jobs.key_date,jobs.set_reminder,jobs.archived,jobs.completed,jobs.deleted,jobs.notes,jobs.last_updated FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 ORDER BY jobs.key_date ASC';
         return db.query(sql, [email])
     },
+    getCategoryCount: (email) => {
+        const sql = 'SELECT jobs.app_stage,count(jobs.app_stage) FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE email = $1 GROUP BY jobs.app_stage';
+        return db.query(sql, [email])
+    },
     checkJobExists: (email, job_title, company_name) => {
         const sql = 'SELECT jobs.id FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE users.email = $1 AND jobs.job_title = $2 AND jobs.company_name = $3';
         return db.query(sql, [email, job_title, company_name])
