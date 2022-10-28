@@ -1,11 +1,15 @@
 import '../LoadingScreen.css'
+import appminder_logo from '../images/appminder_logo.png'
+import ReactDom from 'react-dom';
 
 export const LoadingScreen = () => {
-    return (
-        <div className='background-container'>
-            <div className='main-box'>
-                Loading...
+    return ReactDom.createPortal(
+        <>
+            <div className='background-container'>
+                <img src={appminder_logo} id='appminderlogo' />
             </div>
-        </div>
+        </>
+        ,
+        document.getElementById('portal')
     )
 };

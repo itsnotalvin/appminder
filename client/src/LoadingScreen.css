@@ -1,5 +1,4 @@
 .background-container {
-    background-color: rgba(213, 213, 213, 0.5);
     height: 100vh;
     width: 100vw;
     top: 0;
@@ -10,16 +9,7 @@
     background-color: aqua;
 }
 
-.main-box {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    max-width: 650px;
-    align-items: center;
-    background-color: rgb(74, 74, 252);
-    color: white;
-    border: 0;
-    box-shadow: 0px 0px 10px 10px rgba(0, 0, 255, 0.588);
-    padding: 10px;
-    border-radius: 15px;
+.main-box > img {
+    width: 90%;
+    height: auto;
 }
