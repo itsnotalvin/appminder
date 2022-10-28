@@ -87,7 +87,7 @@ export const JobDashboard = () => {
 
                     <div className='nav-btn-container'>
                         <div className='nav-btn' onClick={() => setViewPage('Applications')} >Applications</div>
-                        <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div>
+                        {/* <div className='nav-btn' onClick={() => setViewPage('Profile')} >Profile</div> */}
                         <div className='nav-btn' onClick={() => setViewPage('Archive')}>Archive</div>
 
                         <div className='nav-btn' onClick={() => setIsOpen(true)} >Sign Out</div>

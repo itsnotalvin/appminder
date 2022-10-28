@@ -4,17 +4,20 @@ import { useState, useEffect } from 'react'
 
 
 export const Profile = () => {
-    const [jobInfo, setJobInfo] = useState([]);
-    const [infoChange, setInfoChange] = useState(0);
+    const [userDetails, setUserDetails] = useState([]);
+    const { id, first_name, last_name, email, sec_qns, sec_ans } = userDetails;
+    
     useEffect(() => {
-        axios.get('/jobs/allUserJobs')
+        console.log('calling use effect')
+        axios.get('/users/getUsersDetails')        
             .then(res => {
-                setJobInfo(res.data)
-            })
-    }, [infoChange]);
-    const changedJobInfo = () => {
-        setInfoChange(infoChange === 0 ? 1 : 0);
-    };
+                console.log(`trying to get user details from API`)
+                setUserDetails(res.data)
+                console.log(res.data)
+                
+            } )
+    }, []);
+    
     return (
         <>
         
@@ -49,16 +52,42 @@ export const Profile = () => {
             </header>
             <div id='applications-display'>
                 <div id='application-content'>
-                    {/* <div id='application-detail-header'>
-                        <span>Company</span>
-                        <span>Position</span>
-                        <span>Key Date</span>
-                        <span>Last Updated</span>
-                        <span>Set Reminder</span>
-                        <span>Details</span>
-                        <span>Unarchive</span>
+                    <div id='profile-name'>
+                        <div>
+                            <h2>First Name</h2>
+                        </div>
+                        <div>
+                            <h2>Last Name</h2>
+                        </div>
                     </div>
-                    <JobDetails jobs={jobInfo} selected={'Archive'} changedJobInfo={changedJobInfo} /> */}
+                    <div>Details:
+                        <ul>
+                            <li>{userDetails[0].first_name}</li>
+                            <li>{userDetails[0].last_name}</li>
+                            <li>{userDetails[0].email}</li>
+                            <li>{userDetails[0].hashed_pw}</li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+
+                    
+                    <div id='profile-email'>
+                        Email
+                    </div>
+                    <div id='profile-password'>
+                        Password ******
+                    </div>
+                    <div id='profile-reminder'>
+                        <label htmlFor='reminder'>Reminder days:</label>
+                        <input
+                        type='number' 
+                        min='1'
+                        max='31'
+                        />
+                    </div>
+                    <button>Change Password</button>
                 </div>
             </div>
         </>

@@ -294,7 +294,7 @@ export const Signup = () => {
                             />
                             {/* email */}
                             <input
-                                type="text"
+                                type="email"
                                 id="email"
                                 ref={userRef}
                                 autoComplete="off"
@@ -370,6 +370,11 @@ export const Signup = () => {
                                 className="form-control form-control-lg"
                                 placeholder="Confirm Password"
                             />
+
+                        
+
+
+
                             {/* submit button */}
 
                             <p className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
