@@ -13,10 +13,7 @@ const User = {
         const sql = 'SELECT hashed_pw FROM users WHERE email = $1';
         return db.query(sql, [email])
     },
-    getUsersDetail: (email) => {
-        const sql = 'SELECT * FROM users WHERE email = $1';
-        return db.query(sql, [email])
-    }
+    
 };
 
 module.exports = User;

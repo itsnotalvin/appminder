@@ -8,6 +8,14 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useDrag } from 'react-dnd';
 import dateFormat, { masks } from 'dateformat';
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveStatus, updateAppModal, changeDeleteStatus }) => {
     const [hideJobDetails, setHideJobDetails] = useState(false);
@@ -39,14 +47,15 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
 
 
     return (
-        <div className={vibrateId === id ? 'job-row shake' : 'job-row'} style={{ opacity: isDragging ? '0.5' : '1' }} ref={drag}>
-            <div className='core-job-details'>
-                <div className='app-name'>{company_name}</div>
-                <div className='app-title'>{job_title}</div>
-                <div className='app-keydate'>{formattedKeyDate}</div>
-                <div className='app-lastupdated'>{lastUpdatedDateTime}</div>
+        <>
+            <TableRow className={vibrateId === id ? 'job-row shake' : 'job-row'} style={{ opacity: isDragging ? '0.5' : '1' }} ref={drag}>
+                {/* <div className='core-job-details'> */}
+                <TableCell className='app-name'>{company_name}</TableCell>
+                <TableCell className='app-title'>{job_title}</TableCell>
+                <TableCell className='app-keydate'>{formattedKeyDate}</TableCell>
+                <TableCell align='right' className='app-lastupdated'>{lastUpdatedDateTime}</TableCell>
                 {
-                    !archived && <div className='app-notification'>
+                    !archived && <TableCell align='right' className='app-notification'>
                         {
                             set_reminder ? <NotificationsActiveIcon className='icon-mod' onClick={() => {
                                 vibrateApplicationRow(id)
@@ -58,30 +67,31 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
                             }
                             } />
                         }
-                    </div>
+                    </TableCell>
                 }
-                <div className='app-expand'>
+                <TableCell align='right' className='app-expand'>
                     {
                         !hideJobDetails ? <ArrowDropDownIcon className='icon-mod' onClick={() => expandJobDetails(id)} /> : <ArrowDropUpIcon className='icon-mod' onClick={() => expandJobDetails(id)} />
                     }
-                </div>
-                <div className='app-archive'>
+                </TableCell>
+                <TableCell align='right' className='app-archive'>
                     {
                         !archived ? <ArchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, true)} /> : <><UnarchiveIcon className='icon-mod' onClick={() => changeArchiveStatus(id, false)} /> <DeleteForeverIcon className='icon-mod' onClick={() => changeDeleteStatus(id, true)} /></>
                     }
-                </div>
-            </div>
-            <div style={{ display: !hideJobDetails ? 'none' : 'flex' }} className='expanded-job-content' id={id}>
-                <div>
-                    <strong style={{ margin: 0, padding: 0 }}>Notes</strong>
-                </div>
+                </TableCell>
+                {/* </div> */}
+            </TableRow>
+            <TableCell colSpan={7} style={{ display: !hideJobDetails && 'none' }} id={id}>
                 <div className='notes-and-appUpdateBtn'>
-                    <span className='notes-block'>{notes}</span>
-                    {
-                        !archived && <span className='application-btn' onClick={() => updateAppModal(true)}>Update Application</span>
-                    }
+                    <div className='notes-content'>{notes}</div>
+                    <div className='notes-content'>
+                        {
+                            !archived && <span className='application-btn' onClick={() => updateAppModal(true)}>Update Application</span>
+                        }
+                    </div>
                 </div>
-            </div>
-        </div>
+            </TableCell>
+        </>
     )
 };
+

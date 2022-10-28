@@ -98,31 +98,4 @@ router.delete("/session", (req, res) => {
 });
 
 
-// Update User Details
-
-router.put("/updateUserDetail", (req, res) => {
-  const { id, email, password, secQns, secAns, loggedInUserId } = req.body;
-  const updateUserDetails = (id, email, password, secQns, secAns) => {
-    if (password === 'undefined' && secAns === 'undefined') {
-
-
-    }
-  }
-})
-
-// Get User Details
-
-router.get('/getUsersDetails', (req, res) => {
-  const email = req.session.email;
-  User.getUsersDetail(email)
-    .then(dbRes => {
-      console.log(dbRes.rows);
-      res.json(dbRes.rows)
-    })
-    .catch(err => res.status(500).json({message: 'error on our end cannot fetch'}))
-})
-
-
-
-
 module.exports = router;
