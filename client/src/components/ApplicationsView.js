@@ -15,7 +15,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export const ApplicationsView = () => {
+export const ApplicationsView = ({ updateAppBreakdown }) => {
     const [jobInfo, setJobInfo] = useState([]);
     const [selectedTab, setSelectedTab] = useState('Draft');
     const [infoChange, setInfoChange] = useState(0);
@@ -57,6 +57,15 @@ export const ApplicationsView = () => {
                 awaitingCategory.length ? setAwaitingCount(awaitingCategory[0].count) : setAwaitingCount(0);
             })
     }, [infoChange, droppedIntoStage]);
+
+    useEffect(() => {
+        updateAppBreakdown({
+            draftCount: draftCount,
+            appliedCount: appliedCount,
+            interviewingCount: interviewingCount,
+            awaitingCount: awaitingCount
+        });
+    }, [draftCount, appliedCount, interviewingCount, awaitingCount]);
 
     const changedJobInfo = () => {
         setInfoChange(infoChange === 0 ? 1 : 0);
