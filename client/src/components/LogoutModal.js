@@ -68,11 +68,12 @@ export const LogoutModal = ( { closeModal }) => {
                 {/* modal header */}
                 <div>
                     <h2>Are you sure you want to logout?</h2>
+                    < br/>
                 </div>
                 {/* modal body */}
                 <div>
 
-                    <div>
+                    <div className='modal-form-row'>
                         <button className='yes-button'onClick={navigateHome}>Yes</button>
                     
                         <button className='no-button' onClick={() => closeModal(false)}>No</button>

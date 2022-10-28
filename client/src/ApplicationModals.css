@@ -16,7 +16,7 @@
 .modal-box {
     position: absolute;
     background-color: #6d55ff;
-    padding: 1rem 1.5rem;
+    padding: 10%;
     border-radius: 10px;
     z-index: 3;
 }
@@ -25,6 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2.5%
 }
 .view-modal {
     z-index: 1;

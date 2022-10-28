@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios"
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
+import appminder_logo from '../images/appminder_logo.png'
 
 const REGISTER_URL = '/users/signup'
 
@@ -249,10 +250,13 @@ export const Signup = () => {
             {success ?
                 <Navigate to='/login' replace={true} /> :
                 <div className="signup-container">
+                    
+                    
                     <div className="RegisterBox">
+                    <img src={appminder_logo} id='appminderlogo-landing' />
                         <h1>Register</h1>
 
-                        <form onSubmit={handleSubmit}>
+                        <form onFormSubmit={handleSubmit}>
                             {/* firstname */}
                             <input
                                 type="text"
@@ -377,9 +381,9 @@ export const Signup = () => {
 
                             {/* submit button */}
 
-                            <p className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
+                            <button type ='submit' className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
-                            </p>
+                            </button>
                             <p className="signup-comments">
                                 Already have an account?
                             </p>
@@ -388,6 +392,7 @@ export const Signup = () => {
                             </p>
                         </form>
                     </div>
+                    
                 </div>
             }
         </>

@@ -205,6 +205,18 @@ body {
     .app-stage-tab {
         font-size: 15px;
     }
+    .add-application-btn:hover{
+        background-color:#ada1fd;
+        cursor: pointer;
+    }
+    .yes-button:hover{
+        background-color: #c1fbd8;
+        cursor: pointer;
+    }
+    .no-button:hover{
+        background-color: #fff7c9;
+        cursor: pointer;
+    }
 }
 
 .applied-stage-tab{

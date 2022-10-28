@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
+import appminder_logo from '../images/appminder_logo.png'
 import { redirect } from 'react-router-dom'
 
 const LOGIN_URL = "/users/session";
@@ -82,10 +83,11 @@ export const Login = () => {
                     <Navigate to='/dashboard' replace={true} />
                 ) : (
                     <div className="RegisterBox login">
+                        <img src={appminder_logo} id='appminderlogo-landing' />
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
                         <h1>Sign In</h1>
-                        <form onSubmit={handleSubmit}>
+                        <form onFormSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 id="email"
@@ -119,7 +121,7 @@ export const Login = () => {
                             <div className="signup-comments" style={{ display: enterVals ? 'block' : 'none' }}>
                                 <p style={{ color: 'red', margin: 0 }}>Please enter both details</p>
                             </div>
-                            <p className="submit-btn" onClick={handleSubmit}>Sign In</p>
+                            <button className="submit-btn" type='submit' onClick={handleSubmit}>Sign In</button>
 
                             <p className="signup-comments">
                                 Don't have an account?
