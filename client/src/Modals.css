@@ -5,8 +5,9 @@
     transform: translate(-50%, -50%);
     z-index: 3;
     padding: 100px;
-    background-color: pink;
+    background-color: #6d55ff;
     display: block;
+    border-radius: 20px;
 }
 
 .modalPage{
@@ -16,7 +17,7 @@
     right: 0;
     bottom: 0;
     background-color: #000000;
-    opacity: 70%;
+    opacity: 60%;
     z-index: 2;
     
     height: 100%;

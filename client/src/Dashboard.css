@@ -9,36 +9,57 @@
 #side-panel {
     border: 1px solid black;
     width: 20vw;
-    background-color: blue;
+    background-color: #6d55ff;
     color: white;
     display: flex;
     flex-direction: column;
 }
 #side-panel-content {
     display: flex;
-    height: 50vh;
+    height: 50%;
     flex-direction: column;
     justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+@media screen and (min-width: 601px) {
+    div.nav-btn-container {
+      font-size: 20px;
+    }
+  }
+  
+@media screen and (max-width: 600px) {
+    div.nav-btn-container {
+      font-size: 10px;
+    }
+  }
+
+.nav-btn-container{
+    width: 100%;
 }
 .nav-btn {
     border: 1px solid black;
-    padding: 5px;
+    padding: 10% 20%;
     cursor: pointer;
     transition: 1s ease all;
-    margin: 5px;
-    border-radius: 10px;
+    
+    min-width: 50%;
+    width: 100%;
+    border: 15%;
+    
 }
 .nav-btn:hover {
     background-color: aqua;
 }
 #main-screen {
-    border: 1px solid black;
+    border: 1px solid #cdfcff;
     width: 80%;
     padding: 5% 5% 5% 5%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    background-color: #cdfcff;
 }
 #application-bar {
     display: flex;
@@ -46,6 +67,18 @@
     border: 1px solid black;
     width: 90%;
     padding: 10px;
+}
+.add-application-btn{
+    background-color:#6d55ff;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s ease all;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: bold;
 }
 .application-btn {
     background-color: aquamarine;
@@ -69,9 +102,8 @@
     flex-direction: column;
     justify-content: center;
 }
-#main-screen{
-    background-color: grey;
-}
+
+
 #application-stage-selection {
     display: flex;
     justify-content: left;
@@ -116,13 +148,20 @@
     height: 80%;
     border-radius: 0 10px 10px 10px;
     padding-top: 1vh;
-    overflow-y: auto;
-    
+    overflow-y: auto;   
+}
+#application-module {
+    background-color: white;
+    height: 80%;
+    border-radius: 0 10px 10px 10px;
+    padding-top: 1vh;
+    overflow-y: auto;   
 }
 #application-detail-header {
     display: flex;
     justify-content: space-evenly;
     padding: 1vh 0vh;
+    font-weight: bold;
 }
 .application-stage-btn:hover {
     background-color: blueviolet;
@@ -131,9 +170,10 @@
     display: flex;
     flex-direction: column;
     margin: 1rem;
-    background-color: rgb(185, 252, 230);
+    background-color: #dbfdff;
     padding: 0.5rem 0rem;
     border-radius: 10px;
+    
 }
 .core-job-details {
     display: flex;
