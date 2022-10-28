@@ -55,7 +55,6 @@ export const Login = () => {
 
                     });
                 setPwd('');
-                console.log('logged in');
                 setSuccess(true);
             } catch (err) {
                 if (!err?.response) {

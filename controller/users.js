@@ -28,7 +28,6 @@ router.post("/signup", (req, res) => {
 
     })
     .catch((err) => {
-      console.log(err, 'this is outside')
       res.status(500).json({})
     });
 
@@ -38,7 +37,6 @@ router.post("/signup", (req, res) => {
 // User login
 router.post("/session", (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password, 'inside controller')
   db.query("SELECT id, email, hashed_pw FROM users WHERE email=$1", [email])
 
     .then((dbRes) => {
@@ -50,9 +48,7 @@ router.post("/session", (req, res) => {
       }
       const user = dbRes.rows[0];
       const hashedPassword = user.hashed_pw;
-      console.log(password, hashedPassword)
       if (isValidPassword(password, hashedPassword)) {
-        console.log(user)
         req.session.email = user.email;
         req.session.user_id = user.id;
         req.session.name = user.first_name;
@@ -65,7 +61,6 @@ router.post("/session", (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(err)
       res.status(500).json({});
 
     });

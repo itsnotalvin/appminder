@@ -52,7 +52,6 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
 
     const handleAppSubmit = async (e) => {
         e.preventDefault();
-        console.log("trying toi submit")
 
         try {
             const response = await axios.post(ADDAPP_URL,

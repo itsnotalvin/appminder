@@ -12,26 +12,20 @@ export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) =
         displayJobs = jobs.filter(job => job.archived === true && job.deleted !== true)
     }
     const changeReminderStatus = (id, newStatus) => {
-        console.log(`attempting to change reminder status of ${id} to ${newStatus}`);
         axios.patch(`/jobs/updateReminder/${newStatus}/${id}`)
             .then(dbRes => {
-                console.log('changed reminder status');
                 changedJobInfo();
             })
     };
     const changeArchiveStatus = (id, newStatus) => {
-        console.log(`attempting to change archive status of ${id} to ${newStatus}`);
         axios.patch(`/jobs/archiveStatusChange/${newStatus}/${id}`)
             .then(dbRes => {
-                console.log('changed archive status');
                 changedJobInfo();
             })
     };
     const changeDeleteStatus = (id, newStatus) => {
-        console.log(`attempting to delete ${id}`);
         axios.patch(`/jobs/updateDeletionStatus/${newStatus}/${id}`)
             .then(dbRes => {
-                console.log('changed deletion status');
                 changedJobInfo();
             })
     };

@@ -25,9 +25,7 @@ export const JobDashboard = () => {
     useEffect(() => {
         axios.get('/users/session')
             .then(res => {
-                console.log(res);
                 if (res.status !== 401) {
-                    console.log('authenticated');
                     setIsAuthenticated(true);
                     setIsLoading(false);
                 }
@@ -60,7 +58,6 @@ export const JobDashboard = () => {
     }, [jobInfo])
 
     const closeModal = (bool) => {
-        console.log('hello siddarth')
         setIsOpen(bool);
     };
 

@@ -6,7 +6,7 @@ export default function ModalSample() {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <>
-            <div onClick={() => console.log('clicked')}>
+            <div>
                 <button onClick={() => setIsOpen(true)}>Open Modal</button>
 
                 <br />
@@ -14,7 +14,7 @@ export default function ModalSample() {
                     Fancy Modal
 
                 </Modal>
-                < br/>
+                < br />
                 <button>Close Button</button>
             </div>
         </>

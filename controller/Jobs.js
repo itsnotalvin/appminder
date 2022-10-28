@@ -16,7 +16,6 @@ router.get('/categoryCount', (request, response) => {
     const loggedInEmail = request.session.email;
     Jobs.getCategoryCount(loggedInEmail)
         .then(dbRes => {
-            console.log(dbRes.rows);
             response.json(dbRes.rows)
         })
         .catch(err => response.status(500).json({ message: 'Could not fetch job count for user due to internal server error!' }))

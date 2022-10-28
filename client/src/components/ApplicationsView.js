@@ -40,7 +40,6 @@ export const ApplicationsView = () => {
     useEffect(() => {
         axios.get('/jobs/allUserJobs')
             .then(res => {
-                console.log('calling api to get users jobs');
                 setJobInfo(res.data)
             })
     }, [selectedTab, infoChange, droppedIntoStage, isOpen]);
@@ -48,7 +47,6 @@ export const ApplicationsView = () => {
     useEffect(() => {
         axios.get('/jobs/categoryCount')
             .then(res => {
-                console.log('calling api to get job count by category');
                 const draftCategory = res.data.filter(category => category.app_stage === 'Draft');
                 if (draftCategory.length) {
                     setDraftCount(draftCategory[0].count)
@@ -104,7 +102,6 @@ export const ApplicationsView = () => {
             notes: appToUpdateNotes
         })
             .then(res => {
-                console.log('calling api to update job info');
                 changedJobInfo();
             })
     };
@@ -124,7 +121,6 @@ export const ApplicationsView = () => {
     const dropIntoDraft = (id) => {
         axios.patch(`/jobs/updateJobStage/Draft/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Draft`);
                 setDroppedIntoStage(`Drafted ${id}`);
             })
     };
@@ -140,7 +136,6 @@ export const ApplicationsView = () => {
     const dropIntoApplied = (id) => {
         axios.patch(`/jobs/updateJobStage/Applied/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Applied`);
                 setDroppedIntoStage(`Applied ${id}`);
             })
     };
@@ -156,7 +151,6 @@ export const ApplicationsView = () => {
     const dropIntoInterviewing = (id) => {
         axios.patch(`/jobs/updateJobStage/Interviewing/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Interviewing`);
                 setDroppedIntoStage(`Interviewing ${id}`);
             })
     };
@@ -172,7 +166,6 @@ export const ApplicationsView = () => {
     const dropIntoAwaiting = (id) => {
         axios.patch(`/jobs/updateJobStage/Awaiting/${id}`)
             .then(res => {
-                console.log(`Moved ${id} into Awaiting`);
                 setDroppedIntoStage(`Awaiting ${id}`);
             })
     };

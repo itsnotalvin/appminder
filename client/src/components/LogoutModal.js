@@ -39,26 +39,6 @@ export const LogoutModal = ({ closeModal }) => {
         axios.delete('/users/session');
     }
 
-    // const logout = (e) => {
-    //     e.preventDefault();
-    //     console.log('you are trying to log out')
-    //     // axios.delete('/users/session')
-
-    //     try {
-    //         console.log('you have logged out')
-    //         // axios.delete('/users/session')
-    //         // redirect('/')
-    //         axios.delete('/users/session');
-
-    //         redirect('/')
-
-
-    //     } catch (err) {
-    //         setErrMsg('Unable to log out')
-    //     }
-    // }
-
-
     return ReactDom.createPortal(
         <>
             <div className='modalPage' onClick={() => closeModal(false)} >
