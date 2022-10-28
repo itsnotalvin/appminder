@@ -256,7 +256,7 @@ export const Signup = () => {
                         <img src={appminder_logo} id='appminderlogo-landing' />
                         <h1>Register</h1>
 
-                        <form onFormSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             {/* firstname */}
                             <input
                                 type="text"

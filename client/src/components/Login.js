@@ -87,7 +87,7 @@ export const Login = () => {
                         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} ></p>
 
                         <h1>Sign In</h1>
-                        <form onFormSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 id="email"

@@ -10,6 +10,7 @@
     border-radius: 10px;
     flex-direction: column;
     display: flex;
+    align-items: center;
     color: white;
 }
 .ModalHeader {
@@ -39,12 +40,23 @@
     textarea {
         font-size: 8px;
     }
+        #portal > .modalContainer > .submit-btns > .yes-logout, #portal>.modalContainer>.submit-btns>.no-logout {
+        font-size: 13px;
+        width: 50px;
+        height: 30px;
+    }
 }
 
 @media screen and (min-width:501px) {
     #portal {
         font-size: 15px;
     }
+        #portal>.modalContainer>.submit-btns>.yes-logout,
+        #portal>.modalContainer>.submit-btns>.no-logout {
+            font-size: 18px;
+            width: 60px;
+            height: 40px;
+        }
 }
 
 @media screen and (max-width:600px) {
@@ -129,22 +141,27 @@
     }
 }
 
-.yes-button{
+.yes-button, .yes-logout{
     background-color: #6bc1ff;
     box-shadow: 0px 0px 8px 5px #6bc1ff;
 }
 
 @media (hover:hover) and (pointer:fine) {
-    .yes-button:hover {
+    .yes-button:hover, .yes-logout:hover {
             background-color: #85cafb;
     }
-    .no-button:hover {
+    .no-button:hover, .no-logout:hover {
         background-color: rgb(234, 234, 234);
     }
 }
 
-.no-button{
+.no-button, .no-logout{
     background-color: rgb(197, 196, 196);
+}
+.yes-logout, .no-logout {
+    border-radius: 5px;
+    width: 60px;
+    height: 25px;
 }
 
 .modal-form-row{
@@ -155,5 +172,5 @@
     width: 100%;
 }
 .modal-form-row.submit-btns {
-    justify-content: space-around;
+    justify-content: center;
 }

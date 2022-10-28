@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios'
 import { Navigate, redirect, useNavigate } from 'react-router-dom';
 import ReactDom from 'react-dom'
+import '../Modals.css'
 
 const LOGOUT_URL = '/sessions'
 
@@ -27,16 +28,16 @@ const LOGOUT_URL = '/sessions'
 //     zIndex: 2
 // }
 
-export const LogoutModal = ( { closeModal }) => {
+export const LogoutModal = ({ closeModal }) => {
     const navigate = useNavigate();
     const [errMsg, setErrMsg] = useState('')
     const [loggedout, setLoggedout] = useState(false)
-    
-    
+
+
     const navigateHome = () => {
         navigate('/login');
         axios.delete('/users/session');
-    }    
+    }
 
     // const logout = (e) => {
     //     e.preventDefault();
@@ -50,45 +51,41 @@ export const LogoutModal = ( { closeModal }) => {
     //         axios.delete('/users/session');
 
     //         redirect('/')
-                    
-                
+
+
     //     } catch (err) {
     //         setErrMsg('Unable to log out')
     //     }
     // }
-    
 
-    return ReactDom.createPortal (
+
+    return ReactDom.createPortal(
         <>
-        <div className='modalPage' onClick={() => closeModal(false)} >
-        </div>
-        {/* // modal box */}
-        <div className='modalContainer'>          
-            <br />
+            <div className='modalPage' onClick={() => closeModal(false)} >
+            </div>
+            {/* // modal box */}
+            <div className='modalContainer'>
                 {/* modal header */}
                 <div>
                     <h2>Are you sure you want to logout?</h2>
-                    < br/>
                 </div>
                 {/* modal body */}
-                <div>
 
-                    <div className='modal-form-row'>
-                        <button className='yes-button'onClick={navigateHome}>Yes</button>
-                    
-                        <button className='no-button' onClick={() => closeModal(false)}>No</button>
-                    </div>
+                <div className='modal-form-row submit-btns'>
+                    <button className='add-app-btn yes-logout' onClick={navigateHome}>Yes</button>
+
+                    <button className='add-app-btn no-logout' onClick={() => closeModal(false)}>No</button>
                 </div>
 
-            {/* modal footer */}
-                
-        </div>
-            
-        
+                {/* modal footer */}
+
+            </div>
+
+
         </>
         ,
         document.getElementById('portal')
-        
-        
+
+
     )
 }
