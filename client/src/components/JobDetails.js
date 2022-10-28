@@ -16,18 +16,21 @@ export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) =
             .then(dbRes => {
                 changedJobInfo();
             })
+            .catch(err => { })
     };
     const changeArchiveStatus = (id, newStatus) => {
         axios.patch(`/jobs/archiveStatusChange/${newStatus}/${id}`)
             .then(dbRes => {
                 changedJobInfo();
             })
+            .catch(err => { })
     };
     const changeDeleteStatus = (id, newStatus) => {
         axios.patch(`/jobs/updateDeletionStatus/${newStatus}/${id}`)
             .then(dbRes => {
                 changedJobInfo();
             })
+            .catch(err => { })
     };
     return (
         <>

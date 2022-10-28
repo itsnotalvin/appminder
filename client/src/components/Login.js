@@ -3,7 +3,6 @@ import axios from "axios";
 import { Navigate } from 'react-router-dom'
 import '../SignupLogin.css'
 import appminder_logo from '../images/appminder_logo.png'
-import { redirect } from 'react-router-dom'
 
 const LOGIN_URL = "/users/session";
 

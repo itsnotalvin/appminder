@@ -214,10 +214,8 @@ export const Signup = () => {
                         withCredentials: true
                     }
                 );
-                // set stored email so email can be sent
                 setStoredEmail(email);
 
-                // clear input fields after submit
                 setFirstName("");
                 setLastName("");
                 setEmail("");
@@ -378,13 +376,7 @@ export const Signup = () => {
                                 className="form-control form-control-lg login-inp"
                                 placeholder="Confirm Password"
                             />
-
-
-
-
-
                             {/* submit button */}
-
                             <button type='submit' className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
                             </button>

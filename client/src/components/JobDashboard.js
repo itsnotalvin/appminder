@@ -1,10 +1,8 @@
 import '../Dashboard.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { JobDetails } from './JobDetails.js'
 import { ApplicationsView } from './ApplicationsView';
 import { ArchiveView } from './ArchiveView';
-import { Logout } from './Logout.js';
 import { LogoutModal } from './LogoutModal.js'
 import appminder_logo from '../images/appminder_logo.png'
 import { Navigate } from 'react-router-dom'
@@ -18,9 +16,6 @@ export const JobDashboard = () => {
     const [componentToView, setComponentToView] = useState
         (<ApplicationsView />);
     const [username, setUsername] = useState('');
-
-
-
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     useEffect(() => {
         axios.get('/users/session')

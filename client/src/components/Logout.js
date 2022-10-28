@@ -7,6 +7,5 @@ export const Logout = () => {
             log me out brother
             <LogoutModal />
         </div>
-        
     )
 }

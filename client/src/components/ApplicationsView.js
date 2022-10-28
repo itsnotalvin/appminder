@@ -5,7 +5,7 @@ import '../ApplicationModals.css';
 import '../Modals.css';
 import axios from 'axios';
 import { useDrop } from 'react-dnd';
-import dateFormat, { masks } from 'dateformat';
+import dateFormat from 'dateformat';
 import AddAppModal from './AddAppModal.js';
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody';
@@ -48,33 +48,13 @@ export const ApplicationsView = () => {
         axios.get('/jobs/categoryCount')
             .then(res => {
                 const draftCategory = res.data.filter(category => category.app_stage === 'Draft');
-                if (draftCategory.length) {
-                    setDraftCount(draftCategory[0].count)
-                }
-                else {
-                    setDraftCount(0);
-                }
+                draftCategory.length ? setDraftCount(draftCategory[0].count) : setDraftCount(0);
                 const appliedCategory = res.data.filter(category => category.app_stage === 'Applied');
-                if (appliedCategory.length) {
-                    setAppliedCount(appliedCategory[0].count)
-                }
-                else {
-                    setAppliedCount(0);
-                }
+                appliedCategory.length ? setAppliedCount(appliedCategory[0].count) : setAppliedCount(0);
                 const interviewingCategory = res.data.filter(category => category.app_stage === 'Interviewing');
-                if (interviewingCategory.length) {
-                    setInterviewingCount(interviewingCategory[0].count)
-                }
-                else {
-                    setInterviewingCount(0);
-                }
+                interviewingCategory.length ? setInterviewingCount(interviewingCategory[0].count) : setInterviewingCount(0);
                 const awaitingCategory = res.data.filter(category => category.app_stage === 'Awaiting');
-                if (awaitingCategory.length) {
-                    setAwaitingCount(awaitingCategory[0].count)
-                }
-                else {
-                    setAwaitingCount(0);
-                }
+                awaitingCategory.length ? setAwaitingCount(awaitingCategory[0].count) : setAwaitingCount(0);
             })
     }, [infoChange, droppedIntoStage]);
 
@@ -191,25 +171,17 @@ export const ApplicationsView = () => {
 
     return (
         <>
-
-
             <header id='application-bar'>
                 <h2>Applications</h2>
-
-
                 <button className='add-application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
                 <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} changedJobInfo={changedJobInfo} />
             </header>
 
             <div id='applications-display'>
                 <div id='application-stage-selection'>
-
                     <div className='app-stage-tab draft-stage-tab' style={{ backgroundColor: isInDraft && 'purple' }} ref={dropIntoDraftHook} onClick={() => setSelectedTab('Draft')}>Draft <br />({draftCount})</div>
-
                     <div className='app-stage-tab applied-stage-tab' style={{ backgroundColor: isInApplied && 'purple' }} ref={dropIntoAppliedHook} onClick={() => setSelectedTab('Applied')}>Applied <br />({appliedCount})</div>
-
                     <div className='app-stage-tab interview-stage-tab' style={{ backgroundColor: isInInterviewing && 'purple' }} ref={dropIntoInterviewingHook} onClick={() => setSelectedTab('Interviewing')}>Interviewing <br />({interviewingCount})</div>
-
                     <div className='app-stage-tab awaiting-stage-tab' style={{ backgroundColor: isInAwaiting && 'purple' }} ref={dropIntoAwaitingHook} onClick={() => setSelectedTab('Awaiting')}>Awaiting <br />({awaitingCount})</div>
                 </div>
                 <TableContainer component={Paper}>
@@ -275,8 +247,6 @@ export const ApplicationsView = () => {
                     </div>
                 </div>
             </div>
-
         </>
-
     )
 };

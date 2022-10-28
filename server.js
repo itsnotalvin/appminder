@@ -5,12 +5,9 @@ const fs = require('fs');
 
 const port = process.env.PORT || 3001;
 
-const pg = require('pg');
-const bcrypt = require('bcrypt');
 const usersController = require('./controller/users.js')
 const jobsController = require('./controller/Jobs.js');
 const emailController = require('./controller/Email.js');
-
 
 const { expressSession, pgSession } = require('./session.js');
 
@@ -26,11 +23,8 @@ app.use(
     })
 );
 
-
-
 app.use(express.json());
 app.use(express.static("./client/build"));
-
 
 app.use('/users', usersController)
 app.use('/jobs', jobsController);
@@ -40,7 +34,6 @@ app.get("*", (req, res) => {
     res.setHeader("content-type", "text/html");
     fs.createReadStream(`${__dirname}/client/build/index.html`).pipe(res);
 });
-
 
 app.listen(port, () => console.log(`Listening at localhost:${port}`));
 
