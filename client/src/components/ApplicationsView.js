@@ -200,7 +200,7 @@ export const ApplicationsView = () => {
 
 
                 <button className='add-application-btn' onClick={() => setIsOpen(true)}>Add Application</button>
-                <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} />
+                <AddAppModal open={isOpen} closeModal={closeModal} onClose={() => setIsOpen(false)} changedJobInfo={changedJobInfo} />
             </header>
 
             {/* working hereworking hereworking hereworking here */}

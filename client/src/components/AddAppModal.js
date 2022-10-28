@@ -32,28 +32,28 @@ const OVERLAY_STYLES = {
 }
 
 
-export default function AddAppModal({ open, children, onClose, closeModal }) {
+export default function AddAppModal({ open, children, onClose, closeModal, changedJobInfo }) {
     const userRef = useRef();
     const errRef = useRef();
-    
+
     const [appAddCompany, setAppAddCompany] = useState('');
     const [appAddRole, setAppAddRole] = useState('');
     const [appStage, setAppStage] = useState('');
     const [appKeyDate, setAppKeyDate] = useState('');
-    const [appNotes, setAppNotes] = useState(''); 
-    const [appReminder, setAppReminder] = useState('')   
+    const [appNotes, setAppNotes] = useState('');
+    const [appReminder, setAppReminder] = useState('')
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState('false')
-    
+
     useEffect(() => {
         setErrMsg('');
     }, [appAddCompany])
-    
+
     // const onSubmit = () => {
     //     setIsOpen={(false)}
     // }
-    
+
     // const { job_title, company_name, app_stage, key_date, set_reminder, notes } = request.body;
 
     const handleAppSubmit = async (e) => {
@@ -62,20 +62,21 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
 
         try {
             const response = await axios.post(ADDAPP_URL,
-                JSON.stringify({ 
+                JSON.stringify({
                     company_name: appAddCompany,
                     job_title: appAddRole,
                     app_stage: appStage,
                     key_date: appKeyDate,
                     notes: appNotes
-                  }),
+                }),
                 {
-                    headers: { 'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 });
-                closeModal(false)
+            changedJobInfo()
+            closeModal(false)
         } catch (err) {
-            if(!err?.response) {
+            if (!err?.response) {
                 setErrMsg('No server response');
             } else {
                 setErrMsg('Unable to add Job')
@@ -87,8 +88,8 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
 
     return ReactDom.createPortal(
         <>
-            <div 
-                className='modalPage' 
+            <div
+                className='modalPage'
                 // style={OVERLAY_STYLES}
                 onClick={onClose}
             >
@@ -96,58 +97,58 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
             {/* add application modal */}
             <div
                 className='modalContainer'
-                // style={MODAL_STYLES}
-             >
+            // style={MODAL_STYLES}
+            >
                 <div className='ModalHeader'>
-                    
+
                     <h3>Add a new Job Application</h3>
 
                 </div>
 
                 <div className='ModalBody'>
-                    
+
                     <form onSubmit={handleAppSubmit}>
                         {/* add company */}
                         <div className='modal-form-row' >
                             <div>
-                            <label htmlFor="appAddCompany">
-                                Company Name:
-                            </label>
+                                <label htmlFor="appAddCompany">
+                                    Company Name:
+                                </label>
                             </div>
-                            
-                            
+
+
 
                             <div>
-                            <input
-                                type="text"
-                                autoComplete="off"
-                                required
-                                onChange={(e) => setAppAddCompany(e.target.value)}
-                            />
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    required
+                                    onChange={(e) => setAppAddCompany(e.target.value)}
+                                />
                             </div>
-                           
+
                         </div>
-                        
-                    
+
+
 
                         {/* add position */}
                         <div className='modal-form-row'>
                             <div>
-                            <label htmlFor="appAddRole">
-                                Role:
-                            </label>
+                                <label htmlFor="appAddRole">
+                                    Role:
+                                </label>
 
                             </div>
                             <div>
-                            <input
-                                type="text"
-                                autoComplete="off"
-                                required
-                                onChange={(e) => setAppAddRole(e.target.value)}
-                            />
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    required
+                                    onChange={(e) => setAppAddRole(e.target.value)}
+                                />
 
                             </div>
-                            
+
 
                         </div>
 
@@ -156,15 +157,15 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
                             <label htmlFor="appStage">
                                 Stage:
                             </label>
-                            <select value={appStage} onChange={(e) => setAppStage(e.target.value)}> 
+                            <select value={appStage} onChange={(e) => setAppStage(e.target.value)}>
                                 <option value='Draft'>Draft</option>
                                 <option value='Applied'>Applied</option>
                                 <option value='Interviewing'>Interviewing</option>
                                 <option value='Awaiting'>Awaiting</option>
                             </select>
                         </div>
-                        
-                        < br/>
+
+                        < br />
 
                         {/* add keydate */}
                         <div className='modal-form-row'>
@@ -176,12 +177,12 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
                                 required
                                 onChange={(e) => setAppKeyDate(e.target.value)}
                             />
-                        </div>   
+                        </div>
                         <div className='modal-form-row'>
                             test
-                        </div>             
-                        
-                    
+                        </div>
+
+
                         {/* add notes */}
                         <div className='modal-form-row'>
                             <label htmlFor="appKeyDate">
@@ -192,29 +193,29 @@ export default function AddAppModal({ open, children, onClose, closeModal }) {
                                 autoComplete="off"
                                 onChange={(e) => setAppNotes(e.target.value)}
                             />
-                        </div>                 
+                        </div>
                         {/* reminder */}
                         <div className='modal-form-row' >
 
                         </div>
-                    
+
                         <br />
                         <div className='modal-form-row'>
-                        <button className='yes-button'type='submit'>Add Application</button>
-                        <button className='no-button' onClick={onClose}>Discard Application</button>
+                            <button className='yes-button' type='submit'>Add Application</button>
+                            <button className='no-button' onClick={onClose}>Discard Application</button>
 
                         </div>
-                        
+
                     </form>
-                    
+
                 </div>
 
                 <div className='ModalFooter'>
-                    
 
-                </div>                
-                
-                
+
+                </div>
+
+
             </div>
             {children}
         </>
