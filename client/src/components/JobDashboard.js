@@ -61,13 +61,6 @@ export const JobDashboard = () => {
     }, []);
 
     const updateAppBreakdown = ({ draftCount, appliedCount, interviewingCount, awaitingCount }) => {
-        // setAppBreakdown({
-        //     draft: draftCount,
-        //     applied: appliedCount,
-        //     interviewing: interviewingCount,
-        //     awaiting: awaitingCount
-        // });
-        console.log(draftCount);
         setAppBreakdown([{
             "id": "Draft",
             "label": "Draft",
