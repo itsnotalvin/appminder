@@ -106,46 +106,32 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                     <form onSubmit={handleAppSubmit}>
                         {/* add company */}
                         <div className='modal-form-row' >
-                            <div>
-                                <label htmlFor="appAddCompany">
-                                    Company Name:
-                                </label>
-                            </div>
-
-
-
-                            <div>
-                                <input
-                                    type="text"
-                                    autoComplete="off"
-                                    required
-                                    onChange={(e) => setAppAddCompany(e.target.value)}
-                                />
-                            </div>
-
+                            <label htmlFor="appAddCompany">
+                                Company Name:
+                            </label>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                required
+                                className='login-inp add-app'
+                                onChange={(e) => setAppAddCompany(e.target.value)}
+                            />
                         </div>
 
 
 
                         {/* add position */}
                         <div className='modal-form-row'>
-                            <div>
-                                <label htmlFor="appAddRole">
-                                    Role:
-                                </label>
-
-                            </div>
-                            <div>
-                                <input
-                                    type="text"
-                                    autoComplete="off"
-                                    required
-                                    onChange={(e) => setAppAddRole(e.target.value)}
-                                />
-
-                            </div>
-
-
+                            <label htmlFor="appAddRole">
+                                Role:
+                            </label>
+                            <input
+                                type="text"
+                                autoComplete="off"
+                                required
+                                className='login-inp add-app'
+                                onChange={(e) => setAppAddRole(e.target.value)}
+                            />
                         </div>
 
                         {/* add stage */}
@@ -171,11 +157,9 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             <input
                                 type="date"
                                 required
+                                className='login-inp add-app'
                                 onChange={(e) => setAppKeyDate(e.target.value)}
                             />
-                        </div>
-                        <div className='modal-form-row'>
-                            test
                         </div>
 
 
@@ -185,8 +169,8 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                                 Notes:
                             </label>
                             <textarea
-                                className='textarea'
                                 type="text"
+                                className='login-inp add-app'
                                 autoComplete="off"
                                 onChange={(e) => setAppNotes(e.target.value)}
                             />
@@ -198,7 +182,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             </label>
                             <input
                                 type='checkbox'
-                                className=''
+                                className='login-inp add-app'
                                 onChange={(e) => setAppReminder(e.target.value)}
 
                             />
@@ -207,9 +191,9 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                         </div>
 
                         <br />
-                        <div className='modal-form-row'>
-                            <button className='yes-button' type='submit'>Add Application</button>
-                            <button className='no-button' onClick={onClose}>Discard Application</button>
+                        <div className='modal-form-row submit-btns'>
+                            <button className='add-app-btn yes-button' type='submit'>Add Application</button>
+                            <button className='add-app-btn no-button' onClick={onClose}>Discard Application</button>
 
                         </div>
 

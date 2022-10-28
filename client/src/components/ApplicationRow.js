@@ -90,7 +90,7 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
                     <div className='notes-content'>{notes}</div>
                     <div className='notes-content'>
                         {
-                            !archived && <span className='application-btn' onClick={() => updateAppModal(true)}>Update Application</span>
+                            !archived && <span className='add-application-btn' onClick={() => updateAppModal(true)}>Update Application</span>
                         }
                     </div>
                 </div>

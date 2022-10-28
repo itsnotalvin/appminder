@@ -52,7 +52,6 @@
 }
 .login-inp {
     margin: 0.5rem;
-    padding: 10px;
     border: 0;
     width: 60%;
     max-width: 250px;
@@ -80,10 +79,16 @@
     .submit-btn {
         padding: 5px 15px;
     }
+    .login-inp {
+        padding: 5px;
+    }
 }
 @media screen and (min-width:351px){
     .submit-btn {
         padding: 5px 30px;
+    }
+    .login-inp {
+        padding: 10px;
     }
 }
 @media screen and (min-width:601px) {

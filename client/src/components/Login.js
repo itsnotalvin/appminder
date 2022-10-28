@@ -35,7 +35,7 @@ export const Login = () => {
                     setIsAuthenticated(true);
                 }
             })
-            .catch()
+            .catch(err => { })
     }, []);
 
     if (isAuthenticated) {

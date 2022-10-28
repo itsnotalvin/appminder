@@ -127,19 +127,6 @@ body {
     font-family: 'Comfortaa', cursive;
     font-family: 'Montserrat Alternates', sans-serif;
 }
-.application-btn {
-    background-color: aquamarine;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: 1s ease all;
-    border-radius: 10px;
-}
-.application-btn:hover {
-    background-color: blueviolet;
-}
 #applications-display {
     width: 90%;
     height: 90%;
