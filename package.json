@@ -18,7 +18,10 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+<<<<<<< HEAD
+=======
     "nodemailer": "^6.8.0",
+>>>>>>> ddb2abe5cb714c75d9bc1a2d34f170a456b6b256
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "react-dnd": "^16.0.1",
