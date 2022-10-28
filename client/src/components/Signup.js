@@ -372,7 +372,7 @@ export const Signup = () => {
                             />
                             {/* submit button */}
 
-                            <p className={validInputs ? "submit-btn" : "submit-btn invalid-input"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
+                            <p className={validInputs ? "submit-btn" : "submit-btn invalid-input disabled"} role="submit-btn" onClick={handleSubmit} ref={signupBtnRef}>
                                 Start tracking
                             </p>
                             <p className="signup-comments">
