@@ -42,7 +42,7 @@ export const ApplicationsView = () => {
     useEffect(() => {
         axios.get('/jobs/categoryCount')
             .then(res => {
-                console.log('calling api to get job count by category', res.data);
+                console.log('calling api to get job count by category');
                 const draftCategory = res.data.filter(category => category.app_stage === 'Draft');
                 if (draftCategory.length) {
                     setDraftCount(draftCategory[0].count)

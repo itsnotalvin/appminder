@@ -4,10 +4,10 @@ import axios from 'axios';
 export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) => {
     let displayJobs;
     if (selected !== 'Archive') {
-        displayJobs = jobs.filter(job => job.app_stage === selected && job.archived !== true)
+        displayJobs = jobs.filter(job => job.app_stage === selected && job.archived !== true && job.deleted !== true)
     }
     else {
-        displayJobs = jobs.filter(job => job.archived === true)
+        displayJobs = jobs.filter(job => job.archived === true && job.deleted !== true)
     }
     const changeReminderStatus = (id, newStatus) => {
         console.log(`attempting to change reminder status of ${id} to ${newStatus}`);
@@ -19,7 +19,7 @@ export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) =
     };
     const changeArchiveStatus = (id, newStatus) => {
         console.log(`attempting to change archive status of ${id} to ${newStatus}`);
-        axios.patch(`/jobs//archiveStatusChange/${newStatus}/${id}`)
+        axios.patch(`/jobs/archiveStatusChange/${newStatus}/${id}`)
             .then(dbRes => {
                 console.log('changed archive status');
                 changedJobInfo();
@@ -27,6 +27,11 @@ export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) =
     };
     const changeDeleteStatus = (id, newStatus) => {
         console.log(`attempting to delete ${id}`);
+        axios.patch(`/jobs/updateDeletionStatus/${newStatus}/${id}`)
+            .then(dbRes => {
+                console.log('changed deletion status');
+                changedJobInfo();
+            })
     };
     return (
         <div id="stage-type-applications">
