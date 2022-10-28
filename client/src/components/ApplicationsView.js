@@ -2,6 +2,7 @@ import { JobDetails } from "./JobDetails";
 import { useState, useEffect } from "react";
 import '../Dashboard.css';
 import '../ApplicationModals.css';
+import '../Modals.css';
 import axios from 'axios';
 import { useDrop } from 'react-dnd';
 import dateFormat, { masks } from 'dateformat';
@@ -241,44 +242,42 @@ export const ApplicationsView = () => {
             </div>
 
             {/* MODAL */}
-            <div onClick={() => setModalClass('modal')}>
-                <div className={modalClass}>
-                    <div className='modal-box'>
-                        <div className='modal-content'>
-                            <h3>Update Application</h3>
-                            <div className='update-app-field'>
-                                <label htmlFor="job_title">Job Title</label>
-                                <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp' onChange={(e) => e.preventDefault()} />
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="company_name">Company Name</label>
-                                <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp' onChange={(e) => e.preventDefault()} />
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="app_stage_dropdown">Application Stage</label>
-                                <select name="app-stage" id="app_stage_dropdown" value={appToUpdateStage} onChange={updateAppStage}>
-                                    <option value='Draft'>Draft</option>
-                                    <option value='Applied'>Applied</option>
-                                    <option value='Interviewing'>Interviewing</option>
-                                    <option value='Awaiting'>Awaiting</option>
-                                </select>
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="key_date">Key Date</label>
-                                <input value={appToUpdateKeyDate} id='key_date' type='date' onChange={updateKeyDate} />
-                            </div>
-                            <div className='update-app-field'>
-                                <label htmlFor="notes">Notes</label>
-                                <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
-                            </div>
-                            <div className='update-app-btn-group'>
-                                <button className='yes-button'
+            <div className={modalClass}>
+                <div className='modal-box'>
+                    <div className='modal-content'>
+                        <h3>Update Application</h3>
+                        <div className='update-app-field'>
+                            <label htmlFor="job_title">Job Title</label>
+                            <input value={appToUpdateOtherInfo.job} id='job_title' className='disabled-inp login-inp add-inp' onChange={(e) => e.preventDefault()} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="company_name">Company Name</label>
+                            <input value={appToUpdateOtherInfo.company} id='company_name' className='disabled-inp login-inp add-inp' onChange={(e) => e.preventDefault()} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="app_stage_dropdown">Application Stage</label>
+                            <select name="app-stage" id="app_stage_dropdown" className='login-inp add-inp' value={appToUpdateStage} onChange={updateAppStage}>
+                                <option value='Draft'>Draft</option>
+                                <option value='Applied'>Applied</option>
+                                <option value='Interviewing'>Interviewing</option>
+                                <option value='Awaiting'>Awaiting</option>
+                            </select>
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="key_date">Key Date</label>
+                            <input value={appToUpdateKeyDate} id='key_date' className='login-inp add-inp' type='date' onChange={updateKeyDate} />
+                        </div>
+                        <div className='update-app-field'>
+                            <label htmlFor="notes">Notes</label>
+                            <textarea value={appToUpdateNotes} placeholder='Edit Notes' id='notes' onChange={updateNotes} />
+                        </div>
+                        <div className='submit-btns modal-form-row'>
+                            <button className='add-app-btn yes-button'
                                 onClick={updateAppAction}>Update Application
-                                </button>
-                                <button 
-                                className='no-button'
+                            </button>
+                            <button
+                                className='add-app-btn no-button'
                                 onClick={() => setModalClass('modal')}>Discard Update</button>
-                            </div>
                         </div>
                     </div>
                 </div>

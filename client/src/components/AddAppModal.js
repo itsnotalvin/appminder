@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import ReactDom from 'react-dom'
 import axios from 'axios'
 import '../Modals.css';
-import '../App.css'
+import '../App.css';
+import Checkbox from '@mui/material/Checkbox';
 
 const ADDAPP_URL = '/jobs'
 
@@ -49,8 +50,6 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
         setErrMsg('');
     }, [appAddCompany])
 
-
-
     const handleAppSubmit = async (e) => {
         e.preventDefault();
         console.log("trying toi submit")
@@ -71,6 +70,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                 });
             changedJobInfo()
             closeModal(false)
+            setAppReminder(false)
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');
@@ -139,7 +139,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             <label htmlFor="appStage">
                                 Stage:
                             </label>
-                            <select value={appStage} onChange={(e) => setAppStage(e.target.value)}>
+                            <select className='login-inp add-app' value={appStage} onChange={(e) => setAppStage(e.target.value)}>
                                 <option value='Draft'>Draft</option>
                                 <option value='Applied'>Applied</option>
                                 <option value='Interviewing'>Interviewing</option>
@@ -180,14 +180,14 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             <label htmlFor="appReminder">
                                 Reminders?
                             </label>
-                            <input
-                                type='checkbox'
-                                className='login-inp add-app'
-                                onChange={(e) => setAppReminder(e.target.value)}
-
-                            />
-
-
+                            <Checkbox style={{ backgroundColor: appReminder ? '#a89cfa' : '#6d55ff' }} sx={{
+                                '&.Mui-checked': {
+                                    color: '#ffffff',
+                                },
+                            }} onChange={(e) => {
+                                setAppReminder(e.target.checked)
+                            }
+                            } />
                         </div>
 
                         <br />

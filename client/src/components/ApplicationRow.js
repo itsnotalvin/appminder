@@ -87,7 +87,7 @@ export const ApplicationRow = ({ jobInfo, changeReminderStatus, changeArchiveSta
             </TableRow>
             <TableCell colSpan={7} style={{ display: !hideJobDetails && 'none' }} id={id}>
                 <div className='notes-and-appUpdateBtn'>
-                    <div className='notes-content'>{notes}</div>
+                    <div className='notes-content text'>{notes}</div>
                     <div className='notes-content'>
                         {
                             !archived && <span className='add-application-btn' onClick={() => updateAppModal(true)}>Update Application</span>

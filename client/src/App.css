@@ -3,8 +3,20 @@
 body, html {
   font-family: 'Comfortaa', cursive;
   font-family: 'Montserrat Alternates', sans-serif;
-  
+}
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+}
+
+input,
+textarea,
+select {
+  font-family: 'Comfortaa', cursive;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 @media screen and (min-width: 601px) {
   body, html {

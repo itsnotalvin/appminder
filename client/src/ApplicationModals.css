@@ -16,19 +16,19 @@
 .modal-box {
     position: absolute;
     background-color: #6d55ff;
-    padding: 10%;
+    padding: 5%;
     border-radius: 10px;
-    z-index: 3;
+    z-index: 10;
 }
 .modal-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2.5%;
+    color: white;
 }
 .view-modal {
-    z-index: 1;
+    z-index: 0;
     opacity: 1;
     transform: scale(1);
     transition: ease all 0.35s;
@@ -38,14 +38,30 @@
     background-color: gray;
     caret-color: transparent;
 }
-select,textarea {
+textarea {
     margin: 0.5rem;
     padding: 10px;
     border-radius: 10px;
     transition: 1s ease all;
 }
+@media screen and (max-width:500px) {
+    .modal-content {
+        font-size: 12px;
+    }
+    select, input, textarea {
+        font-size: 10px;
+    }
+}
+@media screen and (min-width:501px) {
+    .modal-content {
+        font-size: 15px;
+    }
+}
 @media screen and (max-width:600px) {
     select {
+        padding: 3px;
+    }
+    .login-inp.add-app {
         padding: 3px;
     }
 }
@@ -54,15 +70,22 @@ select,textarea {
     select {
         padding: 5px;
     }
+    .login-inp.add-app {
+        padding: 5px;
+    }
 }
 
 @media screen and (min-width:751px) {
     select {
         padding: 7px;
     }
+    .login-inp.add-app {
+        padding: 7px;
+    }
 }
 textarea {
-    height: 100px;
+    width: 70%;
+    height: 80px;
 }
 select:hover {
     cursor: pointer;
@@ -73,27 +96,6 @@ input:hover, textarea:hover {
 }
 select:focus,input:focus,textarea:focus {
     outline: none;
-}
-.update-app-btn-group {
-    display: flex;
-    justify-content: center;
-}
-.update-app-btn-group > span {
-    display: flex;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    background-color: blue;
-    color: white;
-    cursor: pointer;
-    border-radius: 10px;
-    margin: 0.5rem;
-    transition: 1s ease all;
-}
-.update-app-btn-group>span:hover {
-    background-color: aqua;
-    transition: 1s ease all;
-    color: black;
 }
 .update-app-field {
     display: flex;
