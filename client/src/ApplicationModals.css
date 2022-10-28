@@ -15,9 +15,10 @@
 }
 .modal-box {
     position: absolute;
-    background-color: aquamarine;
+    background-color: #6d55ff;
     padding: 1rem 1.5rem;
     border-radius: 10px;
+    z-index: 3;
 }
 .modal-content {
     display: flex;
@@ -81,4 +82,19 @@ select:focus,input:focus,textarea:focus {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+.update-app-background{
+    background-color: #000000;
+    opacity: 70%;
+    z-index: -1;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.update-app-background.active{
+    z-index: 4;
 }

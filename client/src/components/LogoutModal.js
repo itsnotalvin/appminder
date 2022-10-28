@@ -1,30 +1,31 @@
 import { useState } from 'react';
 import axios from 'axios'
-import { Navigate, redirect, useNavigate } from 'react-router-dom'
+import { Navigate, redirect, useNavigate } from 'react-router-dom';
+import ReactDom from 'react-dom'
 
 const LOGOUT_URL = '/sessions'
 
-const MODAL_STYLES = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    zIndex: 3,
-    padding: '100px',
-    backgroundColor: 'red'
+// const MODAL_STYLES = {
+//     position: 'fixed',
+//     top: '50%',
+//     left: '50%',
+//     transform: 'translate(-50%, -50%)',
+//     zIndex: 3,
+//     padding: '100px',
+//     backgroundColor: 'red'
 
-}
+// }
 
-const OVERLAY_STYLES = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#000000',
-    opacity: '70%',
-    zIndex: 2
-}
+// const OVERLAY_STYLES = {
+//     position: 'fixed',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     backgroundColor: '#000000',
+//     opacity: '90%',
+//     zIndex: 2
+// }
 
 export const LogoutModal = ( { closeModal }) => {
     const navigate = useNavigate();
@@ -57,10 +58,12 @@ export const LogoutModal = ( { closeModal }) => {
     // }
     
 
-    return (
-        <div style={OVERLAY_STYLES} onClick={() => closeModal(false)} >
-            {/* // modal box */}
-            <div style={MODAL_STYLES}>          
+    return ReactDom.createPortal (
+        <>
+        <div className='modalPage' onClick={() => closeModal(false)} >
+        </div>
+        {/* // modal box */}
+        <div className='modalContainer'>          
             <br />
                 {/* modal header */}
                 <div>
@@ -78,9 +81,12 @@ export const LogoutModal = ( { closeModal }) => {
 
             {/* modal footer */}
                 
-            </div>
-            
         </div>
+            
+        
+        </>
+        ,
+        document.getElementById('portal')
         
         
     )

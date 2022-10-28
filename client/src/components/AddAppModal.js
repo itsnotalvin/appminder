@@ -90,14 +90,14 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
         <>
             <div
                 className='modalPage'
-                // style={OVERLAY_STYLES}
+                
                 onClick={onClose}
             >
             </div>
             {/* add application modal */}
             <div
                 className='modalContainer'
-            // style={MODAL_STYLES}
+            
             >
                 <div className='ModalHeader'>
 
