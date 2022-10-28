@@ -75,9 +75,11 @@ export const JobDashboard = () => {
         isAuthenticated ? (isLoading ? <LoadingScreen /> : <div id='dashboard'>
             <div id='side-panel'>
                 <div id='side-panel-content'>
-                    <div>
-                        <h3 onClick={() => setViewPage('Applications')}>App Minder</h3>
-                        <img src={appminder_logo} id='appminderlogo'/>
+                    <div className='home-logo'>
+                        <div onClick={() => setViewPage('Applications')}>  
+                        <img src={appminder_logo} id='appminderlogo' />
+
+                        </div>
                     </div>
                     <div>
                         <h3>Hello, {username}</h3>

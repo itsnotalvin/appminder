@@ -41,7 +41,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
     const [appStage, setAppStage] = useState('');
     const [appKeyDate, setAppKeyDate] = useState('');
     const [appNotes, setAppNotes] = useState('');
-    const [appReminder, setAppReminder] = useState('')
+    const [appReminder, setAppReminder] = useState(false)
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState('false')
@@ -50,11 +50,7 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
         setErrMsg('');
     }, [appAddCompany])
 
-    // const onSubmit = () => {
-    //     setIsOpen={(false)}
-    // }
-
-    // const { job_title, company_name, app_stage, key_date, set_reminder, notes } = request.body;
+    
 
     const handleAppSubmit = async (e) => {
         e.preventDefault();
@@ -67,7 +63,8 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                     job_title: appAddRole,
                     app_stage: appStage,
                     key_date: appKeyDate,
-                    notes: appNotes
+                    notes: appNotes,
+                    set_reminder: appReminder
                 }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -188,7 +185,8 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                             <label htmlFor="appKeyDate">
                                 Notes:
                             </label>
-                            <input
+                            <textarea
+                                className='textarea'
                                 type="text"
                                 autoComplete="off"
                                 onChange={(e) => setAppNotes(e.target.value)}
@@ -196,6 +194,16 @@ export default function AddAppModal({ open, children, onClose, closeModal, chang
                         </div>
                         {/* reminder */}
                         <div className='modal-form-row' >
+                            <label htmlFor="appReminder">
+                                Reminders?
+                            </label>
+                            <input 
+                            type='checkbox'
+                            className=''
+                            onChange={(e) => setAppReminder(e.target.value)}
+                            
+                            />
+
 
                         </div>
 

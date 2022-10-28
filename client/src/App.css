@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Montserrat+Alternates&display=swap');
+
+body, html {
+  font-family: 'Comfortaa', cursive;
+  font-family: 'Montserrat Alternates', sans-serif;
+  
+
+}
+@media screen and (min-width: 601px) {
+  body, html {
+    font-size: 90%;
+ }
+}
+
+@media screen and (max-width: 600px) {
+  body, html {
+    font-size: 75%;
+  }
+}
+
 
 .App-logo {
   height: 40vmin;
@@ -42,3 +62,4 @@
   border: 3vh;
   align-self: center;
 }
+
