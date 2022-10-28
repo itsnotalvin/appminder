@@ -34,10 +34,10 @@ export const JobDetails = ({ jobs, selected, changedJobInfo, updateAppModal }) =
             })
     };
     return (
-        <div id="stage-type-applications">
+        <>
             {
                 displayJobs.length ? displayJobs.map((job, index) => <ApplicationRow key={job.id} jobInfo={job} changeReminderStatus={changeReminderStatus} changeArchiveStatus={changeArchiveStatus} updateAppModal={() => updateAppModal(job)} changeDeleteStatus={changeDeleteStatus} />) : <div>Nothing to show!</div>
             }
-        </div>
+        </>
     )
 };
