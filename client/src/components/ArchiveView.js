@@ -21,7 +21,11 @@ export const ArchiveView = () => {
                 <h2>Archived Applications</h2>
             </header>
             <div id='applications-display'>
-                <div id='application-content'>
+            <div id='application-stage-selection'>
+
+<div className='draft-stage-tab' ><br/></div>
+</div>
+                <div id='application-content-archive'>
                     <div id='application-detail-header'>
                         <span>Company</span>
                         <span>Position</span>
