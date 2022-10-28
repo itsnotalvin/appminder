@@ -79,6 +79,9 @@ body {
     .nav-btn:hover {
             background-color: #ada1fd;
         }
+    .add-application-btn:hover {
+            background-color: #8775ff;
+        }
 }
 #main-screen {
     border: 1px solid #cdfcff;
