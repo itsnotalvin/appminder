@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/Users.js');
 const Jobs = require('../models/Jobs.js');
+const currentTime = require('./Date.js');
 
 router.get('/allUserJobs', (request, response) => {
     const loggedInEmail = request.session.email;
@@ -24,10 +25,11 @@ router.get('/categoryCount', (request, response) => {
 router.post('/', (request, response) => {
     const { job_title, company_name, app_stage, key_date, set_reminder, notes } = request.body;
     const loggedInEmail = request.session.email;
+    const currentTimestamp = currentTime.currentTime();
     User.checkUserDetailsWithEmail(loggedInEmail)
         .then(dbRes => {
             const loggedInUserId = dbRes.rows[0].id;
-            Jobs.createNewJob(loggedInUserId, job_title, company_name, app_stage, key_date, set_reminder, notes)
+            Jobs.createNewJob(loggedInUserId, job_title, company_name, app_stage, key_date, set_reminder, notes, currentTimestamp)
                 .then(dbRes => response.json({ message: 'Job Application successfully stored' }))
                 .catch(err => response.status(500).json({ message: 'Unknown error occurred in storing job application, sorry!' }))
         })
@@ -37,7 +39,8 @@ router.post('/', (request, response) => {
 router.patch('/updateReminder/:newStatus/:jobId', (request, response) => {
     const newStatus = request.params.newStatus;
     const jobId = request.params.jobId;
-    Jobs.updateJobReminderStatus(jobId, newStatus)
+    const currentTimestamp = currentTime.currentTime();
+    Jobs.updateJobReminderStatus(jobId, newStatus, currentTimestamp)
         .then(dbRes => response.json({ message: `Changed job reminder status! - for job - ${jobId}` }))
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update reminder status for job - ${jobId} due to an internal error` }))
 });
@@ -45,7 +48,8 @@ router.patch('/updateReminder/:newStatus/:jobId', (request, response) => {
 router.patch('/archiveStatusChange/:newStatus/:jobId', (request, response) => {
     const newStatus = request.params.newStatus;
     const jobId = request.params.jobId;
-    Jobs.updateJobArchiveStatus(jobId, newStatus)
+    const currentTimestamp = currentTime.currentTime();
+    Jobs.updateJobArchiveStatus(jobId, newStatus, currentTimestamp)
         .then(dbRes => response.json({ message: `Changed job archive status! - for job - ${jobId}` }))
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update archive status for job - ${jobId} due to an internal error` }))
 });
@@ -53,7 +57,8 @@ router.patch('/archiveStatusChange/:newStatus/:jobId', (request, response) => {
 router.patch('/completionStatusChange/:newStatus/:jobId', (request, response) => {
     const newStatus = request.params.newStatus;
     const jobId = request.params.jobId;
-    Jobs.updateJobCompletionStatus(jobId, newStatus)
+    const currentTimestamp = currentTime.currentTime();
+    Jobs.updateJobCompletionStatus(jobId, newStatus, currentTimestamp)
         .then(dbRes => response.json({ message: `Changed job completion status! - for job - ${jobId}` }))
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update completion status for job - ${jobId} due to an internal error` }))
 });
@@ -61,7 +66,8 @@ router.patch('/completionStatusChange/:newStatus/:jobId', (request, response) =>
 // add the ability to check if new notes are any different from the original
 router.patch('/updateJobInfo', (request, response) => {
     const { job_id, app_stage, key_date, notes } = request.body;
-    Jobs.updateJobInfo(job_id, app_stage, key_date, notes)
+    const currentTimestamp = currentTime.currentTime();
+    Jobs.updateJobInfo(job_id, app_stage, key_date, notes, currentTimestamp)
         .then(dbRes => response.json({ message: `Changed job notes! - for job - ${job_id}` }))
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update notes for job - ${job_id} due to an internal error` }))
 });
@@ -69,7 +75,8 @@ router.patch('/updateJobInfo', (request, response) => {
 router.patch('/updateDeletionStatus/:newStatus/:jobId', (request, response) => {
     const newStatus = request.params.newStatus;
     const jobId = request.params.jobId;
-    Jobs.updateJobDeleteStatus(jobId, newStatus)
+    const currentTimestamp = currentTime.currentTime();
+    Jobs.updateJobDeleteStatus(jobId, newStatus, currentTimestamp)
         .then(dbRes => response.json({ message: `Changed job deletion status! - for job - ${jobId}` }))
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update deletion status for job - ${jobId} due to an internal error` }))
 });
@@ -77,7 +84,8 @@ router.patch('/updateDeletionStatus/:newStatus/:jobId', (request, response) => {
 router.patch('/updateJobStage/:newStage/:jobId', (request, response) => {
     const newStage = request.params.newStage;
     const job_id = request.params.jobId;
-    Jobs.updateJobStage(job_id, newStage)
+    const currentTimestamp = currentTime.currentTime();
+    Jobs.updateJobStage(job_id, newStage, currentTimestamp)
         .then(dbRes => response.json({ message: `Changed job stage - for job - ${job_id} to ${newStage}` }))
         .catch(err => response.status(500).json({ message: `Sorry! We were unable to update deletion status for job - ${job_id} due to an internal error` }))
 });

@@ -21,6 +21,3 @@ INSERT INTO jobs(user_id,job_title,company_name,app_stage,key_date,set_reminder,
 (3,'Senior Architect','Neverwhere','Applied','2022-11-24',true,false,false,false,'2 + 2 is 7 lol I hope the interviewers dont read this'),
 (1,'Football Player','Barcelona','Applied','2022-11-30',true,false,false,false,'Do people apply for these on Seek?');
 
-
-UPDATE users
-SET hashed_pw = '$2b$10$O4aGfJCTTvX1RlpxCt8nheXbi3cMXhPqHixADxU2qXalr3xwqxABa'

@@ -13,33 +13,33 @@ const Jobs = {
         const sql = 'SELECT jobs.id FROM users LEFT JOIN jobs ON users.id = jobs.user_id WHERE users.email = $1 AND jobs.job_title = $2 AND jobs.company_name = $3';
         return db.query(sql, [email, job_title, company_name])
     },
-    createNewJob: (user_id, job_title, company_name, app_stage, key_date, set_reminder, notes) => {
-        const sql = "INSERT INTO jobs(user_id,job_title,company_name,app_stage,key_date,set_reminder,archived,completed,deleted,notes) VALUES($1,$2,$3,$4,$5,$6,'f','f','f',$7)";
-        return db.query(sql, [user_id, job_title, company_name, app_stage, key_date, set_reminder, notes])
+    createNewJob: (user_id, job_title, company_name, app_stage, key_date, set_reminder, notes, currentTimestamp) => {
+        const sql = "INSERT INTO jobs(user_id,job_title,company_name,app_stage,key_date,set_reminder,archived,completed,deleted,notes,last_updated) VALUES($1,$2,$3,$4,$5,$6,'f','f','f',$7,$8)";
+        return db.query(sql, [user_id, job_title, company_name, app_stage, key_date, set_reminder, notes, currentTimestamp])
     },
-    updateJobInfo: (job_id, app_stage, key_date, notes) => {
-        const sql = 'UPDATE jobs SET app_stage = $1, key_date = $2, notes = $3 WHERE id = $4';
-        return db.query(sql, [app_stage, key_date, notes, job_id])
+    updateJobInfo: (job_id, app_stage, key_date, notes, currentTimestamp) => {
+        const sql = 'UPDATE jobs SET app_stage = $1, key_date = $2, notes = $3, last_updated = $4 WHERE id = $5';
+        return db.query(sql, [app_stage, key_date, notes, currentTimestamp, job_id])
     },
-    updateJobReminderStatus: (job_id, newStatus) => {
-        const sql = 'UPDATE jobs SET set_reminder = $1 WHERE id = $2';
-        return db.query(sql, [newStatus, job_id])
+    updateJobReminderStatus: (job_id, newStatus, currentTimestamp) => {
+        const sql = 'UPDATE jobs SET set_reminder = $1, last_updated = $2 WHERE id = $3';
+        return db.query(sql, [newStatus, currentTimestamp, job_id])
     },
-    updateJobArchiveStatus: (job_id, newStatus) => {
-        const sql = 'UPDATE jobs SET archived = $1 WHERE id = $2';
-        return db.query(sql, [newStatus, job_id])
+    updateJobArchiveStatus: (job_id, newStatus, currentTimestamp) => {
+        const sql = 'UPDATE jobs SET archived = $1, last_updated = $2 WHERE id = $3';
+        return db.query(sql, [newStatus, currentTimestamp, job_id])
     },
-    updateJobCompletionStatus: (job_id, newStatus) => {
-        const sql = 'UPDATE jobs SET completed = $1 WHERE id = $2';
-        return db.query(sql, [newStatus, job_id])
+    updateJobCompletionStatus: (job_id, newStatus, currentTimestamp) => {
+        const sql = 'UPDATE jobs SET completed = $1, last_updated = $2 WHERE id = $3';
+        return db.query(sql, [newStatus, currentTimestamp, job_id])
     },
-    updateJobDeleteStatus: (job_id, newStatus) => {
-        const sql = 'UPDATE jobs SET deleted = $1 WHERE id = $2';
-        return db.query(sql, [newStatus, job_id])
+    updateJobDeleteStatus: (job_id, newStatus, currentTimestamp) => {
+        const sql = 'UPDATE jobs SET deleted = $1, last_updated = $2 WHERE id = $3';
+        return db.query(sql, [newStatus, currentTimestamp, job_id])
     },
-    updateJobStage: (job_id, newStage) => {
-        const sql = 'UPDATE jobs SET app_stage = $1 WHERE id = $2';
-        return db.query(sql, [newStage, job_id])
+    updateJobStage: (job_id, newStage, currentTimestamp) => {
+        const sql = 'UPDATE jobs SET app_stage = $1, last_updated = $2 WHERE id = $3';
+        return db.query(sql, [newStage, currentTimestamp, job_id])
     }
 };
 
