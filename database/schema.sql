@@ -29,7 +29,7 @@ CREATE TABLE jobs (
     completed boolean,
     deleted boolean,
     notes text,
-    last_updated TIMESTAMP WITHOUT TIME ZONE
+    last_updated TIMESTAMP default (CURRENT_TIMESTAMP AT TIME ZONE 'AEDT')
 );
 
 -- CREATE OR REPLACE FUNCTION update_modified_column() 
