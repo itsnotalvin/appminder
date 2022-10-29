@@ -8,6 +8,14 @@ You can use Appminder at `https://appminder.herokuapp.com/`
 ## Approach Taken
 - We approached this application to provide a solution to everyone who is in the job application process. We understand the pain points of applying to multiple jobs and losing track of the numerous jobs you apply for. Thus we developed this project to help others track their applications throughout the job processes through an easy and intuitive 'drag and drop' function.
 
+## Application Features
+- Signup form uses a validation checking script, which ensures your passwor contains at least one Capital (A-Z), Lowercase(a-z), Number(0-9), Special character (!@#$%^&*). After you have registered, an email will be sent to your registered email address to confirm your registration.
+
+- Add application modal built using react portals allows you to add a job application to Appminder.
+
+- Main module to track your job applications uses react-dnd to allow for maneuvering of applications throughout the job process. Appminder module sorts your applications by 'key-date' to ensure that you can see which applications keydates are nearest. Furthermore, data is displayed using MUI Table styling so that data values are all aligned. An expansion indicator allows you to view the notes, so that you have a high level view of all your applications upon landing.
+
+- Profile page shows your current applications throughout the Job Stages in a pie chart format, this was built using NIVO Pie.
 
 
 ## Digital Mockups
